@@ -1,0 +1,34 @@
+﻿@model EEBank.Models.Banks
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Banks</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Adress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BanckCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BanckCode)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BankID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

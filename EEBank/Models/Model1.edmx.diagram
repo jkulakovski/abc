@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c0febad267d44a61b3770c1582910e01" Name="Diagram1" ZoomLevel="84">
+        <EntityTypeShape EntityType="EEBankModel.Banks" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EEBankModel.DocType" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EEBankModel.FreeFormatDoc" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EEBankModel.PaymentOrder" Width="1.5" PointX="6" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EEBankModel.PaymentRequirements" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EEBankModel.Roles" Width="1.5" PointX="1.5" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EEBankModel.TypeOfPaymentOrder" Width="1.5" PointX="3.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="EEBankModel.TypePaymentRequirements" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EEBankModel.Users" Width="1.5" PointX="0.75" PointY="12.625" IsExpanded="true" />
+        <AssociationConnector Association="EEBankModel.FK__PaymentOr__BankC__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="EEBankModel.FK__PaymentRe__BankI__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="EEBankModel.FK__FreeForma__DocTy__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="EEBankModel.FK__PaymentOr__DocTy__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="EEBankModel.FK__PaymentRe__DocTy__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="EEBankModel.FK__PaymentOr__TypeO__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="EEBankModel.FK__PaymentOr__UserI__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="EEBankModel.FK__PaymentRe__TypeO__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="EEBankModel.FK__PaymentRe__UserI__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="EEBankModel.FK_Users_Roles_RoleId" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
