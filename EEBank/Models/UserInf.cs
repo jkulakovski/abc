@@ -12,23 +12,21 @@ namespace EEBank.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class UserInf
     {
-        public Users()
+        public UserInf()
         {
-            this.PaymentOrder = new HashSet<PaymentOrder>();
-            this.PaymentRequirements = new HashSet<PaymentRequirements>();
+            this.Users = new HashSet<Users>();
         }
     
+        public int UserInfID { get; set; }
+        public string FullName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public int UserId { get; set; }
-        public Nullable<int> RoleId { get; set; }
-        public Nullable<int> UserUnfID { get; set; }
+        public string Phone { get; set; }
+        public string AccountNumber { get; set; }
+        public string ECP { get; set; }
     
-        public virtual ICollection<PaymentOrder> PaymentOrder { get; set; }
-        public virtual ICollection<PaymentRequirements> PaymentRequirements { get; set; }
-        public virtual Roles Roles { get; set; }
-        public virtual UserInf UserInf { get; set; }
+        public virtual ICollection<Users> Users { get; set; }
     }
 }

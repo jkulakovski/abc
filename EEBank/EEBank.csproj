@@ -235,6 +235,9 @@
     <Compile Include="Models\TypePaymentRequirements.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserInf.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Users.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
