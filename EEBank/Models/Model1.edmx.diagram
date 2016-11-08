@@ -25,7 +25,7 @@
         <AssociationConnector Association="EEBankModel.FK__PaymentRe__UserI__4316F928" ManuallyRouted="false" />
         <AssociationConnector Association="EEBankModel.FK_Users_Roles_RoleId" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EEBankModel.UserInf" Width="1.5" PointX="0.75" PointY="20.125" />
-        <AssociationConnector Association="EEBankModel.FK_Users_UserInf_UserInfID" />
+        <AssociationConnector Association="EEBankModel.FK_UserInf_Users_UserId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

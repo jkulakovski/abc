@@ -189,6 +189,7 @@
     <Compile Include="Controllers\BanksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserInfsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -327,6 +328,11 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\UserInfs\Create.cshtml" />
+    <Content Include="Views\UserInfs\Delete.cshtml" />
+    <Content Include="Views\UserInfs\Details.cshtml" />
+    <Content Include="Views\UserInfs\Edit.cshtml" />
+    <Content Include="Views\UserInfs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

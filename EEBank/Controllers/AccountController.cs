@@ -15,6 +15,7 @@ namespace EEBank.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private EEBankEntitie db = new EEBankEntitie();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -153,20 +154,17 @@ namespace EEBank.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 
-                
+               
   
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var new_user = new Users { Email = model.Email, Password = model.Password, RoleId = 5 };
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
-                    // Дополнительные сведения о том, как включить подтверждение учетной записи и сброс пароля, см. по адресу: http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Отправка сообщения электронной почты с этой ссылкой
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи", "Подтвердите вашу учетную запись, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    db.Users.Add(new_user);
+                    db.SaveChanges();
+                    return RedirectToAction("Create", "UserUInfs");
                 }
                 AddErrors(result);
             }

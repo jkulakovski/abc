@@ -100,6 +100,7 @@
           <Property Name="Phone" Type="varchar" MaxLength="150" />
           <Property Name="AccountNumber" Type="varchar" MaxLength="150" />
           <Property Name="ECP" Type="varchar" MaxLength="50" />
+          <Property Name="UserID" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -109,7 +110,6 @@
           <Property Name="Password" Type="varchar" MaxLength="150" />
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleId" Type="int" />
-          <Property Name="UserUnfID" Type="int" />
         </EntityType>
         <Association Name="FK__FreeForma__DocTy__46E78A0C">
           <End Role="DocType" Type="Self.DocType" Multiplicity="0..1" />
@@ -219,6 +219,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserInf_Users_UserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="UserInf" Type="Self.UserInf" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserInf">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Users_Roles_RoleId">
           <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
@@ -228,18 +240,6 @@
             </Principal>
             <Dependent Role="Users">
               <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Users_UserInf_UserInfID">
-          <End Role="UserInf" Type="Self.UserInf" Multiplicity="0..1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserInf">
-              <PropertyRef Name="UserInfID" />
-            </Principal>
-            <Dependent Role="Users">
-              <PropertyRef Name="UserUnfID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -290,12 +290,12 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserInf_Users_UserId" Association="Self.FK_UserInf_Users_UserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserInf" EntitySet="UserInf" />
+          </AssociationSet>
           <AssociationSet Name="FK_Users_Roles_RoleId" Association="Self.FK_Users_Roles_RoleId">
             <End Role="Roles" EntitySet="Roles" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_UserInf_UserInfID" Association="Self.FK_Users_UserInf_UserInfID">
-            <End Role="UserInf" EntitySet="UserInf" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
@@ -415,8 +415,7 @@
           <NavigationProperty Name="PaymentOrder" Relationship="Self.FK__PaymentOr__UserI__3C69FB99" FromRole="Users" ToRole="PaymentOrder" />
           <NavigationProperty Name="PaymentRequirements" Relationship="Self.FK__PaymentRe__UserI__4316F928" FromRole="Users" ToRole="PaymentRequirements" />
           <NavigationProperty Name="Roles" Relationship="Self.FK_Users_Roles_RoleId" FromRole="Users" ToRole="Roles" />
-          <Property Name="UserUnfID" Type="Int32" />
-          <NavigationProperty Name="UserInf" Relationship="EEBankModel.FK_Users_UserInf_UserInfID" FromRole="Users" ToRole="UserInf" />
+          <NavigationProperty Name="UserInf1" Relationship="EEBankModel.FK_UserInf_Users_UserId" FromRole="Users" ToRole="UserInf" />
         </EntityType>
         <Association Name="FK__PaymentOr__BankC__3D5E1FD2">
           <End Role="Banks" Type="Self.Banks" Multiplicity="0..1" />
@@ -589,9 +588,9 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <EntitySet Name="UserInf" EntityType="EEBankModel.UserInf" />
-          <AssociationSet Name="FK_Users_UserInf_UserInfID" Association="EEBankModel.FK_Users_UserInf_UserInfID">
-            <End Role="UserInf" EntitySet="UserInf" />
+          <AssociationSet Name="FK_UserInf_Users_UserId" Association="EEBankModel.FK_UserInf_Users_UserId">
             <End Role="Users" EntitySet="Users" />
+            <End Role="UserInf" EntitySet="UserInf" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserInf">
@@ -605,17 +604,18 @@
           <Property Name="Phone" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="AccountNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="ECP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Users" Relationship="EEBankModel.FK_Users_UserInf_UserInfID" FromRole="UserInf" ToRole="Users" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="Users1" Relationship="EEBankModel.FK_UserInf_Users_UserId" FromRole="UserInf" ToRole="Users" />
         </EntityType>
-        <Association Name="FK_Users_UserInf_UserInfID">
-          <End Type="EEBankModel.UserInf" Role="UserInf" Multiplicity="0..1" />
-          <End Type="EEBankModel.Users" Role="Users" Multiplicity="*" />
+        <Association Name="FK_UserInf_Users_UserId">
+          <End Type="EEBankModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="EEBankModel.UserInf" Role="UserInf" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UserInf">
-              <PropertyRef Name="UserInfID" />
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
             </Principal>
-            <Dependent Role="Users">
-              <PropertyRef Name="UserUnfID" />
+            <Dependent Role="UserInf">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -720,7 +720,6 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="EEBankModel.Users">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="UserUnfID" ColumnName="UserUnfID" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -731,6 +730,7 @@
           <EntitySetMapping Name="UserInf">
             <EntityTypeMapping TypeName="EEBankModel.UserInf">
               <MappingFragment StoreEntitySet="UserInf">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ECP" ColumnName="ECP" />
                 <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />

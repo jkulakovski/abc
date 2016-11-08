@@ -14,11 +14,6 @@ namespace EEBank.Models
     
     public partial class UserInf
     {
-        public UserInf()
-        {
-            this.Users = new HashSet<Users>();
-        }
-    
         public int UserInfID { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
@@ -26,7 +21,8 @@ namespace EEBank.Models
         public string Phone { get; set; }
         public string AccountNumber { get; set; }
         public string ECP { get; set; }
+        public Nullable<int> UserID { get; set; }
     
-        public virtual ICollection<Users> Users { get; set; }
+        public virtual Users Users1 { get; set; }
     }
 }

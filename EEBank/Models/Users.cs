@@ -18,17 +18,17 @@ namespace EEBank.Models
         {
             this.PaymentOrder = new HashSet<PaymentOrder>();
             this.PaymentRequirements = new HashSet<PaymentRequirements>();
+            this.UserInf1 = new HashSet<UserInf>();
         }
     
         public string Email { get; set; }
         public string Password { get; set; }
         public int UserId { get; set; }
         public Nullable<int> RoleId { get; set; }
-        public Nullable<int> UserUnfID { get; set; }
     
         public virtual ICollection<PaymentOrder> PaymentOrder { get; set; }
         public virtual ICollection<PaymentRequirements> PaymentRequirements { get; set; }
         public virtual Roles Roles { get; set; }
-        public virtual UserInf UserInf { get; set; }
+        public virtual ICollection<UserInf> UserInf1 { get; set; }
     }
 }
