@@ -53,6 +53,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -187,21 +188,31 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BanksController.cs" />
+    <Compile Include="Controllers\DocTypesController.cs" />
+    <Compile Include="Controllers\FullInfManagersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PaymentRequirementsController.cs" />
     <Compile Include="Controllers\UserInfsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Methods\ECP.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Banks.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DocStatus.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DocType.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FreeFormatDoc.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FullInfManagers.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
@@ -318,11 +329,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Banks\Create.cshtml" />
-    <Content Include="Views\Banks\Delete.cshtml" />
-    <Content Include="Views\Banks\Details.cshtml" />
-    <Content Include="Views\Banks\Edit.cshtml" />
-    <Content Include="Views\Banks\Index.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
@@ -333,6 +339,27 @@
     <Content Include="Views\UserInfs\Details.cshtml" />
     <Content Include="Views\UserInfs\Edit.cshtml" />
     <Content Include="Views\UserInfs\Index.cshtml" />
+    <Content Include="Views\Account\Add_User.cshtml" />
+    <Content Include="Views\FullInfManagers\Create.cshtml" />
+    <Content Include="Views\FullInfManagers\Delete.cshtml" />
+    <Content Include="Views\FullInfManagers\Details.cshtml" />
+    <Content Include="Views\FullInfManagers\Edit.cshtml" />
+    <Content Include="Views\FullInfManagers\Index.cshtml" />
+    <Content Include="Views\Banks\Create.cshtml" />
+    <Content Include="Views\Banks\Delete.cshtml" />
+    <Content Include="Views\Banks\Details.cshtml" />
+    <Content Include="Views\Banks\Edit.cshtml" />
+    <Content Include="Views\Banks\Index.cshtml" />
+    <Content Include="Views\DocTypes\Create.cshtml" />
+    <Content Include="Views\DocTypes\Delete.cshtml" />
+    <Content Include="Views\DocTypes\Details.cshtml" />
+    <Content Include="Views\DocTypes\Edit.cshtml" />
+    <Content Include="Views\DocTypes\Index.cshtml" />
+    <Content Include="Views\PaymentRequirements\Create.cshtml" />
+    <Content Include="Views\PaymentRequirements\Delete.cshtml" />
+    <Content Include="Views\PaymentRequirements\Details.cshtml" />
+    <Content Include="Views\PaymentRequirements\Edit.cshtml" />
+    <Content Include="Views\PaymentRequirements\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

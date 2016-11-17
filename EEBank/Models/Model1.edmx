@@ -10,15 +10,23 @@
             <PropertyRef Name="BankID" />
           </Key>
           <Property Name="BankID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Adress" Type="varchar" MaxLength="1" />
-          <Property Name="BanckCode" Type="int" />
+          <Property Name="Adress" Type="varchar" MaxLength="150" />
+          <Property Name="BanckCode" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DocStatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="DocType">
           <Key>
             <PropertyRef Name="DocTypeId" />
           </Key>
           <Property Name="DocTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DocName" Type="varchar" MaxLength="1" />
+          <Property Name="DocName" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="FreeFormatDoc">
           <Key>
@@ -27,6 +35,18 @@
           <Property Name="FreeFormatDocID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DocTypeID" Type="int" />
           <Property Name="Document" Type="text" />
+        </EntityType>
+        <EntityType Name="FullInfManagers">
+          <Key>
+            <PropertyRef Name="ManagerID" />
+          </Key>
+          <Property Name="ManagerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="ECP" Type="varchar" MaxLength="100" />
+          <Property Name="OpenKey" Type="varchar" MaxLength="10" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="BankID" Type="int" />
         </EntityType>
         <EntityType Name="PaymentOrder">
           <Key>
@@ -38,69 +58,72 @@
           <Property Name="DocType" Type="int" />
           <Property Name="ExchangeRates" Type="int" />
           <Property Name="UserID" Type="int" />
-          <Property Name="UserCountry" Type="varchar" MaxLength="1" />
-          <Property Name="BankReceiver" Type="varchar" MaxLength="1" />
+          <Property Name="UserCountry" Type="varchar" MaxLength="100" />
+          <Property Name="BankReceiver" Type="varchar" MaxLength="100" />
           <Property Name="BankCodeID" Type="int" />
-          <Property Name="Benficiar" Type="varchar" MaxLength="1" />
+          <Property Name="Benficiar" Type="varchar" MaxLength="100" />
           <Property Name="BankAccount" Type="int" />
           <Property Name="PaymentPurpose" Type="text" />
-          <Property Name="UserUNP" Type="varchar" MaxLength="1" />
-          <Property Name="ReceiverUNP" Type="varchar" MaxLength="1" />
-          <Property Name="PaymentCode" Type="varchar" MaxLength="1" />
+          <Property Name="UserUNP" Type="varchar" MaxLength="100" />
+          <Property Name="ReceiverUNP" Type="varchar" MaxLength="100" />
+          <Property Name="PaymentCode" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="PaymentRequirements">
           <Key>
             <PropertyRef Name="PaymentRequirementsID" />
           </Key>
           <Property Name="PaymentRequirementsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Date" Type="date" />
+          <Property Name="Date" Type="datetime" />
           <Property Name="TypeOfRequirements" Type="int" />
           <Property Name="DocType" Type="int" />
-          <Property Name="СurrencyCode" Type="varchar" MaxLength="4" />
+          <Property Name="СurrencyCode" Type="varchar" MaxLength="40" />
           <Property Name="SummOfremittance" Type="int" />
           <Property Name="UserID" Type="int" />
-          <Property Name="AccountNumber" Type="varchar" MaxLength="1" />
+          <Property Name="AccountNumber" Type="varchar" MaxLength="100" />
           <Property Name="BankID" Type="int" />
-          <Property Name="Benficiar" Type="varchar" MaxLength="1" />
-          <Property Name="BankReceiver" Type="varchar" MaxLength="1" />
+          <Property Name="Benficiar" Type="varchar" MaxLength="100" />
+          <Property Name="BankReceiver" Type="varchar" MaxLength="100" />
           <Property Name="PaymentPurpose" Type="text" />
           <Property Name="DocNumber" Type="int" />
-          <Property Name="UserUNP" Type="varchar" MaxLength="1" />
-          <Property Name="BankUNP" Type="varchar" MaxLength="1" />
+          <Property Name="UserUNP" Type="varchar" MaxLength="100" />
+          <Property Name="BankUNP" Type="varchar" MaxLength="100" />
+          <Property Name="StatusId" Type="int" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="RoleId" />
           </Key>
           <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleName" Type="varchar" MaxLength="1" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="TypeOfPaymentOrder">
           <Key>
             <PropertyRef Name="TYpeId" />
           </Key>
           <Property Name="TYpeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="1" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="TypePaymentRequirements">
           <Key>
             <PropertyRef Name="TypeId" />
           </Key>
           <Property Name="TypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TypeNAme" Type="varchar" MaxLength="1" />
+          <Property Name="TypeName" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="UserInf">
           <Key>
             <PropertyRef Name="UserInfID" />
           </Key>
           <Property Name="UserInfID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
           <Property Name="FullName" Type="varchar" MaxLength="150" />
           <Property Name="Email" Type="varchar" MaxLength="150" />
           <Property Name="Password" Type="varchar" MaxLength="150" />
           <Property Name="Phone" Type="varchar" MaxLength="150" />
           <Property Name="AccountNumber" Type="varchar" MaxLength="150" />
           <Property Name="ECP" Type="varchar" MaxLength="50" />
-          <Property Name="UserID" Type="int" />
+          <Property Name="OpenKey" Type="varchar" MaxLength="50" />
+          <Property Name="Adress" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -120,6 +143,30 @@
             </Principal>
             <Dependent Role="FreeFormatDoc">
               <PropertyRef Name="DocTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FullInfMa__BankI__07C12930">
+          <End Role="Banks" Type="Self.Banks" Multiplicity="0..1" />
+          <End Role="FullInfManagers" Type="Self.FullInfManagers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banks">
+              <PropertyRef Name="BankID" />
+            </Principal>
+            <Dependent Role="FullInfManagers">
+              <PropertyRef Name="BankID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FullInfMa__RoleI__06CD04F7">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="FullInfManagers" Type="Self.FullInfManagers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="FullInfManagers">
+              <PropertyRef Name="RoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -219,6 +266,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PaymentRequirements_DocStatus_StatusId">
+          <End Role="DocStatus" Type="Self.DocStatus" Multiplicity="0..1" />
+          <End Role="PaymentRequirements" Type="Self.PaymentRequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocStatus">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="PaymentRequirements">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserInf_Users_UserId">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="UserInf" Type="Self.UserInf" Multiplicity="*" />
@@ -245,8 +304,10 @@
         </Association>
         <EntityContainer Name="Хранилище EEBankModelContainer">
           <EntitySet Name="Banks" EntityType="Self.Banks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocStatus" EntityType="Self.DocStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocType" EntityType="Self.DocType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FreeFormatDoc" EntityType="Self.FreeFormatDoc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FullInfManagers" EntityType="Self.FullInfManagers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentOrder" EntityType="Self.PaymentOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentRequirements" EntityType="Self.PaymentRequirements" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
@@ -257,6 +318,14 @@
           <AssociationSet Name="FK__FreeForma__DocTy__46E78A0C" Association="Self.FK__FreeForma__DocTy__46E78A0C">
             <End Role="DocType" EntitySet="DocType" />
             <End Role="FreeFormatDoc" EntitySet="FreeFormatDoc" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FullInfMa__BankI__07C12930" Association="Self.FK__FullInfMa__BankI__07C12930">
+            <End Role="Banks" EntitySet="Banks" />
+            <End Role="FullInfManagers" EntitySet="FullInfManagers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FullInfMa__RoleI__06CD04F7" Association="Self.FK__FullInfMa__RoleI__06CD04F7">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="FullInfManagers" EntitySet="FullInfManagers" />
           </AssociationSet>
           <AssociationSet Name="FK__PaymentOr__BankC__3D5E1FD2" Association="Self.FK__PaymentOr__BankC__3D5E1FD2">
             <End Role="Banks" EntitySet="Banks" />
@@ -290,6 +359,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
           </AssociationSet>
+          <AssociationSet Name="FK_PaymentRequirements_DocStatus_StatusId" Association="Self.FK_PaymentRequirements_DocStatus_StatusId">
+            <End Role="DocStatus" EntitySet="DocStatus" />
+            <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserInf_Users_UserId" Association="Self.FK_UserInf_Users_UserId">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserInf" EntitySet="UserInf" />
@@ -308,17 +381,19 @@
             <PropertyRef Name="BankID" />
           </Key>
           <Property Name="BankID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Adress" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="BanckCode" Type="Int32" />
+          <Property Name="Adress" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="BanckCode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="PaymentOrder" Relationship="Self.FK__PaymentOr__BankC__3D5E1FD2" FromRole="Banks" ToRole="PaymentOrder" />
           <NavigationProperty Name="PaymentRequirements" Relationship="Self.FK__PaymentRe__BankI__440B1D61" FromRole="Banks" ToRole="PaymentRequirements" />
+          <NavigationProperty Name="FullInfManagers" Relationship="EEBankModel.FK__FullInfMa__BankI__07C12930" FromRole="Banks" ToRole="FullInfManagers" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="DocType">
           <Key>
             <PropertyRef Name="DocTypeId" />
           </Key>
           <Property Name="DocTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DocName" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="DocName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="FreeFormatDoc" Relationship="Self.FK__FreeForma__DocTy__46E78A0C" FromRole="DocType" ToRole="FreeFormatDoc" />
           <NavigationProperty Name="PaymentOrder" Relationship="Self.FK__PaymentOr__DocTy__3B75D760" FromRole="DocType" ToRole="PaymentOrder" />
           <NavigationProperty Name="PaymentRequirements" Relationship="Self.FK__PaymentRe__DocTy__4222D4EF" FromRole="DocType" ToRole="PaymentRequirements" />
@@ -342,15 +417,15 @@
           <Property Name="DocType" Type="Int32" />
           <Property Name="ExchangeRates" Type="Int32" />
           <Property Name="UserID" Type="Int32" />
-          <Property Name="UserCountry" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="BankReceiver" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="UserCountry" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BankReceiver" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="BankCodeID" Type="Int32" />
-          <Property Name="Benficiar" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Benficiar" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="BankAccount" Type="Int32" />
           <Property Name="PaymentPurpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="UserUNP" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ReceiverUNP" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="PaymentCode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="UserUNP" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ReceiverUNP" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Banks" Relationship="Self.FK__PaymentOr__BankC__3D5E1FD2" FromRole="PaymentOrder" ToRole="Banks" />
           <NavigationProperty Name="DocType1" Relationship="Self.FK__PaymentOr__DocTy__3B75D760" FromRole="PaymentOrder" ToRole="DocType" />
           <NavigationProperty Name="TypeOfPaymentOrder" Relationship="Self.FK__PaymentOr__TypeO__3A81B327" FromRole="PaymentOrder" ToRole="TypeOfPaymentOrder" />
@@ -361,39 +436,42 @@
             <PropertyRef Name="PaymentRequirementsID" />
           </Key>
           <Property Name="PaymentRequirementsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
           <Property Name="TypeOfRequirements" Type="Int32" />
           <Property Name="DocType" Type="Int32" />
-          <Property Name="СurrencyCode" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="СurrencyCode" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="SummOfremittance" Type="Int32" />
           <Property Name="UserID" Type="Int32" />
-          <Property Name="AccountNumber" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="AccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="BankID" Type="Int32" />
-          <Property Name="Benficiar" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="BankReceiver" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Benficiar" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BankReceiver" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PaymentPurpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DocNumber" Type="Int32" />
-          <Property Name="UserUNP" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="BankUNP" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="UserUNP" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BankUNP" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Banks" Relationship="Self.FK__PaymentRe__BankI__440B1D61" FromRole="PaymentRequirements" ToRole="Banks" />
           <NavigationProperty Name="DocType1" Relationship="Self.FK__PaymentRe__DocTy__4222D4EF" FromRole="PaymentRequirements" ToRole="DocType" />
           <NavigationProperty Name="TypePaymentRequirements" Relationship="Self.FK__PaymentRe__TypeO__412EB0B6" FromRole="PaymentRequirements" ToRole="TypePaymentRequirements" />
           <NavigationProperty Name="Users" Relationship="Self.FK__PaymentRe__UserI__4316F928" FromRole="PaymentRequirements" ToRole="Users" />
+          <Property Name="StatusId" Type="Int32" />
+          <NavigationProperty Name="DocStatus" Relationship="EEBankModel.FK_PaymentRequirements_DocStatus_StatusId" FromRole="PaymentRequirements" ToRole="DocStatus" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="RoleId" />
           </Key>
           <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles_RoleId" FromRole="Roles" ToRole="Users" />
+          <NavigationProperty Name="FullInfManagers" Relationship="EEBankModel.FK__FullInfMa__RoleI__06CD04F7" FromRole="Roles" ToRole="FullInfManagers" />
         </EntityType>
         <EntityType Name="TypeOfPaymentOrder">
           <Key>
             <PropertyRef Name="TYpeId" />
           </Key>
           <Property Name="TYpeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PaymentOrder" Relationship="Self.FK__PaymentOr__TypeO__3A81B327" FromRole="TypeOfPaymentOrder" ToRole="PaymentOrder" />
         </EntityType>
         <EntityType Name="TypePaymentRequirements">
@@ -401,8 +479,8 @@
             <PropertyRef Name="TypeId" />
           </Key>
           <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TypeNAme" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PaymentRequirements" Relationship="Self.FK__PaymentRe__TypeO__412EB0B6" FromRole="TypePaymentRequirements" ToRole="PaymentRequirements" />
+          <Property Name="TypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -592,6 +670,20 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UserInf" EntitySet="UserInf" />
           </AssociationSet>
+          <EntitySet Name="FullInfManagers" EntityType="EEBankModel.FullInfManagers" />
+          <AssociationSet Name="FK__FullInfMa__BankI__07C12930" Association="EEBankModel.FK__FullInfMa__BankI__07C12930">
+            <End Role="Banks" EntitySet="Banks" />
+            <End Role="FullInfManagers" EntitySet="FullInfManagers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FullInfMa__RoleI__06CD04F7" Association="EEBankModel.FK__FullInfMa__RoleI__06CD04F7">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="FullInfManagers" EntitySet="FullInfManagers" />
+          </AssociationSet>
+          <EntitySet Name="DocStatus" EntityType="EEBankModel.DocStatus" />
+          <AssociationSet Name="FK_PaymentRequirements_DocStatus_StatusId" Association="EEBankModel.FK_PaymentRequirements_DocStatus_StatusId">
+            <End Role="DocStatus" EntitySet="DocStatus" />
+            <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserInf">
           <Key>
@@ -606,6 +698,8 @@
           <Property Name="ECP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserID" Type="Int32" />
           <NavigationProperty Name="Users1" Relationship="EEBankModel.FK_UserInf_Users_UserId" FromRole="UserInf" ToRole="Users" />
+          <Property Name="OpenKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Adress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_UserInf_Users_UserId">
           <End Type="EEBankModel.Users" Role="Users" Multiplicity="0..1" />
@@ -619,6 +713,64 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FullInfManagers">
+          <Key>
+            <PropertyRef Name="ManagerID" />
+          </Key>
+          <Property Name="ManagerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ECP" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OpenKey" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="BankID" Type="Int32" />
+          <NavigationProperty Name="Banks" Relationship="EEBankModel.FK__FullInfMa__BankI__07C12930" FromRole="FullInfManagers" ToRole="Banks" />
+          <NavigationProperty Name="Roles" Relationship="EEBankModel.FK__FullInfMa__RoleI__06CD04F7" FromRole="FullInfManagers" ToRole="Roles" />
+        </EntityType>
+        <Association Name="FK__FullInfMa__BankI__07C12930">
+          <End Type="EEBankModel.Banks" Role="Banks" Multiplicity="0..1" />
+          <End Type="EEBankModel.FullInfManagers" Role="FullInfManagers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banks">
+              <PropertyRef Name="BankID" />
+            </Principal>
+            <Dependent Role="FullInfManagers">
+              <PropertyRef Name="BankID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FullInfMa__RoleI__06CD04F7">
+          <End Type="EEBankModel.Roles" Role="Roles" Multiplicity="0..1" />
+          <End Type="EEBankModel.FullInfManagers" Role="FullInfManagers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="FullInfManagers">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DocStatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PaymentRequirements" Relationship="EEBankModel.FK_PaymentRequirements_DocStatus_StatusId" FromRole="DocStatus" ToRole="PaymentRequirements" />
+        </EntityType>
+        <Association Name="FK_PaymentRequirements_DocStatus_StatusId">
+          <End Type="EEBankModel.DocStatus" Role="DocStatus" Multiplicity="0..1" />
+          <End Type="EEBankModel.PaymentRequirements" Role="PaymentRequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocStatus">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="PaymentRequirements">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -628,6 +780,7 @@
           <EntitySetMapping Name="Banks">
             <EntityTypeMapping TypeName="EEBankModel.Banks">
               <MappingFragment StoreEntitySet="Banks">
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="BankID" ColumnName="BankID" />
                 <ScalarProperty Name="Adress" ColumnName="Adress" />
                 <ScalarProperty Name="BanckCode" ColumnName="BanckCode" />
@@ -675,6 +828,7 @@
           <EntitySetMapping Name="PaymentRequirements">
             <EntityTypeMapping TypeName="EEBankModel.PaymentRequirements">
               <MappingFragment StoreEntitySet="PaymentRequirements">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="PaymentRequirementsID" ColumnName="PaymentRequirementsID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="TypeOfRequirements" ColumnName="TypeOfRequirements" />
@@ -712,8 +866,8 @@
           <EntitySetMapping Name="TypePaymentRequirements">
             <EntityTypeMapping TypeName="EEBankModel.TypePaymentRequirements">
               <MappingFragment StoreEntitySet="TypePaymentRequirements">
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
                 <ScalarProperty Name="TypeId" ColumnName="TypeId" />
-                <ScalarProperty Name="TypeNAme" ColumnName="TypeNAme" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -730,6 +884,8 @@
           <EntitySetMapping Name="UserInf">
             <EntityTypeMapping TypeName="EEBankModel.UserInf">
               <MappingFragment StoreEntitySet="UserInf">
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="OpenKey" ColumnName="OpenKey" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ECP" ColumnName="ECP" />
                 <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
@@ -738,6 +894,27 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="UserInfID" ColumnName="UserInfID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FullInfManagers">
+            <EntityTypeMapping TypeName="EEBankModel.FullInfManagers">
+              <MappingFragment StoreEntitySet="FullInfManagers">
+                <ScalarProperty Name="BankID" ColumnName="BankID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="OpenKey" ColumnName="OpenKey" />
+                <ScalarProperty Name="ECP" ColumnName="ECP" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocStatus">
+            <EntityTypeMapping TypeName="EEBankModel.DocStatus">
+              <MappingFragment StoreEntitySet="DocStatus">
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

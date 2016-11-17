@@ -1,0 +1,26 @@
+﻿@model IEnumerable<EEBank.Models.DocType>
+
+@{
+    ViewBag.Title = "Документы";
+}
+
+<h2>Документы</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Документ
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            
+            @Html.ActionLink(item.DocName, "Index", "PaymentRequirements", new { id = item.DocTypeId }, null)
+        </td>
+    </tr>
+}
+
+</table>

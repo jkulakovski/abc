@@ -1,0 +1,136 @@
+﻿@model EEBank.Models.PaymentRequirements
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PaymentRequirements</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.СurrencyCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.СurrencyCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SummOfremittance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SummOfremittance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Benficiar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Benficiar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BankReceiver)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankReceiver)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentPurpose)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentPurpose)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DocNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DocNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserUNP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserUNP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BankUNP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankUNP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Banks.Adress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Banks.Adress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DocType1.DocName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DocType1.DocName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypePaymentRequirements.TypeNAme)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypePaymentRequirements.TypeNAme)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Users.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Users.Email)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

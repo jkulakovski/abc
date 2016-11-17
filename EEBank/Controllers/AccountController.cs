@@ -153,18 +153,19 @@ namespace EEBank.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                
+
+                var roleId = db.Roles.Where(p => p.RoleName == "Пользователь").FirstOrDefault().RoleId;                
                
   
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    var new_user = new Users { Email = model.Email, Password = model.Password, RoleId = 5 };
+                    var new_user = new Users { Email = model.Email, Password = model.Password, RoleId = roleId };
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     db.Users.Add(new_user);
                     db.SaveChanges();
-                    return RedirectToAction("Create", "UserUInfs");
+                    return RedirectToAction("Create", "UserInfs");
                 }
                 AddErrors(result);
             }
@@ -172,6 +173,47 @@ namespace EEBank.Controllers
             // Появление этого сообщения означает наличие ошибки; повторное отображение формы
             return View(model);
         }
+
+        [Authorize]
+        public ActionResult Add_User()
+        {
+            ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "RoleName");
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult Add_User(RegisterViewModelNew model, [Bind(Include = "Email,Password,RoleId")] Users users)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+                var result = UserManager.Create(user, model.Password);
+
+                
+
+                users.Email = model.Email;
+                users.Password = model.Password;
+
+                
+                
+               
+                db.Users.Add(users);
+                db.SaveChanges();
+               // var selected = db.Roles.Where(w => w.RoleName == "Пользователь").Last();
+               // if (selected.RoleName == "Пользователь")
+                if (users.RoleId == 5)
+                    return RedirectToAction("Create", "UserInfs");
+                else
+                    return RedirectToAction("Create", "FullInfManagers");
+            }
+            ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "RoleName", users.RoleId);
+            return View(users);
+        }
+
+
 
         //
         // GET: /Account/ConfirmEmail

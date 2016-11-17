@@ -18,13 +18,16 @@ namespace EEBank.Models
         {
             this.PaymentOrder = new HashSet<PaymentOrder>();
             this.PaymentRequirements = new HashSet<PaymentRequirements>();
+            this.FullInfManagers = new HashSet<FullInfManagers>();
         }
     
         public int BankID { get; set; }
         public string Adress { get; set; }
-        public Nullable<int> BanckCode { get; set; }
+        public string BanckCode { get; set; }
+        public string Phone { get; set; }
     
         public virtual ICollection<PaymentOrder> PaymentOrder { get; set; }
         public virtual ICollection<PaymentRequirements> PaymentRequirements { get; set; }
+        public virtual ICollection<FullInfManagers> FullInfManagers { get; set; }
     }
 }

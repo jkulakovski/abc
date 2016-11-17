@@ -1,36 +1,39 @@
 ﻿@model IEnumerable<EEBank.Models.UserInf>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Создать пользователя";
 }
 
-<h2>Index</h2>
+<h2>Создать пользователя</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить пользователя", "Add_User","Account")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FullName)
+            ФИО
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            Email
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Password)
+            Пароль
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Phone)
+            Телефон
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AccountNumber)
+            Номер аккаунта
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ECP)
+            ЭЦП
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Users1.Email)
+            Открытый ключ
+        </th>
+        <th>
+            Адрес
         </th>
         <th></th>
     </tr>
@@ -56,12 +59,15 @@
             @Html.DisplayFor(modelItem => item.ECP)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Users1.Email)
+            @Html.DisplayFor(modelItem => item.OpenKey)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserInfID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserInfID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserInfID })
+            @Html.DisplayFor(modelItem => item.Adress)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.UserInfID }) |
+            @Html.ActionLink("Подробнее", "Details", new { id=item.UserInfID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.UserInfID })
         </td>
     </tr>
 }

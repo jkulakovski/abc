@@ -12,18 +12,16 @@ namespace EEBank.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Roles
+    public partial class DocStatus
     {
-        public Roles()
+        public DocStatus()
         {
-            this.Users = new HashSet<Users>();
-            this.FullInfManagers = new HashSet<FullInfManagers>();
+            this.PaymentRequirements = new HashSet<PaymentRequirements>();
         }
     
-        public int RoleId { get; set; }
-        public string RoleName { get; set; }
+        public int StatusId { get; set; }
+        public string StatusName { get; set; }
     
-        public virtual ICollection<Users> Users { get; set; }
-        public virtual ICollection<FullInfManagers> FullInfManagers { get; set; }
+        public virtual ICollection<PaymentRequirements> PaymentRequirements { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EEBank.Models;
+using EEBank.Methods;
 
 namespace EEBank.Controllers
 {
@@ -43,42 +44,51 @@ namespace EEBank.Controllers
             return View();
         }
 
-        
-
+        // POST: UserInfs/Create
+        // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
+        // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserInfID,FullName,Email,Password,Phone,AccountNumber,ECP,UserID")] UserInf userInf)
+        public ActionResult Create([Bind(Include = "UserInfID,FullName,Email,Password,Phone,AccountNumber,ECP,UserID,Adress")] UserInf userInf)
         {
-            var usr = db.Users.Where(p => p.Email == User.Identity.Name);
+
+            var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
+            ECP ecp = new ECP();
+            int[] keys = ecp.Key();
+            string login = "";
+            for (int i = 0; i < user.Email.Length; i++)
+            {
+                    if (Char.IsLetter(user.Email[i]))
+                        login += user.Email[i];
+                    if (user.Email[i] == ('@'))
+                        break;
+                
+
+            }
+
+
+            string sign = ecp.Create_ECP(login, keys);
+
+            string open_key = "";
+            open_key += keys[0].ToString();
+            open_key += ' ';
+            open_key += keys[1].ToString();
+
+            var new_userinf = new UserInf { FullName = userInf.FullName, Email = user.Email, Password = user.Password, Phone = userInf.Phone, AccountNumber = user.UserId.ToString(), ECP = sign, OpenKey = open_key, UserID = user.UserId, Adress = userInf.Adress };
+            db.SaveChanges();
             if (ModelState.IsValid)
-            {
-                userInf.Email = usr.FirstOrDefault().Email;
-                userInf.Password = usr.FirstOrDefault().Password;
-                userInf.AccountNumber = userInf.UserInfID.ToString();
-                db.UserInf.Add(userInf);
+            {               
+              
+                db.UserInf.Add(new_userinf);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
 
-            ViewBag.UserID = new SelectList(db.Users, "UserId", "Email", userInf.UserID);
             return View(userInf);
         }
 
-        // GET: UserInfs/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserInf userInf = db.UserInf.Find(id);
-            if (userInf == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.UserID = new SelectList(db.Users, "UserId", "Email", userInf.UserID);
-            return View(userInf);
-        }
+
+        
 
         // POST: UserInfs/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 

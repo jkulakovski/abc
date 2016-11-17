@@ -1,0 +1,117 @@
+﻿@model IEnumerable<EEBank.Models.PaymentRequirements>
+
+@{
+    ViewBag.Title = "Платежные поручения";
+}
+
+<h2>Платежные поручения</h2>
+
+<p>
+    @Html.ActionLink("Создать новый", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Дата создания
+        </th>
+        <th>
+            Код валюты
+        </th>
+        <th>
+            Сумма перевода
+        </th>
+        <th>
+            Номер аккаунта
+        </th>
+        <th>
+            Бенефициар
+        </th>
+        <th>
+            Банк получатель
+        </th>
+        <th>
+            Назначение платежа
+        </th>
+        <th>
+            Номер документа
+        </th>
+        <th>
+            УНП отправителя
+        </th>
+        <th>
+            УНП банка
+        </th>
+        <th>
+            Адрес банка
+        </th>
+        <th>
+            Вид документа
+        </th>
+        <th>
+            Название документа
+        </th>
+        <th>
+            ФИО отправителя
+        </th>
+        <th>
+            Статус
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.СurrencyCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SummOfremittance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Benficiar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BankReceiver)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentPurpose)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserUNP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BankUNP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Banks.Adress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocType1.DocName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TypePaymentRequirements.TypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Users.UserInf1.Where(p => p.Email == User.Identity.Name).FirstOrDefault().FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocStatus.StatusName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.PaymentRequirementsID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PaymentRequirementsID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PaymentRequirementsID })
+        </td>
+    </tr>
+}
+
+</table>

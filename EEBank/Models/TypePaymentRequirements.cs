@@ -20,7 +20,7 @@ namespace EEBank.Models
         }
     
         public int TypeId { get; set; }
-        public string TypeNAme { get; set; }
+        public string TypeName { get; set; }
     
         public virtual ICollection<PaymentRequirements> PaymentRequirements { get; set; }
     }

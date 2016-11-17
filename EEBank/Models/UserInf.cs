@@ -22,6 +22,8 @@ namespace EEBank.Models
         public string AccountNumber { get; set; }
         public string ECP { get; set; }
         public Nullable<int> UserID { get; set; }
+        public string OpenKey { get; set; }
+        public string Adress { get; set; }
     
         public virtual Users Users1 { get; set; }
     }

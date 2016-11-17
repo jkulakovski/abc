@@ -29,10 +29,12 @@ namespace EEBank.Models
         public Nullable<int> DocNumber { get; set; }
         public string UserUNP { get; set; }
         public string BankUNP { get; set; }
+        public Nullable<int> StatusId { get; set; }
     
         public virtual Banks Banks { get; set; }
         public virtual DocType DocType1 { get; set; }
         public virtual TypePaymentRequirements TypePaymentRequirements { get; set; }
         public virtual Users Users { get; set; }
+        public virtual DocStatus DocStatus { get; set; }
     }
 }
