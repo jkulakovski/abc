@@ -1,17 +1,25 @@
 ﻿@model EEBank.Models.PaymentRequirements
+@using EEBank.Models
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Платежное поручение";
 }
 
-<h2>Details</h2>
+<h2>Платежное поручение</h2>
 
 <div>
-    <h4>PaymentRequirements</h4>
+    <h4>Платежное поручение</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Date)
+            ФИО отправителя
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Users.UserInf1.Where(p => p.UserID == model.UserID).FirstOrDefault().FullName)
+        </dd>
+        <dt>
+            Дата создания документа
         </dt>
 
         <dd>
@@ -19,7 +27,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.СurrencyCode)
+            Код валюты
         </dt>
 
         <dd>
@@ -27,7 +35,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SummOfremittance)
+            Сумма перевода
         </dt>
 
         <dd>
@@ -35,7 +43,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.AccountNumber)
+            Номер аккаунта
         </dt>
 
         <dd>
@@ -43,7 +51,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Benficiar)
+            Бенефициар
         </dt>
 
         <dd>
@@ -51,7 +59,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.BankReceiver)
+            Банк отправитель
         </dt>
 
         <dd>
@@ -59,7 +67,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PaymentPurpose)
+            Цель отправления
         </dt>
 
         <dd>
@@ -67,7 +75,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DocNumber)
+            Номер документа
         </dt>
 
         <dd>
@@ -75,7 +83,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.UserUNP)
+            УНП отправителя
         </dt>
 
         <dd>
@@ -83,7 +91,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.BankUNP)
+            УНП банка
         </dt>
 
         <dd>
@@ -91,15 +99,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Banks.Adress)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Banks.Adress)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DocType1.DocName)
+            Документ
         </dt>
 
         <dd>
@@ -107,24 +107,36 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TypePaymentRequirements.TypeNAme)
+            Тип платежного поручения
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TypePaymentRequirements.TypeNAme)
+            @Html.DisplayFor(model => model.TypePaymentRequirements.TypeName)
         </dd>
-
+        
         <dt>
-            @Html.DisplayNameFor(model => model.Users.Email)
+            Менеджер
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.Users.Email)
+            @Html.DisplayFor(model => model.FullInfManagers.FullName)
         </dd>
+        <dt>
+            Статус
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DocStatus.StatusName)
+        </dd>
+
+        
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PaymentRequirementsID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@using (Html.BeginForm("Details", "PaymentRequirements", FormMethod.Post))
+{
+
+    <div class="form-actions no-color">
+        <input type="submit" name="action" value="Reject" class="btn btn-default" /> |
+        <input type="submit" name="action" value="Accept" class="btn btn-default" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}

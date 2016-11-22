@@ -88,6 +88,7 @@
           <Property Name="UserUNP" Type="varchar" MaxLength="100" />
           <Property Name="BankUNP" Type="varchar" MaxLength="100" />
           <Property Name="StatusId" Type="int" />
+          <Property Name="ManagerId" Type="int" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -278,6 +279,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PaymentRequirements_FullInfManagers_ManagerID">
+          <End Role="FullInfManagers" Type="Self.FullInfManagers" Multiplicity="0..1" />
+          <End Role="PaymentRequirements" Type="Self.PaymentRequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FullInfManagers">
+              <PropertyRef Name="ManagerID" />
+            </Principal>
+            <Dependent Role="PaymentRequirements">
+              <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserInf_Users_UserId">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="UserInf" Type="Self.UserInf" Multiplicity="*" />
@@ -361,6 +374,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_PaymentRequirements_DocStatus_StatusId" Association="Self.FK_PaymentRequirements_DocStatus_StatusId">
             <End Role="DocStatus" EntitySet="DocStatus" />
+            <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentRequirements_FullInfManagers_ManagerID" Association="Self.FK_PaymentRequirements_FullInfManagers_ManagerID">
+            <End Role="FullInfManagers" EntitySet="FullInfManagers" />
             <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
           </AssociationSet>
           <AssociationSet Name="FK_UserInf_Users_UserId" Association="Self.FK_UserInf_Users_UserId">
@@ -456,6 +473,8 @@
           <NavigationProperty Name="Users" Relationship="Self.FK__PaymentRe__UserI__4316F928" FromRole="PaymentRequirements" ToRole="Users" />
           <Property Name="StatusId" Type="Int32" />
           <NavigationProperty Name="DocStatus" Relationship="EEBankModel.FK_PaymentRequirements_DocStatus_StatusId" FromRole="PaymentRequirements" ToRole="DocStatus" />
+          <Property Name="ManagerId" Type="Int32" />
+          <NavigationProperty Name="FullInfManagers" Relationship="EEBankModel.FK_PaymentRequirements_FullInfManagers_ManagerID" FromRole="PaymentRequirements" ToRole="FullInfManagers" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -684,6 +703,10 @@
             <End Role="DocStatus" EntitySet="DocStatus" />
             <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
           </AssociationSet>
+          <AssociationSet Name="FK_PaymentRequirements_FullInfManagers_ManagerID" Association="EEBankModel.FK_PaymentRequirements_FullInfManagers_ManagerID">
+            <End Role="FullInfManagers" EntitySet="FullInfManagers" />
+            <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserInf">
           <Key>
@@ -726,6 +749,7 @@
           <Property Name="BankID" Type="Int32" />
           <NavigationProperty Name="Banks" Relationship="EEBankModel.FK__FullInfMa__BankI__07C12930" FromRole="FullInfManagers" ToRole="Banks" />
           <NavigationProperty Name="Roles" Relationship="EEBankModel.FK__FullInfMa__RoleI__06CD04F7" FromRole="FullInfManagers" ToRole="Roles" />
+          <NavigationProperty Name="PaymentRequirements" Relationship="EEBankModel.FK_PaymentRequirements_FullInfManagers_ManagerID" FromRole="FullInfManagers" ToRole="PaymentRequirements" />
         </EntityType>
         <Association Name="FK__FullInfMa__BankI__07C12930">
           <End Type="EEBankModel.Banks" Role="Banks" Multiplicity="0..1" />
@@ -768,6 +792,18 @@
             </Principal>
             <Dependent Role="PaymentRequirements">
               <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentRequirements_FullInfManagers_ManagerID">
+          <End Type="EEBankModel.FullInfManagers" Role="FullInfManagers" Multiplicity="0..1" />
+          <End Type="EEBankModel.PaymentRequirements" Role="PaymentRequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FullInfManagers">
+              <PropertyRef Name="ManagerID" />
+            </Principal>
+            <Dependent Role="PaymentRequirements">
+              <PropertyRef Name="ManagerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -828,6 +864,7 @@
           <EntitySetMapping Name="PaymentRequirements">
             <EntityTypeMapping TypeName="EEBankModel.PaymentRequirements">
               <MappingFragment StoreEntitySet="PaymentRequirements">
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="PaymentRequirementsID" ColumnName="PaymentRequirementsID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
