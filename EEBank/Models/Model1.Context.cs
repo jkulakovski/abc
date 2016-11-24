@@ -37,5 +37,6 @@ namespace EEBank.Models
         public virtual DbSet<UserInf> UserInf { get; set; }
         public virtual DbSet<FullInfManagers> FullInfManagers { get; set; }
         public virtual DbSet<DocStatus> DocStatus { get; set; }
+        public virtual DbSet<ArchivePaymentRequirements> ArchivePaymentRequirements { get; set; }
     }
 }

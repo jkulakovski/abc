@@ -14,6 +14,11 @@ namespace EEBank.Models
     
     public partial class PaymentRequirements
     {
+        public PaymentRequirements()
+        {
+            this.ArchivePaymentRequirements = new HashSet<ArchivePaymentRequirements>();
+        }
+    
         public int PaymentRequirementsID { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<int> TypeOfRequirements { get; set; }
@@ -38,5 +43,6 @@ namespace EEBank.Models
         public virtual Users Users { get; set; }
         public virtual DocStatus DocStatus { get; set; }
         public virtual FullInfManagers FullInfManagers { get; set; }
+        public virtual ICollection<ArchivePaymentRequirements> ArchivePaymentRequirements { get; set; }
     }
 }

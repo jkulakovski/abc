@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c0febad267d44a61b3770c1582910e01" Name="Diagram1" ZoomLevel="35">
+      <Diagram DiagramId="c0febad267d44a61b3770c1582910e01" Name="Diagram1" ZoomLevel="75">
         <EntityTypeShape EntityType="EEBankModel.Banks" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EEBankModel.DocType" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EEBankModel.FreeFormatDoc" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
@@ -32,6 +32,8 @@
         <EntityTypeShape EntityType="EEBankModel.DocStatus" Width="1.5" PointX="5.375" PointY="0.875" />
         <AssociationConnector Association="EEBankModel.FK_PaymentRequirements_DocStatus_StatusId" />
         <AssociationConnector Association="EEBankModel.FK_PaymentRequirements_FullInfManagers_ManagerID" />
+        <EntityTypeShape EntityType="EEBankModel.ArchivePaymentRequirements" Width="1.5" PointX="5.25" PointY="17.375" />
+        <AssociationConnector Association="EEBankModel.FK__ArchivePa__Payme__0E6E26BF" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

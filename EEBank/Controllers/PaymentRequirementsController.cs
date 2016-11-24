@@ -39,7 +39,7 @@ namespace EEBank.Controllers
             var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
             if (user.RoleId == 5)
             {
-                var paymentRequirements = db.PaymentRequirements.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.TypePaymentRequirements).Include(p => p.Users).Where(p => p.Users.Email == User.Identity.Name);
+                var paymentRequirements = db.PaymentRequirements.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.TypePaymentRequirements).Include(p => p.Users).Where(p => p.Users.Email == User.Identity.Name).Where(p => p.StatusId != 3);
                 return View(paymentRequirements.ToList());
             }
             if (user.RoleId == 6)
@@ -49,7 +49,7 @@ namespace EEBank.Controllers
             }
             else
             {
-                var paymentRequirements = db.PaymentRequirements.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.TypePaymentRequirements).Include(p => p.Users).Where(p => p.FullInfManagers.Email ==user.Email );
+                var paymentRequirements = db.PaymentRequirements.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.TypePaymentRequirements).Include(p => p.Users).Where(p => p.FullInfManagers.Email ==user.Email).Where(p => p.StatusId == 1);
                 return View(paymentRequirements.ToList());
             }
         }
@@ -92,6 +92,10 @@ namespace EEBank.Controllers
             PaymentRequirements paymentRequirements = db.PaymentRequirements.Find(id);
             paymentRequirements.StatusId = 3;
             db.Entry(paymentRequirements).State = EntityState.Modified;
+            db.SaveChanges();
+            ArchivePaymentRequirements achive = new ArchivePaymentRequirements();
+            achive.PaymentRequirementId = id;
+            db.ArchivePaymentRequirements.Add(achive);
             db.SaveChanges();
             return RedirectToAction("Index");
 
@@ -186,6 +190,7 @@ namespace EEBank.Controllers
 
             var managers = db.FullInfManagers.Where(p => p.BankID == paymentRequirements.BankID).ToList();
             Random rn = new Random();
+            int index = rn.Next(0, managers.Count);
             
             
             if (ModelState.IsValid)  {
@@ -198,7 +203,7 @@ namespace EEBank.Controllers
                 if (it != res.Length || it == 0)
                     paymentRequirements.StatusId = 2;
                 if (paymentRequirements.StatusId == 1)
-                    paymentRequirements.ManagerId = managers.ElementAt(rn.Next(0, managers.Count - 1)).ManagerID;
+                    paymentRequirements.ManagerId = managers.ElementAt(index).ManagerID;
                 else
                     paymentRequirements.ManagerId = null;
                 db.PaymentRequirements.Add(paymentRequirements);

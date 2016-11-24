@@ -80,7 +80,15 @@
             @Html.DisplayFor(modelItem => item.DocStatus.StatusName)
         </td>
         <td>
+           
             @Html.ActionLink("Просмотреть", "Details", new { id=item.PaymentRequirementsID }) 
+        </td>
+        <td>
+            @if (item.StatusId == 2 || item.StatusId == 4)
+            {
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.PaymentRequirementsID })
+
+            }
         </td>
     </tr>
 }

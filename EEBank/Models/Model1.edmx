@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Хранилище EEBankModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ArchivePaymentRequirements">
+          <Key>
+            <PropertyRef Name="ArchivePaymentRequirementsId" />
+          </Key>
+          <Property Name="ArchivePaymentRequirementsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentRequirementId" Type="int" />
+        </EntityType>
         <EntityType Name="Banks">
           <Key>
             <PropertyRef Name="BankID" />
@@ -135,6 +142,18 @@
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleId" Type="int" />
         </EntityType>
+        <Association Name="FK__ArchivePa__Payme__0E6E26BF">
+          <End Role="PaymentRequirements" Type="Self.PaymentRequirements" Multiplicity="0..1" />
+          <End Role="ArchivePaymentRequirements" Type="Self.ArchivePaymentRequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentRequirements">
+              <PropertyRef Name="PaymentRequirementsID" />
+            </Principal>
+            <Dependent Role="ArchivePaymentRequirements">
+              <PropertyRef Name="PaymentRequirementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__FreeForma__DocTy__46E78A0C">
           <End Role="DocType" Type="Self.DocType" Multiplicity="0..1" />
           <End Role="FreeFormatDoc" Type="Self.FreeFormatDoc" Multiplicity="*" />
@@ -316,6 +335,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Хранилище EEBankModelContainer">
+          <EntitySet Name="ArchivePaymentRequirements" EntityType="Self.ArchivePaymentRequirements" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Banks" EntityType="Self.Banks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocStatus" EntityType="Self.DocStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocType" EntityType="Self.DocType" Schema="dbo" store:Type="Tables" />
@@ -328,6 +348,10 @@
           <EntitySet Name="TypePaymentRequirements" EntityType="Self.TypePaymentRequirements" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInf" EntityType="Self.UserInf" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ArchivePa__Payme__0E6E26BF" Association="Self.FK__ArchivePa__Payme__0E6E26BF">
+            <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
+            <End Role="ArchivePaymentRequirements" EntitySet="ArchivePaymentRequirements" />
+          </AssociationSet>
           <AssociationSet Name="FK__FreeForma__DocTy__46E78A0C" Association="Self.FK__FreeForma__DocTy__46E78A0C">
             <End Role="DocType" EntitySet="DocType" />
             <End Role="FreeFormatDoc" EntitySet="FreeFormatDoc" />
@@ -475,6 +499,7 @@
           <NavigationProperty Name="DocStatus" Relationship="EEBankModel.FK_PaymentRequirements_DocStatus_StatusId" FromRole="PaymentRequirements" ToRole="DocStatus" />
           <Property Name="ManagerId" Type="Int32" />
           <NavigationProperty Name="FullInfManagers" Relationship="EEBankModel.FK_PaymentRequirements_FullInfManagers_ManagerID" FromRole="PaymentRequirements" ToRole="FullInfManagers" />
+          <NavigationProperty Name="ArchivePaymentRequirements" Relationship="EEBankModel.FK__ArchivePa__Payme__0E6E26BF" FromRole="PaymentRequirements" ToRole="ArchivePaymentRequirements" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -707,6 +732,11 @@
             <End Role="FullInfManagers" EntitySet="FullInfManagers" />
             <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
           </AssociationSet>
+          <EntitySet Name="ArchivePaymentRequirements" EntityType="EEBankModel.ArchivePaymentRequirements" />
+          <AssociationSet Name="FK__ArchivePa__Payme__0E6E26BF" Association="EEBankModel.FK__ArchivePa__Payme__0E6E26BF">
+            <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
+            <End Role="ArchivePaymentRequirements" EntitySet="ArchivePaymentRequirements" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserInf">
           <Key>
@@ -804,6 +834,26 @@
             </Principal>
             <Dependent Role="PaymentRequirements">
               <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ArchivePaymentRequirements">
+          <Key>
+            <PropertyRef Name="ArchivePaymentRequirementsId" />
+          </Key>
+          <Property Name="ArchivePaymentRequirementsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentRequirementId" Type="Int32" />
+          <NavigationProperty Name="PaymentRequirements" Relationship="EEBankModel.FK__ArchivePa__Payme__0E6E26BF" FromRole="ArchivePaymentRequirements" ToRole="PaymentRequirements" />
+        </EntityType>
+        <Association Name="FK__ArchivePa__Payme__0E6E26BF">
+          <End Type="EEBankModel.PaymentRequirements" Role="PaymentRequirements" Multiplicity="0..1" />
+          <End Type="EEBankModel.ArchivePaymentRequirements" Role="ArchivePaymentRequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentRequirements">
+              <PropertyRef Name="PaymentRequirementsID" />
+            </Principal>
+            <Dependent Role="ArchivePaymentRequirements">
+              <PropertyRef Name="PaymentRequirementId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -952,6 +1002,14 @@
               <MappingFragment StoreEntitySet="DocStatus">
                 <ScalarProperty Name="StatusName" ColumnName="StatusName" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArchivePaymentRequirements">
+            <EntityTypeMapping TypeName="EEBankModel.ArchivePaymentRequirements">
+              <MappingFragment StoreEntitySet="ArchivePaymentRequirements">
+                <ScalarProperty Name="PaymentRequirementId" ColumnName="PaymentRequirementId" />
+                <ScalarProperty Name="ArchivePaymentRequirementsId" ColumnName="ArchivePaymentRequirementsId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
