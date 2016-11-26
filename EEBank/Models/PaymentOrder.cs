@@ -29,10 +29,16 @@ namespace EEBank.Models
         public string UserUNP { get; set; }
         public string ReceiverUNP { get; set; }
         public string PaymentCode { get; set; }
+        public Nullable<int> PaymentTypeID { get; set; }
+        public Nullable<int> ManagerID { get; set; }
+        public Nullable<int> StatusID { get; set; }
+        public string Comment { get; set; }
     
         public virtual Banks Banks { get; set; }
         public virtual DocType DocType1 { get; set; }
         public virtual TypeOfPaymentOrder TypeOfPaymentOrder { get; set; }
         public virtual Users Users { get; set; }
+        public virtual DocStatus DocStatus { get; set; }
+        public virtual FullInfManagers FullInfManagers { get; set; }
     }
 }

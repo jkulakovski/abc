@@ -17,11 +17,13 @@ namespace EEBank.Models
         public DocStatus()
         {
             this.PaymentRequirements = new HashSet<PaymentRequirements>();
+            this.PaymentOrder = new HashSet<PaymentOrder>();
         }
     
         public int StatusId { get; set; }
         public string StatusName { get; set; }
     
         public virtual ICollection<PaymentRequirements> PaymentRequirements { get; set; }
+        public virtual ICollection<PaymentOrder> PaymentOrder { get; set; }
     }
 }

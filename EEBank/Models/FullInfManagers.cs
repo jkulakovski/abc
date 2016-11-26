@@ -17,6 +17,7 @@ namespace EEBank.Models
         public FullInfManagers()
         {
             this.PaymentRequirements = new HashSet<PaymentRequirements>();
+            this.PaymentOrder = new HashSet<PaymentOrder>();
         }
     
         public int ManagerID { get; set; }
@@ -30,5 +31,6 @@ namespace EEBank.Models
         public virtual Banks Banks { get; set; }
         public virtual Roles Roles { get; set; }
         public virtual ICollection<PaymentRequirements> PaymentRequirements { get; set; }
+        public virtual ICollection<PaymentOrder> PaymentOrder { get; set; }
     }
 }
