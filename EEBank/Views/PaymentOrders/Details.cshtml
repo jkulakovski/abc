@@ -1,0 +1,130 @@
+﻿@model EEBank.Models.PaymentOrder
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PaymentOrder</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExchangeRates)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExchangeRates)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserCountry)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserCountry)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BankReceiver)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankReceiver)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Benficiar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Benficiar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BankAccount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankAccount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentPurpose)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentPurpose)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserUNP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserUNP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReceiverUNP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceiverUNP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Banks.Adress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Banks.Adress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DocType1.DocName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DocType1.DocName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeOfPaymentOrder.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeOfPaymentOrder.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Users.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Users.Email)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PaymentOrderID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

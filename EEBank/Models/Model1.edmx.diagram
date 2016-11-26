@@ -36,6 +36,8 @@
         <AssociationConnector Association="EEBankModel.FK__ArchivePa__Payme__0E6E26BF" />
         <AssociationConnector Association="EEBankModel.FK_PaymentOrder_DocStatus_StatusId" />
         <AssociationConnector Association="EEBankModel.FK_PaymentOrder_FullInfManagers_ManagerID" />
+        <EntityTypeShape EntityType="EEBankModel.PaymentType" Width="1.5" PointX="7.375" PointY="0.875" />
+        <AssociationConnector Association="EEBankModel.FK_PaymentOrder_PaymentType_PaymentTypeID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

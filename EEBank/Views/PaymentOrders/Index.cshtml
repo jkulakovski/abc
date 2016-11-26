@@ -1,0 +1,121 @@
+﻿@model IEnumerable<EEBank.Models.PaymentOrder>
+@using EEBank.Models;
+@{
+    ViewBag.Title = "Платежные требования";
+}
+@{EEBankEntitie db = new EEBankEntitie();
+var role = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault().RoleId;
+}
+<h2>Платежные требования</h2>
+
+@if (role == 5)
+{
+    <p>
+        @Html.ActionLink("Создать новый", "Create")
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            ФИО
+        </th>
+        <th>
+            Дата создания
+        </th>
+        <th>
+            Курс валют
+        </th>
+        <th>
+            Банк получатель
+        </th>
+        <th>
+            Бенефициар
+        </th>
+        <th>
+            Счет банка
+        </th>
+        <th>
+            Назначение платежа
+        </th>
+        <th>
+            УНП отправителя
+        </th>
+        <th>
+            УНП получателя
+        </th>
+        <th>
+            Код платежа
+        </th>
+        <th>
+            Тип платженого поручения
+        </th>
+        <th>
+            Статус платежа
+        </th>
+        <th>
+            Комментарий
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Users.UserInf1.Where(p => p.UserID == item.UserID).FirstOrDefault().FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExchangeRates)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserCountry)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BankReceiver)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Benficiar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BankAccount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentPurpose)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserUNP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReceiverUNP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TypeOfPaymentOrder.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StatusID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comment)
+        </td>
+
+        <td>
+
+            @Html.ActionLink("Просмотреть", "Details", new { id = item.PaymentOrderID })
+        </td>
+        <td>
+            @if (item.StatusID == 2 || item.StatusID == 4)
+            {
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.PaymentOrderID })
+
+            }
+        </td>
+    </tr>
+}
+
+</table>

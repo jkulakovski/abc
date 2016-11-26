@@ -102,6 +102,13 @@
           <Property Name="ManagerId" Type="int" />
           <Property Name="Comment" Type="text" />
         </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="PaymentTypeID" />
+          </Key>
+          <Property Name="PaymentTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentName" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -316,6 +323,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PaymentOrder_PaymentType_PaymentTypeID">
+          <End Role="PaymentType" Type="Self.PaymentType" Multiplicity="0..1" />
+          <End Role="PaymentOrder" Type="Self.PaymentOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="PaymentTypeID" />
+            </Principal>
+            <Dependent Role="PaymentOrder">
+              <PropertyRef Name="PaymentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PaymentRequirements_DocStatus_StatusId">
           <End Role="DocStatus" Type="Self.DocStatus" Multiplicity="0..1" />
           <End Role="PaymentRequirements" Type="Self.PaymentRequirements" Multiplicity="*" />
@@ -373,6 +392,7 @@
           <EntitySet Name="FullInfManagers" EntityType="Self.FullInfManagers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentOrder" EntityType="Self.PaymentOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentRequirements" EntityType="Self.PaymentRequirements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeOfPaymentOrder" EntityType="Self.TypeOfPaymentOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypePaymentRequirements" EntityType="Self.TypePaymentRequirements" Schema="dbo" store:Type="Tables" />
@@ -432,6 +452,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_PaymentOrder_FullInfManagers_ManagerID" Association="Self.FK_PaymentOrder_FullInfManagers_ManagerID">
             <End Role="FullInfManagers" EntitySet="FullInfManagers" />
+            <End Role="PaymentOrder" EntitySet="PaymentOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentOrder_PaymentType_PaymentTypeID" Association="Self.FK_PaymentOrder_PaymentType_PaymentTypeID">
+            <End Role="PaymentType" EntitySet="PaymentType" />
             <End Role="PaymentOrder" EntitySet="PaymentOrder" />
           </AssociationSet>
           <AssociationSet Name="FK_PaymentRequirements_DocStatus_StatusId" Association="Self.FK_PaymentRequirements_DocStatus_StatusId">
@@ -515,6 +539,7 @@
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DocStatus" Relationship="EEBankModel.FK_PaymentOrder_DocStatus_StatusId" FromRole="PaymentOrder" ToRole="DocStatus" />
           <NavigationProperty Name="FullInfManagers" Relationship="EEBankModel.FK_PaymentOrder_FullInfManagers_ManagerID" FromRole="PaymentOrder" ToRole="FullInfManagers" />
+          <NavigationProperty Name="PaymentType" Relationship="EEBankModel.FK_PaymentOrder_PaymentType_PaymentTypeID" FromRole="PaymentOrder" ToRole="PaymentType" />
         </EntityType>
         <EntityType Name="PaymentRequirements">
           <Key>
@@ -790,6 +815,11 @@
             <End Role="FullInfManagers" EntitySet="FullInfManagers" />
             <End Role="PaymentOrder" EntitySet="PaymentOrder" />
           </AssociationSet>
+          <EntitySet Name="PaymentType" EntityType="EEBankModel.PaymentType" />
+          <AssociationSet Name="FK_PaymentOrder_PaymentType_PaymentTypeID" Association="EEBankModel.FK_PaymentOrder_PaymentType_PaymentTypeID">
+            <End Role="PaymentType" EntitySet="PaymentType" />
+            <End Role="PaymentOrder" EntitySet="PaymentOrder" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserInf">
           <Key>
@@ -934,6 +964,26 @@
             </Principal>
             <Dependent Role="PaymentOrder">
               <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="PaymentTypeID" />
+          </Key>
+          <Property Name="PaymentTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PaymentOrder" Relationship="EEBankModel.FK_PaymentOrder_PaymentType_PaymentTypeID" FromRole="PaymentType" ToRole="PaymentOrder" />
+        </EntityType>
+        <Association Name="FK_PaymentOrder_PaymentType_PaymentTypeID">
+          <End Type="EEBankModel.PaymentType" Role="PaymentType" Multiplicity="0..1" />
+          <End Type="EEBankModel.PaymentOrder" Role="PaymentOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="PaymentTypeID" />
+            </Principal>
+            <Dependent Role="PaymentOrder">
+              <PropertyRef Name="PaymentTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1096,6 +1146,14 @@
               <MappingFragment StoreEntitySet="ArchivePaymentRequirements">
                 <ScalarProperty Name="PaymentRequirementId" ColumnName="PaymentRequirementId" />
                 <ScalarProperty Name="ArchivePaymentRequirementsId" ColumnName="ArchivePaymentRequirementsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentType">
+            <EntityTypeMapping TypeName="EEBankModel.PaymentType">
+              <MappingFragment StoreEntitySet="PaymentType">
+                <ScalarProperty Name="PaymentName" ColumnName="PaymentName" />
+                <ScalarProperty Name="PaymentTypeID" ColumnName="PaymentTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

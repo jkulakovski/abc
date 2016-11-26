@@ -50,8 +50,7 @@ namespace EEBank.Controllers
                 return View(paymentRequirements.ToList());
             }
         }
-
-       
+              
 
         // GET: PaymentRequirements/Details/5
         public ActionResult Details(int? id, string action)

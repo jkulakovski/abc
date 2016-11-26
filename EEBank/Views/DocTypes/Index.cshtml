@@ -24,8 +24,15 @@
             {
 
                 <button class="btn1 float-buttons">
-                   
-                    @Html.ActionLink(item.DocName, "Index", "PaymentRequirements", new { id = item.DocTypeId }, null)
+                   @if (item.DocTypeId == 4)
+                   {
+                       @Html.ActionLink(item.DocName, "Index", "PaymentRequirements", new { id = item.DocTypeId }, null);
+                   }
+                   @if (item.DocTypeId == 5)
+                   {
+                       @Html.ActionLink(item.DocName, "Index", "PaymentOrders", new { id = item.DocTypeId }, null);
+                   }
+                    
                  
                 </button>
 

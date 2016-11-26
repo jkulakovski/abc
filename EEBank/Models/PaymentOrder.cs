@@ -40,5 +40,6 @@ namespace EEBank.Models
         public virtual Users Users { get; set; }
         public virtual DocStatus DocStatus { get; set; }
         public virtual FullInfManagers FullInfManagers { get; set; }
+        public virtual PaymentType PaymentType { get; set; }
     }
 }
