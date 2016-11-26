@@ -262,6 +262,9 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\main.css" />
+    <Content Include="Content\waves.min.css" />
+    <Content Include="Content\waves.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -297,6 +300,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\DocTypes\main.css" />
+    <Content Include="Views\DocTypes\waves.min.css" />
+    <Content Include="Views\DocTypes\waves.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -363,6 +369,7 @@
     <Content Include="Views\PaymentRequirements\Details.cshtml" />
     <Content Include="Views\PaymentRequirements\Edit.cshtml" />
     <Content Include="Views\PaymentRequirements\Index.cshtml" />
+    <Content Include="Views\PaymentRequirements\Create_by_manager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

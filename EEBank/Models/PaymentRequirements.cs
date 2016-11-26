@@ -36,6 +36,7 @@ namespace EEBank.Models
         public string BankUNP { get; set; }
         public Nullable<int> StatusId { get; set; }
         public Nullable<int> ManagerId { get; set; }
+        public string Comment { get; set; }
     
         public virtual Banks Banks { get; set; }
         public virtual DocType DocType1 { get; set; }

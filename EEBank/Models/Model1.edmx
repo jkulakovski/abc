@@ -96,6 +96,7 @@
           <Property Name="BankUNP" Type="varchar" MaxLength="100" />
           <Property Name="StatusId" Type="int" />
           <Property Name="ManagerId" Type="int" />
+          <Property Name="Comment" Type="text" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -132,6 +133,7 @@
           <Property Name="ECP" Type="varchar" MaxLength="50" />
           <Property Name="OpenKey" Type="varchar" MaxLength="50" />
           <Property Name="Adress" Type="varchar" MaxLength="250" />
+          <Property Name="Balans" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -142,7 +144,7 @@
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleId" Type="int" />
         </EntityType>
-        <Association Name="FK__ArchivePa__Payme__0E6E26BF">
+        <Association Name="FK__ArchivePa__Payme__14270015">
           <End Role="PaymentRequirements" Type="Self.PaymentRequirements" Multiplicity="0..1" />
           <End Role="ArchivePaymentRequirements" Type="Self.ArchivePaymentRequirements" Multiplicity="*" />
           <ReferentialConstraint>
@@ -154,7 +156,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FreeForma__DocTy__46E78A0C">
+        <Association Name="FK__FreeForma__DocTy__151B244E">
           <End Role="DocType" Type="Self.DocType" Multiplicity="0..1" />
           <End Role="FreeFormatDoc" Type="Self.FreeFormatDoc" Multiplicity="*" />
           <ReferentialConstraint>
@@ -166,7 +168,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FullInfMa__BankI__07C12930">
+        <Association Name="FK__FullInfMa__BankI__160F4887">
           <End Role="Banks" Type="Self.Banks" Multiplicity="0..1" />
           <End Role="FullInfManagers" Type="Self.FullInfManagers" Multiplicity="*" />
           <ReferentialConstraint>
@@ -178,7 +180,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FullInfMa__RoleI__06CD04F7">
+        <Association Name="FK__FullInfMa__RoleI__17036CC0">
           <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
           <End Role="FullInfManagers" Type="Self.FullInfManagers" Multiplicity="*" />
           <ReferentialConstraint>
@@ -190,7 +192,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaymentOr__BankC__3D5E1FD2">
+        <Association Name="FK__PaymentOr__BankC__17F790F9">
           <End Role="Banks" Type="Self.Banks" Multiplicity="0..1" />
           <End Role="PaymentOrder" Type="Self.PaymentOrder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -202,7 +204,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaymentOr__DocTy__3B75D760">
+        <Association Name="FK__PaymentOr__DocTy__18EBB532">
           <End Role="DocType" Type="Self.DocType" Multiplicity="0..1" />
           <End Role="PaymentOrder" Type="Self.PaymentOrder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -214,7 +216,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaymentOr__TypeO__3A81B327">
+        <Association Name="FK__PaymentOr__TypeO__19DFD96B">
           <End Role="TypeOfPaymentOrder" Type="Self.TypeOfPaymentOrder" Multiplicity="0..1" />
           <End Role="PaymentOrder" Type="Self.PaymentOrder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -226,7 +228,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaymentOr__UserI__3C69FB99">
+        <Association Name="FK__PaymentOr__UserI__1AD3FDA4">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="PaymentOrder" Type="Self.PaymentOrder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -250,7 +252,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaymentRe__DocTy__4222D4EF">
+        <Association Name="FK__PaymentRe__DocTy__25518C17">
           <End Role="DocType" Type="Self.DocType" Multiplicity="0..1" />
           <End Role="PaymentRequirements" Type="Self.PaymentRequirements" Multiplicity="*" />
           <ReferentialConstraint>
@@ -262,7 +264,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaymentRe__TypeO__412EB0B6">
+        <Association Name="FK__PaymentRe__TypeO__2645B050">
           <End Role="TypePaymentRequirements" Type="Self.TypePaymentRequirements" Multiplicity="0..1" />
           <End Role="PaymentRequirements" Type="Self.PaymentRequirements" Multiplicity="*" />
           <ReferentialConstraint>
@@ -274,7 +276,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaymentRe__UserI__4316F928">
+        <Association Name="FK__PaymentRe__UserI__236943A5">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="PaymentRequirements" Type="Self.PaymentRequirements" Multiplicity="*" />
           <ReferentialConstraint>
@@ -348,35 +350,35 @@
           <EntitySet Name="TypePaymentRequirements" EntityType="Self.TypePaymentRequirements" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInf" EntityType="Self.UserInf" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__ArchivePa__Payme__0E6E26BF" Association="Self.FK__ArchivePa__Payme__0E6E26BF">
+          <AssociationSet Name="FK__ArchivePa__Payme__14270015" Association="Self.FK__ArchivePa__Payme__14270015">
             <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
             <End Role="ArchivePaymentRequirements" EntitySet="ArchivePaymentRequirements" />
           </AssociationSet>
-          <AssociationSet Name="FK__FreeForma__DocTy__46E78A0C" Association="Self.FK__FreeForma__DocTy__46E78A0C">
+          <AssociationSet Name="FK__FreeForma__DocTy__151B244E" Association="Self.FK__FreeForma__DocTy__151B244E">
             <End Role="DocType" EntitySet="DocType" />
             <End Role="FreeFormatDoc" EntitySet="FreeFormatDoc" />
           </AssociationSet>
-          <AssociationSet Name="FK__FullInfMa__BankI__07C12930" Association="Self.FK__FullInfMa__BankI__07C12930">
+          <AssociationSet Name="FK__FullInfMa__BankI__160F4887" Association="Self.FK__FullInfMa__BankI__160F4887">
             <End Role="Banks" EntitySet="Banks" />
             <End Role="FullInfManagers" EntitySet="FullInfManagers" />
           </AssociationSet>
-          <AssociationSet Name="FK__FullInfMa__RoleI__06CD04F7" Association="Self.FK__FullInfMa__RoleI__06CD04F7">
+          <AssociationSet Name="FK__FullInfMa__RoleI__17036CC0" Association="Self.FK__FullInfMa__RoleI__17036CC0">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="FullInfManagers" EntitySet="FullInfManagers" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaymentOr__BankC__3D5E1FD2" Association="Self.FK__PaymentOr__BankC__3D5E1FD2">
+          <AssociationSet Name="FK__PaymentOr__BankC__17F790F9" Association="Self.FK__PaymentOr__BankC__17F790F9">
             <End Role="Banks" EntitySet="Banks" />
             <End Role="PaymentOrder" EntitySet="PaymentOrder" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaymentOr__DocTy__3B75D760" Association="Self.FK__PaymentOr__DocTy__3B75D760">
+          <AssociationSet Name="FK__PaymentOr__DocTy__18EBB532" Association="Self.FK__PaymentOr__DocTy__18EBB532">
             <End Role="DocType" EntitySet="DocType" />
             <End Role="PaymentOrder" EntitySet="PaymentOrder" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaymentOr__TypeO__3A81B327" Association="Self.FK__PaymentOr__TypeO__3A81B327">
+          <AssociationSet Name="FK__PaymentOr__TypeO__19DFD96B" Association="Self.FK__PaymentOr__TypeO__19DFD96B">
             <End Role="TypeOfPaymentOrder" EntitySet="TypeOfPaymentOrder" />
             <End Role="PaymentOrder" EntitySet="PaymentOrder" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaymentOr__UserI__3C69FB99" Association="Self.FK__PaymentOr__UserI__3C69FB99">
+          <AssociationSet Name="FK__PaymentOr__UserI__1AD3FDA4" Association="Self.FK__PaymentOr__UserI__1AD3FDA4">
             <End Role="Users" EntitySet="Users" />
             <End Role="PaymentOrder" EntitySet="PaymentOrder" />
           </AssociationSet>
@@ -384,15 +386,15 @@
             <End Role="Banks" EntitySet="Banks" />
             <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaymentRe__DocTy__4222D4EF" Association="Self.FK__PaymentRe__DocTy__4222D4EF">
+          <AssociationSet Name="FK__PaymentRe__DocTy__25518C17" Association="Self.FK__PaymentRe__DocTy__25518C17">
             <End Role="DocType" EntitySet="DocType" />
             <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaymentRe__TypeO__412EB0B6" Association="Self.FK__PaymentRe__TypeO__412EB0B6">
+          <AssociationSet Name="FK__PaymentRe__TypeO__2645B050" Association="Self.FK__PaymentRe__TypeO__2645B050">
             <End Role="TypePaymentRequirements" EntitySet="TypePaymentRequirements" />
             <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaymentRe__UserI__4316F928" Association="Self.FK__PaymentRe__UserI__4316F928">
+          <AssociationSet Name="FK__PaymentRe__UserI__236943A5" Association="Self.FK__PaymentRe__UserI__236943A5">
             <End Role="Users" EntitySet="Users" />
             <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
           </AssociationSet>
@@ -500,6 +502,7 @@
           <Property Name="ManagerId" Type="Int32" />
           <NavigationProperty Name="FullInfManagers" Relationship="EEBankModel.FK_PaymentRequirements_FullInfManagers_ManagerID" FromRole="PaymentRequirements" ToRole="FullInfManagers" />
           <NavigationProperty Name="ArchivePaymentRequirements" Relationship="EEBankModel.FK__ArchivePa__Payme__0E6E26BF" FromRole="PaymentRequirements" ToRole="ArchivePaymentRequirements" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -753,6 +756,7 @@
           <NavigationProperty Name="Users1" Relationship="EEBankModel.FK_UserInf_Users_UserId" FromRole="UserInf" ToRole="Users" />
           <Property Name="OpenKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Adress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Balans" Type="Int32" />
         </EntityType>
         <Association Name="FK_UserInf_Users_UserId">
           <End Type="EEBankModel.Users" Role="Users" Multiplicity="0..1" />
@@ -914,6 +918,7 @@
           <EntitySetMapping Name="PaymentRequirements">
             <EntityTypeMapping TypeName="EEBankModel.PaymentRequirements">
               <MappingFragment StoreEntitySet="PaymentRequirements">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="PaymentRequirementsID" ColumnName="PaymentRequirementsID" />
@@ -971,6 +976,7 @@
           <EntitySetMapping Name="UserInf">
             <EntityTypeMapping TypeName="EEBankModel.UserInf">
               <MappingFragment StoreEntitySet="UserInf">
+                <ScalarProperty Name="Balans" ColumnName="Balans" />
                 <ScalarProperty Name="Adress" ColumnName="Adress" />
                 <ScalarProperty Name="OpenKey" ColumnName="OpenKey" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />

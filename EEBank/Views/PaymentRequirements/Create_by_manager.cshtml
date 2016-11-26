@@ -1,12 +1,12 @@
 ﻿@model EEBank.Models.PaymentRequirements
 
 @{
-    ViewBag.Title = "Редактировать";
+    ViewBag.Title = "Платежное требование";
 }
 
-<h2>Редактировать</h2>
+<h2>Платежное требование</h2>
 
-@using (Html.BeginForm("Edit", "PaymentRequirements", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
@@ -14,16 +14,13 @@
         <h4>PaymentRequirements</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.PaymentRequirementsID)
-
-      
-     
+        
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TypePaymentRequirements, "Тип документа", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TypeOfRequirements, "Тип документа", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("TypeOfRequirements", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TypePaymentRequirements, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.TypeOfRequirements, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -36,7 +33,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SummOfremittance,"Сумма перевода", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.SummOfremittance,"Сумма", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.SummOfremittance, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SummOfremittance, "", new { @class = "text-danger" })
@@ -44,7 +41,23 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.BankID, "Банк", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UserID, "ФИО отправителя", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("UserID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AccountNumber,"Номер аккаунта", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("AccountNumber", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AccountNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BankID, "Адрес банка", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("BankID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.BankID, "", new { @class = "text-danger" })
@@ -60,7 +73,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.BankReceiver, "Код банка",  htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.BankReceiver,"Код банка", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("BankReceiver", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.BankReceiver, "", new { @class = "text-danger" })
@@ -68,10 +81,18 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PaymentPurpose,"Цель отправления", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PaymentPurpose,"Цель", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PaymentPurpose, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PaymentPurpose, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DocNumber,"Номер документа", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DocNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DocNumber, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -84,7 +105,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.BankUNP,"УНП получателя", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.BankUNP,"УНП полкчателя", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.BankUNP, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.BankUNP, "", new { @class = "text-danger" })
@@ -93,14 +114,8 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.StatusId, "Подписать документ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <input type="file" name="upload" /><br>
-
-        </div>
-
-        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>

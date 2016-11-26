@@ -5,6 +5,8 @@
     ViewBag.Title = "Платежное поручение";
 }
 
+@{EEBankEntitie db = new EEBankEntitie();}
+@{var user = db.Users.Where(m => m.Email == User.Identity.Name).FirstOrDefault();}
 <h2>Платежное поручение</h2>
 
 <div>
@@ -130,13 +132,29 @@
         
 
     </dl>
+    @if (user.RoleId == db.Roles.Where(m => m.RoleName == "Менеджер").FirstOrDefault().RoleId)
+    {
+    <div class="form-group">
+        @Html.LabelFor(model => model.Comment, "Причина отказа", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+        </div>
+    </div>
+        
+    }
+
 </div>
-@using (Html.BeginForm("Details", "PaymentRequirements", FormMethod.Post))
+@if (user.RoleId == db.Roles.Where(m => m.RoleName == "Менеджер").FirstOrDefault().RoleId)
+    {
+ using (Html.BeginForm("Details", "PaymentRequirements", FormMethod.Post))
 {
 
     <div class="form-actions no-color">
         <input type="submit" name="action" value="Reject" class="btn btn-default" /> |
         <input type="submit" name="action" value="Accept" class="btn btn-default" /> |
-        @Html.ActionLink("Back to List", "Index")
+        
     </div>
 }
+}
+@Html.ActionLink("Back to List", "Index")

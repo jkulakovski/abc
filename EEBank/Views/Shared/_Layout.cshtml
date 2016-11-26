@@ -42,6 +42,7 @@
 
                     @if ( User.Identity.IsAuthenticated && user.RoleId == 5 )
                     {
+                        <li>@Html.ActionLink("Баланс", "Details","UserInfs")</li>
                         <li>@Html.ActionLink("Мои документы", "Index", "DocTypes")</li>
                     }
                     @if ( User.Identity.IsAuthenticated && user.RoleId == 7)

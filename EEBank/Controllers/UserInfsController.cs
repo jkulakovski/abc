@@ -49,7 +49,7 @@ namespace EEBank.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserInfID,FullName,Email,Password,Phone,AccountNumber,ECP,UserID,Adress")] UserInf userInf)
+        public ActionResult Create([Bind(Include = "UserInfID,FullName,Email,Password,Phone,AccountNumber,ECP,UserID,Adress,Balans")] UserInf userInf)
         {
 
             var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
@@ -74,7 +74,10 @@ namespace EEBank.Controllers
             open_key += ' ';
             open_key += keys[1].ToString();
 
+            
+
             var new_userinf = new UserInf { FullName = userInf.FullName, Email = user.Email, Password = user.Password, Phone = userInf.Phone, AccountNumber = user.UserId.ToString(), ECP = sign, OpenKey = open_key, UserID = user.UserId, Adress = userInf.Adress };
+            new_userinf.Balans = 0;
             db.SaveChanges();
             if (ModelState.IsValid)
             {               

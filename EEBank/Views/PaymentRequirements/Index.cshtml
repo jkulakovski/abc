@@ -3,12 +3,26 @@
 @{
     ViewBag.Title = "Платежные поручения";
 }
+@{EEBankEntitie db = new EEBankEntitie();
+  var role = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault().RoleId;
+  }
+
 
 <h2>Платежные поручения</h2>
 
-<p>
-    @Html.ActionLink("Создать новый", "Create")
-</p>
+@if (role == 5)
+{
+    <p>
+        @Html.ActionLink("Создать новый", "Create")
+    </p>
+}
+@if (role == 7)
+{
+    <p>
+        @Html.ActionLink("Создать новый", "Create_by_manager")
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -42,6 +56,9 @@
         
         <th>
             Статус
+        </th>
+        <th>
+            Комментарий
         </th>
         <th></th>
     </tr>
@@ -80,6 +97,12 @@
             @Html.DisplayFor(modelItem => item.DocStatus.StatusName)
         </td>
         <td>
+            @if (item.StatusId == 4)
+            {
+                @Html.DisplayFor(modelItem => item.Comment)
+            }
+        </td>
+        <td>
            
             @Html.ActionLink("Просмотреть", "Details", new { id=item.PaymentRequirementsID }) 
         </td>
@@ -90,6 +113,7 @@
 
             }
         </td>
+        
     </tr>
 }
 
