@@ -266,6 +266,13 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\bootstrap.min1.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\style1.css" />
+    <Content Include="Content\font\fontawesome-webfont.svg" />
+    <Content Include="Content\js\bootstrap.min1.js" />
+    <Content Include="Content\js\jquery-1.10.2.min1.js" />
+    <Content Include="Content\js\script1.js" />
     <Content Include="Content\main.css" />
     <Content Include="Content\waves.min.css" />
     <Content Include="Content\waves.min.js" />
@@ -292,6 +299,10 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Content\font\fontawesome-webfont-.eot" />
+    <Content Include="Content\font\fontawesome-webfont-v=3.2.1.eot" />
+    <Content Include="Content\font\fontawesome-webfont-v=3.2.1.ttf" />
+    <Content Include="Content\font\fontawesome-webfont-v=3.2.1.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -319,7 +330,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />

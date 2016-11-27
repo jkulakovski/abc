@@ -1,7 +1,66 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Home Page";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/style1.css">
+
+        <div class=" slide story" id="slide-6" data-slide="6">
+            <div class="container">
+                <div class="row title-row">
+                    <div class="col-12 font-lights">Leave us a <span class="font-semibold">message</span></div>
+                </div><!-- /row -->
+                <div class="row line-row">
+                    <div class="hr">&nbsp;</div>
+                </div><!-- /row -->
+                <div class="row subtitle-row">
+                    <div class="col-sm-1 hidden-sm">&nbsp;</div>
+                    <div class="col-12 col-sm-10 font-lights">You can find us literally anywhere, just push a button and we’re there</div>
+                    <div class="col-sm-1 hidden-sm">&nbsp;</div>
+                </div><!-- /row -->
+                <div id="contact-row-4" class="row">
+                    <div class="col-sm-1 hidden-sm">&nbsp;</div>
+                    <div class="col-12 col-sm-2 with-hover-text">
+                        <p><a target="_blank" href="#"><i class="icon icon-phone"></i></a></p>
+                        <span class="hover-text font-lights ">+44 4839-4343</span></a>
+                    </div>
+                    <div class="col-12 col-sm-2 with-hover-text">
+                        <p><a target="_blank" href="#"><i class="icon icon-envelope"></i></a></p>
+                        <span class="hover-text font-lights ">munter@blacktie.co</span></a>
+                    </div>
+                    <div class="col-12 col-sm-2 with-hover-text">
+                        <p><a target="_blank" href="#"><i class="icon icon-home"></i></a></p>
+                        <span class="hover-text font-lights ">London, England<br>zip code 98443</span></a>
+                    </div>  
+                    <div class="col-12 col-sm-2 with-hover-text">
+                        <p><a target="_blank" href="#"><i class="icon icon-facebook"></i></a></p>
+                        <span class="hover-text font-lights ">facebook/blacktie_co</span></a>
+                    </div>
+                    <div class="col-12 col-sm-2 with-hover-text">
+                        <p><a target="_blank" href="#"><i class="icon icon-twitter"></i></a></p>
+                        <span class="hover-text font-lights "></span></a>
+                    </div>
+                    <div class="col-sm-1 hidden-sm">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    <script src="~/Content/js/jquery-1.10.2.min1.js"></script>
+    <script src="~/Content/js/bootstrap.min1.js"></script>
+    <script src="~/Content/js/script1.js"></script>
+    <script>
+	$(document).ready(function(e) {
+		var lis = $('.nav > li');
+		menu_focus( lis[0], 1 );
+
+		$(".fancybox").fancybox({
+			padding: 10,
+			helpers: {
+				overlay: {
+					locked: false
+				}
+			}
+		});
+
+	});
+    </script>

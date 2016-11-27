@@ -71,9 +71,6 @@ var role = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault().R
             @Html.DisplayFor(modelItem => item.ExchangeRates)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UserCountry)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.BankReceiver)
         </td>
         <td>
