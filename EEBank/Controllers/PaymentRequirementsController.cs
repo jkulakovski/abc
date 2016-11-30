@@ -101,8 +101,6 @@ namespace EEBank.Controllers
 
         }
      
-
-
         // GET: PaymentRequirements/Create
         public ActionResult Create()
         {

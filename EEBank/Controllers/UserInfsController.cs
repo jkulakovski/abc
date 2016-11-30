@@ -23,18 +23,15 @@ namespace EEBank.Controllers
         }
 
         // GET: UserInfs/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserInf userInf = db.UserInf.Find(id);
-            if (userInf == null)
+            
+            UserInf user = db.UserInf.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(userInf);
+            return View(user);
         }
 
         // GET: UserInfs/Create

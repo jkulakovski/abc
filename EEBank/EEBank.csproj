@@ -274,6 +274,7 @@
     <Content Include="Content\js\jquery-1.10.2.min1.js" />
     <Content Include="Content\js\script1.js" />
     <Content Include="Content\main.css" />
+    <Content Include="Content\select_button\css\select_style.css" />
     <Content Include="Content\waves.min.css" />
     <Content Include="Content\waves.min.js" />
     <Content Include="favicon.ico" />

@@ -1,17 +1,18 @@
 ﻿@model EEBank.Models.PaymentOrder
-
+@using EEBank.Models
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Платежное поручение";
 }
 
-<h2>Details</h2>
+@{EEBankEntitie db = new EEBankEntitie();}
+@{var user = db.Users.Where(m => m.Email == User.Identity.Name).FirstOrDefault();}
+<h2>Патежные поручение</h2>
 
 <div>
-    <h4>PaymentOrder</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Date)
+            Дата создания
         </dt>
 
         <dd>
@@ -19,79 +20,22 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ExchangeRates)
+            Курс валют
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.ExchangeRates)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.UserCountry)
+            Сумма платежа
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.UserCountry)
+            @Html.DisplayFor(model => model.Summ)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.BankReceiver)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BankReceiver)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Benficiar)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Benficiar)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BankAccount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BankAccount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PaymentPurpose)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PaymentPurpose)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserUNP)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserUNP)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ReceiverUNP)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ReceiverUNP)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PaymentCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PaymentCode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Banks.Adress)
+            Банк получатель
         </dt>
 
         <dd>
@@ -99,7 +43,63 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DocType1.DocName)
+            Бенефициар
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Banks.Adress)
+        </dd>
+
+        <dt>
+            Номер счета
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankAccount)
+        </dd>
+
+        <dt>
+            Назначение платежа
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentPurpose)
+        </dd>
+
+        <dt>
+            УНП Отправителя
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserUNP)
+        </dd>
+
+        <dt>
+            УНП получателя
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReceiverUNP)
+        </dd>
+
+        <dt>
+            Код платежа
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentCode)
+        </dd>
+
+        <dt>
+            Код банка
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Banks.BanckCode)
+        </dd>
+
+        <dt>
+            тип документа
         </dt>
 
         <dd>
@@ -107,7 +107,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TypeOfPaymentOrder.Name)
+            Тип поручения
         </dt>
 
         <dd>
@@ -115,16 +115,44 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Users.Email)
+            ФИО отправителя
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Users.Email)
+            @Html.DisplayFor(model => model.Users.UserInf1.Where(p => p.UserID == model.UserID).FirstOrDefault().FullName)
+        </dd>
+        <dt>
+            Менеджер банка
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FullInfManagers.FullName)
         </dd>
 
     </dl>
+    @if (user.RoleId == db.Roles.Where(m => m.RoleName == "Менеджер").FirstOrDefault().RoleId)
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comment, "Причина отказа", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    }
 </div>
+@if (user.RoleId == db.Roles.Where(m => m.RoleName == "Менеджер").FirstOrDefault().RoleId)
+{
+    using (Html.BeginForm("Details", "PaymentOrders", FormMethod.Post))
+    {
+
+        <div class="form-actions no-color">
+            <input type="submit" name="action" value="отклонить" class="btn btn-default" /> |
+            <input type="submit" name="action" value="принять" class="btn btn-default" /> |
+
+        </div>
+    }
+}
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PaymentOrderID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Вернуться к списку", "Index")
 </p>

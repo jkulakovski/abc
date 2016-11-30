@@ -54,6 +54,42 @@ namespace EEBank.Controllers
             return View(paymentOrder);
         }
 
+        [HttpPost, ActionName("Details")]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "отклонить")]
+        public ActionResult Reject([Bind(Include = "Comment")] PaymentOrder paymentOrder)
+        {
+
+            var balans = db.UserInf.Where(p => p.UserID == paymentOrder.UserID).FirstOrDefault().Balans;
+            if (paymentOrder.Summ > balans)
+                paymentOrder.StatusID = db.DocStatus.Where(p => p.StatusName == "Откленен").FirstOrDefault().StatusId;
+            else
+            {
+                paymentOrder.StatusID = db.DocStatus.Where(p => p.StatusName == "Картотека №2").FirstOrDefault().StatusId;
+                paymentOrder.Comment = "Недостаточно средств на счету";
+            }
+                
+            db.Entry(paymentOrder).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+
+        [HttpPost, ActionName("Details")]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "принять")]
+        public ActionResult Accept(int id)
+        {
+            PaymentOrder paymentOrder = db.PaymentOrder.Find(id);
+            paymentOrder.StatusID = 3;
+            db.Entry(paymentOrder).State = EntityState.Modified;
+            db.SaveChanges();
+            ArchivePaymentRequirements achive = new ArchivePaymentRequirements();
+            achive.PaymentRequirementId = id;
+            db.ArchivePaymentRequirements.Add(achive);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+
         // GET: PaymentOrders/Create
         public ActionResult Create()
         {
@@ -71,7 +107,7 @@ namespace EEBank.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PaymentOrderID,Date,TypeOfPaymatOrder,DocType,ExchangeRates,UserID,UserCountry,BankReceiver,BankCodeID,Benficiar,BankAccount,PaymentPurpose,UserUNP,ReceiverUNP,PaymentCode, PaymentTypeID, ManagerID,StatusID,Comment")] PaymentOrder paymentOrder, HttpPostedFileBase upload)
+        public ActionResult Create([Bind(Include = "PaymentOrderID,Date,TypeOfPaymatOrder,DocType,ExchangeRates,UserID,Summ,BankReceiver,BankCodeID,Benficiar,BankAccount,PaymentPurpose,UserUNP,ReceiverUNP,PaymentCode, PaymentTypeID, ManagerID,StatusID,Comment")] PaymentOrder paymentOrder, HttpPostedFileBase upload)
         {
             var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
             string s = "";

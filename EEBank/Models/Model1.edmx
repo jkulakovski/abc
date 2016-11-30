@@ -65,7 +65,7 @@
           <Property Name="DocType" Type="int" />
           <Property Name="ExchangeRates" Type="int" />
           <Property Name="UserID" Type="int" />
-          <Property Name="UserCountry" Type="varchar" MaxLength="100" />
+          <Property Name="Summ" Type="int" />
           <Property Name="BankReceiver" Type="varchar" MaxLength="100" />
           <Property Name="BankCodeID" Type="int" />
           <Property Name="Benficiar" Type="varchar" MaxLength="100" />
@@ -203,7 +203,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaymentOr__BankC__17F790F9">
+        <Association Name="FK__PaymentOr__BankC__41EDCAC5">
           <End Role="Banks" Type="Self.Banks" Multiplicity="0..1" />
           <End Role="PaymentOrder" Type="Self.PaymentOrder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -215,7 +215,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaymentOr__DocTy__18EBB532">
+        <Association Name="FK__PaymentOr__DocTy__42E1EEFE">
           <End Role="DocType" Type="Self.DocType" Multiplicity="0..1" />
           <End Role="PaymentOrder" Type="Self.PaymentOrder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -227,7 +227,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaymentOr__TypeO__19DFD96B">
+        <Association Name="FK__PaymentOr__TypeO__43D61337">
           <End Role="TypeOfPaymentOrder" Type="Self.TypeOfPaymentOrder" Multiplicity="0..1" />
           <End Role="PaymentOrder" Type="Self.PaymentOrder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -239,7 +239,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PaymentOr__UserI__1AD3FDA4">
+        <Association Name="FK__PaymentOr__UserI__44CA3770">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="PaymentOrder" Type="Self.PaymentOrder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -414,19 +414,19 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="FullInfManagers" EntitySet="FullInfManagers" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaymentOr__BankC__17F790F9" Association="Self.FK__PaymentOr__BankC__17F790F9">
+          <AssociationSet Name="FK__PaymentOr__BankC__41EDCAC5" Association="Self.FK__PaymentOr__BankC__41EDCAC5">
             <End Role="Banks" EntitySet="Banks" />
             <End Role="PaymentOrder" EntitySet="PaymentOrder" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaymentOr__DocTy__18EBB532" Association="Self.FK__PaymentOr__DocTy__18EBB532">
+          <AssociationSet Name="FK__PaymentOr__DocTy__42E1EEFE" Association="Self.FK__PaymentOr__DocTy__42E1EEFE">
             <End Role="DocType" EntitySet="DocType" />
             <End Role="PaymentOrder" EntitySet="PaymentOrder" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaymentOr__TypeO__19DFD96B" Association="Self.FK__PaymentOr__TypeO__19DFD96B">
+          <AssociationSet Name="FK__PaymentOr__TypeO__43D61337" Association="Self.FK__PaymentOr__TypeO__43D61337">
             <End Role="TypeOfPaymentOrder" EntitySet="TypeOfPaymentOrder" />
             <End Role="PaymentOrder" EntitySet="PaymentOrder" />
           </AssociationSet>
-          <AssociationSet Name="FK__PaymentOr__UserI__1AD3FDA4" Association="Self.FK__PaymentOr__UserI__1AD3FDA4">
+          <AssociationSet Name="FK__PaymentOr__UserI__44CA3770" Association="Self.FK__PaymentOr__UserI__44CA3770">
             <End Role="Users" EntitySet="Users" />
             <End Role="PaymentOrder" EntitySet="PaymentOrder" />
           </AssociationSet>
@@ -520,7 +520,6 @@
           <Property Name="DocType" Type="Int32" />
           <Property Name="ExchangeRates" Type="Int32" />
           <Property Name="UserID" Type="Int32" />
-          <Property Name="UserCountry" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="BankReceiver" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="BankCodeID" Type="Int32" />
           <Property Name="Benficiar" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -540,6 +539,7 @@
           <NavigationProperty Name="DocStatus" Relationship="EEBankModel.FK_PaymentOrder_DocStatus_StatusId" FromRole="PaymentOrder" ToRole="DocStatus" />
           <NavigationProperty Name="FullInfManagers" Relationship="EEBankModel.FK_PaymentOrder_FullInfManagers_ManagerID" FromRole="PaymentOrder" ToRole="FullInfManagers" />
           <NavigationProperty Name="PaymentType" Relationship="EEBankModel.FK_PaymentOrder_PaymentType_PaymentTypeID" FromRole="PaymentOrder" ToRole="PaymentType" />
+          <Property Name="Summ" Type="Int32" />
         </EntityType>
         <EntityType Name="PaymentRequirements">
           <Key>
@@ -1023,6 +1023,7 @@
           <EntitySetMapping Name="PaymentOrder">
             <EntityTypeMapping TypeName="EEBankModel.PaymentOrder">
               <MappingFragment StoreEntitySet="PaymentOrder">
+                <ScalarProperty Name="Summ" ColumnName="Summ" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="StatusID" ColumnName="StatusID" />
                 <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
@@ -1033,7 +1034,6 @@
                 <ScalarProperty Name="DocType" ColumnName="DocType" />
                 <ScalarProperty Name="ExchangeRates" ColumnName="ExchangeRates" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="UserCountry" ColumnName="UserCountry" />
                 <ScalarProperty Name="BankReceiver" ColumnName="BankReceiver" />
                 <ScalarProperty Name="BankCodeID" ColumnName="BankCodeID" />
                 <ScalarProperty Name="Benficiar" ColumnName="Benficiar" />

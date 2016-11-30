@@ -20,7 +20,6 @@ namespace EEBank.Models
         public Nullable<int> DocType { get; set; }
         public Nullable<int> ExchangeRates { get; set; }
         public Nullable<int> UserID { get; set; }
-        public string UserCountry { get; set; }
         public string BankReceiver { get; set; }
         public Nullable<int> BankCodeID { get; set; }
         public string Benficiar { get; set; }
@@ -33,6 +32,7 @@ namespace EEBank.Models
         public Nullable<int> ManagerID { get; set; }
         public Nullable<int> StatusID { get; set; }
         public string Comment { get; set; }
+        public Nullable<int> Summ { get; set; }
     
         public virtual Banks Banks { get; set; }
         public virtual DocType DocType1 { get; set; }

@@ -26,6 +26,9 @@ var role = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault().R
             Курс валют
         </th>
         <th>
+            Сумма платежа
+        </th>
+        <th>
             Банк получатель
         </th>
         <th>
@@ -71,13 +74,16 @@ var role = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault().R
             @Html.DisplayFor(modelItem => item.ExchangeRates)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.BankReceiver)
+            @Html.DisplayFor(modelItem => item.Summ)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Benficiar)
+            @Html.DisplayFor(modelItem => item.Banks.Adress)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.BankAccount)
+            @Html.DisplayFor(modelItem => item.Banks.Adress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PaymentPurpose)
@@ -95,7 +101,7 @@ var role = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault().R
             @Html.DisplayFor(modelItem => item.TypeOfPaymentOrder.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.StatusID)
+            @Html.DisplayFor(modelItem => item.DocStatus.StatusName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Comment)
