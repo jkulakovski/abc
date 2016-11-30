@@ -75,10 +75,7 @@ namespace EEBank.Controllers
         {
             
             var balans = db.UserInf.Where(p => p.UserID == paymentRequirements.UserID).FirstOrDefault().Balans;
-            if (paymentRequirements.SummOfremittance > balans)
-                paymentRequirements.StatusId = db.DocStatus.Where(p => p.StatusName == "Откленен").FirstOrDefault().StatusId;
-            else
-                paymentRequirements.StatusId = db.DocStatus.Where(p => p.StatusName == "Картотека №2").FirstOrDefault().StatusId;
+            paymentRequirements.StatusId = db.DocStatus.Where(p => p.StatusName == "Откленен").FirstOrDefault().StatusId;
             db.Entry(paymentRequirements).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -217,7 +214,7 @@ namespace EEBank.Controllers
 
             return View(paymentRequirements);
         }
-
+        
         public ActionResult Create_by_manager()
         {
             var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
@@ -231,7 +228,7 @@ namespace EEBank.Controllers
             ViewBag.AccountNumber = new SelectList(db.Users, "UserID", "UserID");
             return View();
         }
-
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create_by_manager([Bind(Include = "PaymentRequirementsID,Date,TypeOfRequirements,DocType,СurrencyCode,SummOfremittance,UserID,AccountNumber,BankID,Benficiar,BankReceiver,PaymentPurpose,DocNumber,UserUNP,BankUNP,StatusId,ManagerId")] PaymentRequirements paymentRequirements)

@@ -38,6 +38,7 @@
         <AssociationConnector Association="EEBankModel.FK_PaymentOrder_FullInfManagers_ManagerID" />
         <EntityTypeShape EntityType="EEBankModel.PaymentType" Width="1.5" PointX="7.375" PointY="0.875" />
         <AssociationConnector Association="EEBankModel.FK_PaymentOrder_PaymentType_PaymentTypeID" />
+        <AssociationConnector Association="EEBankModel.FK_FreeFormatDoc_FullInfManagers_ManagerID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

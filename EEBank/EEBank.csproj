@@ -275,6 +275,7 @@
     <Content Include="Content\js\script1.js" />
     <Content Include="Content\main.css" />
     <Content Include="Content\select_button\css\select_style.css" />
+    <Content Include="Content\tablestyle.css" />
     <Content Include="Content\waves.min.css" />
     <Content Include="Content\waves.min.js" />
     <Content Include="favicon.ico" />
@@ -390,6 +391,7 @@
     <Content Include="Views\PaymentOrders\Details.cshtml" />
     <Content Include="Views\PaymentOrders\Edit.cshtml" />
     <Content Include="Views\PaymentOrders\Index.cshtml" />
+    <Content Include="Views\PaymentOrders\Create_by_manager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

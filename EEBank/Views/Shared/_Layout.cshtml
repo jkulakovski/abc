@@ -1,4 +1,6 @@
 ﻿@using EEBank.Models
+@{ EEBankEntitie db = new EEBankEntitie();}
+@{var user = db.Users.Where(m => m.Email == User.Identity.Name).FirstOrDefault(); }
 
 
 <!DOCTYPE html>
@@ -25,30 +27,19 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (User.Identity.Name == "admin@gmail.com")
+                    @if (user.RoleId == 6)
                     {
                         <li>@Html.ActionLink("Пользователи", "Index", "UserInfs")</li>
+                        <li>@Html.ActionLink("Менеджеры", "Index", "FullInfManagers")</li>
                     }
                     
                 </ul>
                 
                 <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Банки", "Index", "Banks")</li>
 
                 </ul>
                 <ul class="nav navbar-nav">
-                    @{ EEBankEntitie db = new EEBankEntitie();}
-                    @{var user =  db.Users.Where(m => m.Email == User.Identity.Name).FirstOrDefault(); }
-
-                    @if ( User.Identity.IsAuthenticated && user.RoleId == 5 )
-                    {
-                        <li>@Html.ActionLink("Баланс", "Details","UserInfs")</li>
-                        <li>@Html.ActionLink("Мои документы", "Index", "DocTypes")</li>
-                    }
-                    @if ( User.Identity.IsAuthenticated && user.RoleId == 7)
-                    {
-                        <li>@Html.ActionLink("Входящие документы", "Index", "DocTypes")</li>
-                    }
+                    
 
 
 
@@ -58,13 +49,7 @@
 </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
-        </footer>
-    </div>
+    
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

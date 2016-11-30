@@ -42,6 +42,7 @@
           <Property Name="FreeFormatDocID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DocTypeID" Type="int" />
           <Property Name="Document" Type="text" />
+          <Property Name="ManagerID" Type="int" />
         </EntityType>
         <EntityType Name="FullInfManagers">
           <Key>
@@ -299,6 +300,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FreeFormatDoc_FullInfManagers_ManagerID">
+          <End Role="FullInfManagers" Type="Self.FullInfManagers" Multiplicity="0..1" />
+          <End Role="FreeFormatDoc" Type="Self.FreeFormatDoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FullInfManagers">
+              <PropertyRef Name="ManagerID" />
+            </Principal>
+            <Dependent Role="FreeFormatDoc">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PaymentOrder_DocStatus_StatusId">
           <End Role="DocStatus" Type="Self.DocStatus" Multiplicity="0..1" />
           <End Role="PaymentOrder" Type="Self.PaymentOrder" Multiplicity="*" />
@@ -446,6 +459,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
           </AssociationSet>
+          <AssociationSet Name="FK_FreeFormatDoc_FullInfManagers_ManagerID" Association="Self.FK_FreeFormatDoc_FullInfManagers_ManagerID">
+            <End Role="FullInfManagers" EntitySet="FullInfManagers" />
+            <End Role="FreeFormatDoc" EntitySet="FreeFormatDoc" />
+          </AssociationSet>
           <AssociationSet Name="FK_PaymentOrder_DocStatus_StatusId" Association="Self.FK_PaymentOrder_DocStatus_StatusId">
             <End Role="DocStatus" EntitySet="DocStatus" />
             <End Role="PaymentOrder" EntitySet="PaymentOrder" />
@@ -509,6 +526,8 @@
           <Property Name="DocTypeID" Type="Int32" />
           <Property Name="Document" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DocType" Relationship="Self.FK__FreeForma__DocTy__46E78A0C" FromRole="FreeFormatDoc" ToRole="DocType" />
+          <Property Name="ManagerID" Type="Int32" />
+          <NavigationProperty Name="FullInfManagers" Relationship="EEBankModel.FK_FreeFormatDoc_FullInfManagers_ManagerID" FromRole="FreeFormatDoc" ToRole="FullInfManagers" />
         </EntityType>
         <EntityType Name="PaymentOrder">
           <Key>
@@ -820,6 +839,10 @@
             <End Role="PaymentType" EntitySet="PaymentType" />
             <End Role="PaymentOrder" EntitySet="PaymentOrder" />
           </AssociationSet>
+          <AssociationSet Name="FK_FreeFormatDoc_FullInfManagers_ManagerID" Association="EEBankModel.FK_FreeFormatDoc_FullInfManagers_ManagerID">
+            <End Role="FullInfManagers" EntitySet="FullInfManagers" />
+            <End Role="FreeFormatDoc" EntitySet="FreeFormatDoc" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserInf">
           <Key>
@@ -865,6 +888,7 @@
           <NavigationProperty Name="Roles" Relationship="EEBankModel.FK__FullInfMa__RoleI__06CD04F7" FromRole="FullInfManagers" ToRole="Roles" />
           <NavigationProperty Name="PaymentRequirements" Relationship="EEBankModel.FK_PaymentRequirements_FullInfManagers_ManagerID" FromRole="FullInfManagers" ToRole="PaymentRequirements" />
           <NavigationProperty Name="PaymentOrder" Relationship="EEBankModel.FK_PaymentOrder_FullInfManagers_ManagerID" FromRole="FullInfManagers" ToRole="PaymentOrder" />
+          <NavigationProperty Name="FreeFormatDoc" Relationship="EEBankModel.FK_FreeFormatDoc_FullInfManagers_ManagerID" FromRole="FullInfManagers" ToRole="FreeFormatDoc" />
         </EntityType>
         <Association Name="FK__FullInfMa__BankI__07C12930">
           <End Type="EEBankModel.Banks" Role="Banks" Multiplicity="0..1" />
@@ -987,6 +1011,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FreeFormatDoc_FullInfManagers_ManagerID">
+          <End Type="EEBankModel.FullInfManagers" Role="FullInfManagers" Multiplicity="0..1" />
+          <End Type="EEBankModel.FreeFormatDoc" Role="FreeFormatDoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FullInfManagers">
+              <PropertyRef Name="ManagerID" />
+            </Principal>
+            <Dependent Role="FreeFormatDoc">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1014,6 +1050,7 @@
           <EntitySetMapping Name="FreeFormatDoc">
             <EntityTypeMapping TypeName="EEBankModel.FreeFormatDoc">
               <MappingFragment StoreEntitySet="FreeFormatDoc">
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
                 <ScalarProperty Name="FreeFormatDocID" ColumnName="FreeFormatDocID" />
                 <ScalarProperty Name="DocTypeID" ColumnName="DocTypeID" />
                 <ScalarProperty Name="Document" ColumnName="Document" />

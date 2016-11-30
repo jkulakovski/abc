@@ -207,6 +207,56 @@ namespace EEBank.Controllers
             return View(paymentOrder);
         }
 
+        public ActionResult Create_by_manager()
+        {
+            var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
+            var manager = db.FullInfManagers.Where(p => p.Email == user.Email).FirstOrDefault();
+            var bank = db.Banks.Where(t => t.BankID == manager.BankID);
+            ViewBag.BankReceiver = new SelectList(bank, "BankID", "Adress");
+            ViewBag.BankCodeID = new SelectList(bank, "BankID", "BanckCode");
+            ViewBag.DocType = new SelectList(db.DocType, "DocTypeId", "DocName");
+            ViewBag.TypeOfPaymatOrder = new SelectList(db.TypeOfPaymentOrder, "TYpeId", "Name");
+            ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress");
+            ViewBag.PaymentTypeID = new SelectList(db.PaymentType, "PaymentTypeID", "PaymentName");
+            ViewBag.UserID = new SelectList(db.UserInf, "UserID", "FullName");
+            ViewBag.BankAccount = new SelectList(db.Users, "UserID", "UserID");
+            return View();
+        }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create_by_manager([Bind(Include = "PaymentOrderID,Date,TypeOfPaymatOrder,DocType,ExchangeRates,UserID,Summ,BankReceiver,BankCodeID,Benficiar,BankAccount,PaymentPurpose,UserUNP,ReceiverUNP,PaymentCode, PaymentTypeID, ManagerID,StatusID,Comment")] PaymentOrder paymentOrder)
+        {
+            var user = db.Users.Where(p => p.UserId == paymentOrder.UserID);
+            var manager = db.FullInfManagers.Where(p => p.Email == user.FirstOrDefault().Email).FirstOrDefault();
+
+
+            if (ModelState.IsValid)
+            {
+                paymentOrder.ManagerID = manager.ManagerID;
+                paymentOrder.DocType = 5;
+                paymentOrder.Date = System.DateTime.Now;
+                paymentOrder.StatusID = 3;
+                db.PaymentOrder.Add(paymentOrder);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+
+            }
+
+            var bank = db.Banks.Where(t => t.BankID == manager.BankID);
+            var account = db.Users.Where(p =>p.Email == User.Identity.Name);
+            ViewBag.BankReceiver = new SelectList(bank, "BankID", "Adress", paymentOrder.BankReceiver);
+            ViewBag.BankCodeID = new SelectList(bank, "BankID", "BanckCode", paymentOrder.BankCodeID);
+            ViewBag.DocType = new SelectList(db.DocType, "DocTypeId", "DocName",paymentOrder.DocType);
+            ViewBag.TypeOfPaymatOrder = new SelectList(db.TypeOfPaymentOrder, "TYpeId", "Name", paymentOrder.TypeOfPaymatOrder);
+            ViewBag.Benficiar = new SelectList(bank, "BankID", "Adress",paymentOrder.Benficiar);
+            ViewBag.PaymentTypeID = new SelectList(db.PaymentType, "PaymentTypeID", "PaymentName",paymentOrder.PaymentOrderID);
+            ViewBag.UserID = new SelectList(db.UserInf, "UserID", "FullName",paymentOrder.UserID);
+            ViewBag.BankAccount = new SelectList( user, "UserID", "UserID", paymentOrder.BankAccount);
+            return View(paymentOrder);
+        }
+
         // GET: PaymentOrders/Edit/5
         public ActionResult Edit(int? id)
         {

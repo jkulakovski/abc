@@ -14,6 +14,13 @@ var role = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault().R
         @Html.ActionLink("Создать новый", "Create")
     </p>
 }
+
+@if (role == 7)
+{
+    <p>
+        @Html.ActionLink("Создать новый", "Create_by_manager")
+    </p>
+}
 <table class="table">
     <tr>
         <th>

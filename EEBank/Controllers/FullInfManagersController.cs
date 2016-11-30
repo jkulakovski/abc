@@ -23,13 +23,9 @@ namespace EEBank.Controllers
         }
 
         // GET: FullInfManagers/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            FullInfManagers fullInfManagers = db.FullInfManagers.Find(id);
+            FullInfManagers fullInfManagers = db.FullInfManagers.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
             if (fullInfManagers == null)
             {
                 return HttpNotFound();

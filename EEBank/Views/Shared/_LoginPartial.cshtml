@@ -18,15 +18,19 @@ var user = db.Users.Where(m => m.Email == User.Identity.Name).FirstOrDefault(); 
                             <div id="dd" class="wrapper-dropdown" tabindex="1">
                                 @User.Identity.Name
                                 <ul class="dropdown">
-                                    <li>
-                                        @Html.ActionLink("Профиль", "Details", "UserInfs")
-                                    </li>   
+                                    
                                 @if (User.Identity.IsAuthenticated && user.RoleId == 5)
                                 {
+                                    <li>
+                                        @Html.ActionLink("Профиль", "Details", "UserInfs")
+                                    </li>
                                     <li>@Html.ActionLink("Мои документы", "Index", "DocTypes")</li>
                                 }
                                 @if (User.Identity.IsAuthenticated && user.RoleId == 7)
                                 {
+                                    <li>
+                                        @Html.ActionLink("Профиль", "Details", "FullInfManagers")
+                                    </li>
                                     <li>@Html.ActionLink("Входящие документы", "Index", "DocTypes")</li>
                                 }
                                 
