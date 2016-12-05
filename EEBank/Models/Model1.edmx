@@ -43,6 +43,10 @@
           <Property Name="DocTypeID" Type="int" />
           <Property Name="Document" Type="text" />
           <Property Name="ManagerID" Type="int" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="StatusID" Type="int" />
+          <Property Name="Comment" Type="text" />
+          <Property Name="Date" Type="datetime" />
         </EntityType>
         <EntityType Name="FullInfManagers">
           <Key>
@@ -300,6 +304,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FreeFormatDoc_DocStatus_StatusId">
+          <End Role="DocStatus" Type="Self.DocStatus" Multiplicity="0..1" />
+          <End Role="FreeFormatDoc" Type="Self.FreeFormatDoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocStatus">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="FreeFormatDoc">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FreeFormatDoc_FullInfManagers_ManagerID">
           <End Role="FullInfManagers" Type="Self.FullInfManagers" Multiplicity="0..1" />
           <End Role="FreeFormatDoc" Type="Self.FreeFormatDoc" Multiplicity="*" />
@@ -309,6 +325,18 @@
             </Principal>
             <Dependent Role="FreeFormatDoc">
               <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FreeFormatDoc_Users_UserId">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="FreeFormatDoc" Type="Self.FreeFormatDoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="FreeFormatDoc">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -459,8 +487,16 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
           </AssociationSet>
+          <AssociationSet Name="FK_FreeFormatDoc_DocStatus_StatusId" Association="Self.FK_FreeFormatDoc_DocStatus_StatusId">
+            <End Role="DocStatus" EntitySet="DocStatus" />
+            <End Role="FreeFormatDoc" EntitySet="FreeFormatDoc" />
+          </AssociationSet>
           <AssociationSet Name="FK_FreeFormatDoc_FullInfManagers_ManagerID" Association="Self.FK_FreeFormatDoc_FullInfManagers_ManagerID">
             <End Role="FullInfManagers" EntitySet="FullInfManagers" />
+            <End Role="FreeFormatDoc" EntitySet="FreeFormatDoc" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FreeFormatDoc_Users_UserId" Association="Self.FK_FreeFormatDoc_Users_UserId">
+            <End Role="Users" EntitySet="Users" />
             <End Role="FreeFormatDoc" EntitySet="FreeFormatDoc" />
           </AssociationSet>
           <AssociationSet Name="FK_PaymentOrder_DocStatus_StatusId" Association="Self.FK_PaymentOrder_DocStatus_StatusId">
@@ -528,6 +564,12 @@
           <NavigationProperty Name="DocType" Relationship="Self.FK__FreeForma__DocTy__46E78A0C" FromRole="FreeFormatDoc" ToRole="DocType" />
           <Property Name="ManagerID" Type="Int32" />
           <NavigationProperty Name="FullInfManagers" Relationship="EEBankModel.FK_FreeFormatDoc_FullInfManagers_ManagerID" FromRole="FreeFormatDoc" ToRole="FullInfManagers" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="Users" Relationship="EEBankModel.FK_FreeFormatDoc_Users_UserId" FromRole="FreeFormatDoc" ToRole="Users" />
+          <Property Name="StatusID" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DocStatus" Relationship="EEBankModel.FK_FreeFormatDoc_DocStatus_StatusId" FromRole="FreeFormatDoc" ToRole="DocStatus" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="PaymentOrder">
           <Key>
@@ -627,6 +669,7 @@
           <NavigationProperty Name="PaymentRequirements" Relationship="Self.FK__PaymentRe__UserI__4316F928" FromRole="Users" ToRole="PaymentRequirements" />
           <NavigationProperty Name="Roles" Relationship="Self.FK_Users_Roles_RoleId" FromRole="Users" ToRole="Roles" />
           <NavigationProperty Name="UserInf1" Relationship="EEBankModel.FK_UserInf_Users_UserId" FromRole="Users" ToRole="UserInf" />
+          <NavigationProperty Name="FreeFormatDoc" Relationship="EEBankModel.FK_FreeFormatDoc_Users_UserId" FromRole="Users" ToRole="FreeFormatDoc" />
         </EntityType>
         <Association Name="FK__PaymentOr__BankC__3D5E1FD2">
           <End Role="Banks" Type="Self.Banks" Multiplicity="0..1" />
@@ -843,6 +886,14 @@
             <End Role="FullInfManagers" EntitySet="FullInfManagers" />
             <End Role="FreeFormatDoc" EntitySet="FreeFormatDoc" />
           </AssociationSet>
+          <AssociationSet Name="FK_FreeFormatDoc_Users_UserId" Association="EEBankModel.FK_FreeFormatDoc_Users_UserId">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="FreeFormatDoc" EntitySet="FreeFormatDoc" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FreeFormatDoc_DocStatus_StatusId" Association="EEBankModel.FK_FreeFormatDoc_DocStatus_StatusId">
+            <End Role="DocStatus" EntitySet="DocStatus" />
+            <End Role="FreeFormatDoc" EntitySet="FreeFormatDoc" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserInf">
           <Key>
@@ -922,6 +973,7 @@
           <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PaymentRequirements" Relationship="EEBankModel.FK_PaymentRequirements_DocStatus_StatusId" FromRole="DocStatus" ToRole="PaymentRequirements" />
           <NavigationProperty Name="PaymentOrder" Relationship="EEBankModel.FK_PaymentOrder_DocStatus_StatusId" FromRole="DocStatus" ToRole="PaymentOrder" />
+          <NavigationProperty Name="FreeFormatDoc" Relationship="EEBankModel.FK_FreeFormatDoc_DocStatus_StatusId" FromRole="DocStatus" ToRole="FreeFormatDoc" />
         </EntityType>
         <Association Name="FK_PaymentRequirements_DocStatus_StatusId">
           <End Type="EEBankModel.DocStatus" Role="DocStatus" Multiplicity="0..1" />
@@ -1023,6 +1075,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FreeFormatDoc_Users_UserId">
+          <End Type="EEBankModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="EEBankModel.FreeFormatDoc" Role="FreeFormatDoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="FreeFormatDoc">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FreeFormatDoc_DocStatus_StatusId">
+          <End Type="EEBankModel.DocStatus" Role="DocStatus" Multiplicity="0..1" />
+          <End Type="EEBankModel.FreeFormatDoc" Role="FreeFormatDoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocStatus">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="FreeFormatDoc">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1050,6 +1126,10 @@
           <EntitySetMapping Name="FreeFormatDoc">
             <EntityTypeMapping TypeName="EEBankModel.FreeFormatDoc">
               <MappingFragment StoreEntitySet="FreeFormatDoc">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
                 <ScalarProperty Name="FreeFormatDocID" ColumnName="FreeFormatDocID" />
                 <ScalarProperty Name="DocTypeID" ColumnName="DocTypeID" />

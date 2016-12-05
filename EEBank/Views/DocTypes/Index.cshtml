@@ -32,6 +32,10 @@
                    {
                        @Html.ActionLink(item.DocName, "Index", "PaymentOrders", new { id = item.DocTypeId }, null);
                    }
+                   @if (item.DocTypeId == 6)
+                   {
+                       @Html.ActionLink(item.DocName, "Index", "FreeFormatDocs", new { id = item.DocTypeId }, null);
+                   }
                     
                  
                 </button>

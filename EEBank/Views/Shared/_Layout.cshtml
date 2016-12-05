@@ -1,6 +1,5 @@
 ﻿@using EEBank.Models
-@{ EEBankEntitie db = new EEBankEntitie();}
-@{var user = db.Users.Where(m => m.Email == User.Identity.Name).FirstOrDefault(); }
+
 
 
 <!DOCTYPE html>
@@ -27,7 +26,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (user.RoleId == 6)
+                    @{ EEBankEntitie db = new EEBankEntitie();}
+                    @{var user = db.Users.Where(m => m.Email == User.Identity.Name).FirstOrDefault(); }
+                    @if (User.Identity.IsAuthenticated  && user.RoleId == 6) 
                     {
                         <li>@Html.ActionLink("Пользователи", "Index", "UserInfs")</li>
                         <li>@Html.ActionLink("Менеджеры", "Index", "FullInfManagers")</li>
@@ -35,21 +36,15 @@
                     
                 </ul>
                 
-                <ul class="nav navbar-nav">
-
-                </ul>
-                <ul class="nav navbar-nav">
-                    
-
-
-
-                </ul>
                 @Html.Partial("_LoginPartial")
                 
 </div>
         </div>
     </div>
-    
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

@@ -284,7 +284,7 @@ namespace EEBank.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PaymentRequirementsID,Date,TypeOfRequirements,DocType,СurrencyCode,SummOfremittance,UserID,AccountNumber,BankID,Benficiar,BankReceiver,PaymentPurpose,DocNumber,UserUNP,BankUNP, ManagerId")] PaymentRequirements paymentRequirements, HttpPostedFileBase upload)
+        public ActionResult Edit(PaymentRequirements paymentRequirements, HttpPostedFileBase upload)
         {
 
             var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
@@ -369,6 +369,8 @@ namespace EEBank.Controllers
                     paymentRequirements.ManagerId = managers.ElementAt(index).ManagerID;
                 else
                     paymentRequirements.ManagerId = null;
+                
+                
                 db.Entry(paymentRequirements).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

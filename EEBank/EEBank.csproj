@@ -189,6 +189,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BanksController.cs" />
     <Compile Include="Controllers\DocTypesController.cs" />
+    <Compile Include="Controllers\FreeFormatDocsController.cs" />
     <Compile Include="Controllers\FullInfManagersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -392,6 +393,12 @@
     <Content Include="Views\PaymentOrders\Edit.cshtml" />
     <Content Include="Views\PaymentOrders\Index.cshtml" />
     <Content Include="Views\PaymentOrders\Create_by_manager.cshtml" />
+    <Content Include="Views\FreeFormatDocs\Create.cshtml" />
+    <Content Include="Views\FreeFormatDocs\Delete.cshtml" />
+    <Content Include="Views\FreeFormatDocs\Details.cshtml" />
+    <Content Include="Views\FreeFormatDocs\Edit.cshtml" />
+    <Content Include="Views\FreeFormatDocs\Index.cshtml" />
+    <Content Include="Views\FreeFormatDocs\Create_by_manager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

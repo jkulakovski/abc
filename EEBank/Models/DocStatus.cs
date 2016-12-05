@@ -18,6 +18,7 @@ namespace EEBank.Models
         {
             this.PaymentRequirements = new HashSet<PaymentRequirements>();
             this.PaymentOrder = new HashSet<PaymentOrder>();
+            this.FreeFormatDoc = new HashSet<FreeFormatDoc>();
         }
     
         public int StatusId { get; set; }
@@ -25,5 +26,6 @@ namespace EEBank.Models
     
         public virtual ICollection<PaymentRequirements> PaymentRequirements { get; set; }
         public virtual ICollection<PaymentOrder> PaymentOrder { get; set; }
+        public virtual ICollection<FreeFormatDoc> FreeFormatDoc { get; set; }
     }
 }

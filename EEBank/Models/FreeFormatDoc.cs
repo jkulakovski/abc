@@ -17,7 +17,15 @@ namespace EEBank.Models
         public int FreeFormatDocID { get; set; }
         public Nullable<int> DocTypeID { get; set; }
         public string Document { get; set; }
+        public Nullable<int> ManagerID { get; set; }
+        public Nullable<int> UserID { get; set; }
+        public Nullable<int> StatusID { get; set; }
+        public string Comment { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
     
         public virtual DocType DocType { get; set; }
+        public virtual FullInfManagers FullInfManagers { get; set; }
+        public virtual Users Users { get; set; }
+        public virtual DocStatus DocStatus { get; set; }
     }
 }

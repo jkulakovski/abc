@@ -1,0 +1,69 @@
+﻿@model IEnumerable<EEBank.Models.FreeFormatDoc>
+@using EEBank.Models;
+@{
+    ViewBag.Title = "Платежные поручения";
+}
+@{EEBankEntitie db = new EEBankEntitie();
+var role = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name).RoleId;
+}
+
+@{
+    ViewBag.Title = "Документ свободного формата";
+}
+
+<h2>Документ свободного формата</h2>
+@if (role == 5)
+{
+    <p>
+        @Html.ActionLink("Создать новый", "Create")
+    </p>
+}
+@if (role == 7)
+{
+    <p>
+        @Html.ActionLink("Создать новый", "Create_by_manager")
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            ФИО отправителя
+        </th>
+        <th>
+            Документ
+        </th>
+        <th>
+            Статус
+        </th>
+        <th>
+            Комментарий
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Users.UserInf1.Where(p => p.UserID == item.UserID).FirstOrDefault().FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Document)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocStatus.StatusName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comment)
+        </td>
+        <td>
+            @if(item.StatusID == 2 || item.StatusID == 4 && role == 5){
+
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.FreeFormatDocID })
+            
+            }
+            @Html.ActionLink("Посмотреть", "Details", new { id=item.FreeFormatDocID }) 
+        </td>
+    </tr>
+}
+
+</table>

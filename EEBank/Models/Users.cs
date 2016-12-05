@@ -19,6 +19,7 @@ namespace EEBank.Models
             this.PaymentOrder = new HashSet<PaymentOrder>();
             this.PaymentRequirements = new HashSet<PaymentRequirements>();
             this.UserInf1 = new HashSet<UserInf>();
+            this.FreeFormatDoc = new HashSet<FreeFormatDoc>();
         }
     
         public string Email { get; set; }
@@ -30,5 +31,6 @@ namespace EEBank.Models
         public virtual ICollection<PaymentRequirements> PaymentRequirements { get; set; }
         public virtual Roles Roles { get; set; }
         public virtual ICollection<UserInf> UserInf1 { get; set; }
+        public virtual ICollection<FreeFormatDoc> FreeFormatDoc { get; set; }
     }
 }
