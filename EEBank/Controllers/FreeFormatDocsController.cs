@@ -15,6 +15,8 @@ namespace EEBank.Controllers
     public class FreeFormatDocsController : Controller
     {
         private EEBankEntitie db = new EEBankEntitie();
+        Get_ecp ecp = new Get_ecp();
+        Random rn = new Random();
 
         // GET: FreeFormatDocs
         public ActionResult Index()
@@ -99,10 +101,11 @@ namespace EEBank.Controllers
         public ActionResult Create([Bind(Include = "FreeFormatDocID,DocTypeID,Document,ManagerID,UserID,StatusID,Comment,Date")] FreeFormatDoc freeFormatDoc, HttpPostedFileBase upload)
         {
             var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
-            freeFormatDoc.StatusID = GET_ECP(user, upload);
+            
+            freeFormatDoc.StatusID =ecp.GET_ECP(user, upload);
 
             var managers = db.FullInfManagers.ToList();
-            Random rn = new Random();
+            
             int index = rn.Next(0, managers.Count);
 
             if (ModelState.IsValid)
@@ -153,83 +156,7 @@ namespace EEBank.Controllers
             return View(freeFormatDoc);
         }
 
-        public int GET_ECP(Users user, HttpPostedFileBase upload)
-        {
-            
-            string s = "";
-
-            if (upload != null)
-            {
-                // получаем имя файла
-                string fileName = System.IO.Path.GetFileName(upload.FileName);
-                Random rn = new Random();
-                // сохраняем файл в папку Files в проекте
-                fileName = fileName + Convert.ToString(rn.Next(0x0061, 0x007A));
-                upload.SaveAs(Server.MapPath("~/Files/" + fileName ));
-
-
-                StreamReader ReadFile = System.IO.File.OpenText(@"C:/Users/Elizaveta/Documents/visual studio 2013/Projects/EEBank/EEBank/Files/" + fileName);
-                string Input = null;
-                while ((Input = ReadFile.ReadLine()) != null)
-                {
-                    s += Input;
-                }
-            }
-
-            string login = "";
-            for (int i = 0; i < user.Email.Length; i++)
-            {
-                if (Char.IsLetter(user.Email[i]))
-                    login += user.Email[i];
-                if (user.Email[i] == ('@'))
-                    break;
-
-            }
-
-            string keys = user.UserInf1.Where(m => m.Email == User.Identity.Name).FirstOrDefault().OpenKey;
-
-            int[] key = new int[2];
-
-            int iter = 0;
-            for (int i = 0; i < 2; i++)
-            {
-                string num = "";
-                for (int j = 0 + iter; j < keys.Length; j++)
-                {
-                    if (!keys[j].Equals(' '))
-                    {
-                        num += keys[j];
-
-                    }
-                    else
-                    {
-                        iter = j + 1;
-                        break;
-                    }
-                }
-                key[i] = Convert.ToInt32(num);
-            }
-            double[] res;
-            ECP ecp = new ECP();
-            int[] hash = ECP.Hash(login);
-            res = ecp.Deshifrov_ecp(s, key[0], key[1]);
-            int it = 0;
-
-            if (hash.Length == res.Length)
-            {
-                for (int i = 0; i < hash.Length; i++)
-                {
-                    if (hash[i] == res[i])
-                        it++;
-                }
-            }
-            if (it == res.Length)
-                return 1;
-            if (it != res.Length || it == 0)
-                return 2;
-            else
-                return 0;
-        }
+        
 
         // GET: FreeFormatDocs/Edit/5
         public ActionResult Edit(int? id)
@@ -250,12 +177,11 @@ namespace EEBank.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(FreeFormatDoc freeFormatDoc, HttpPostedFileBase upload){
 
-            var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
-            freeFormatDoc.StatusID = GET_ECP(user, upload);
+            var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);
+            freeFormatDoc.StatusID = ecp.GET_ECP(user, upload);
             
 
             var managers = db.FullInfManagers.ToList();
-            Random rn = new Random();
             int index = rn.Next(0, managers.Count);
             FreeFormatDoc old_doc = db.FreeFormatDoc.Find(freeFormatDoc.FreeFormatDocID);
             if (ModelState.IsValid)

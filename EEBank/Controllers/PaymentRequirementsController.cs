@@ -29,11 +29,13 @@ namespace EEBank.Controllers
     public class PaymentRequirementsController : Controller
     {
         private EEBankEntitie db = new EEBankEntitie();
+        Get_ecp ecp = new Get_ecp();
+        Random rn = new Random();
 
         // GET: PaymentRequirements
         public ActionResult Index()
         {
-            var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
+            var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);
             if (user.RoleId == 5)
             {
                 var paymentRequirements = db.PaymentRequirements.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.TypePaymentRequirements).Include(p => p.Users).Where(p => p.Users.Email == User.Identity.Name).Where(p => p.StatusId != 3);
@@ -53,7 +55,7 @@ namespace EEBank.Controllers
               
 
         // GET: PaymentRequirements/Details/5
-        public ActionResult Details(int? id, string action)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -74,8 +76,8 @@ namespace EEBank.Controllers
         public ActionResult Reject([Bind(Include = "Comment")] PaymentRequirements paymentRequirements)
         {
             
-            var balans = db.UserInf.Where(p => p.UserID == paymentRequirements.UserID).FirstOrDefault().Balans;
-            paymentRequirements.StatusId = db.DocStatus.Where(p => p.StatusName == "Откленен").FirstOrDefault().StatusId;
+            var balans = db.UserInf.FirstOrDefault(p => p.UserID == paymentRequirements.UserID).Balans;
+            paymentRequirements.StatusId = db.DocStatus.FirstOrDefault(p => p.StatusName == "Откленен").StatusId;
             db.Entry(paymentRequirements).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -88,6 +90,7 @@ namespace EEBank.Controllers
         {
             PaymentRequirements paymentRequirements = db.PaymentRequirements.Find(id);
             paymentRequirements.StatusId = 3;
+            
             db.Entry(paymentRequirements).State = EntityState.Modified;
             db.SaveChanges();
             ArchivePaymentRequirements achive = new ArchivePaymentRequirements();
@@ -108,95 +111,28 @@ namespace EEBank.Controllers
             return View();
         }
 
-        
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PaymentRequirementsID,Date,TypeOfRequirements,DocType,СurrencyCode,SummOfremittance,UserID,AccountNumber,BankID,Benficiar,BankReceiver,PaymentPurpose,DocNumber,UserUNP,BankUNP,StatusId,ManagerId")] PaymentRequirements paymentRequirements, HttpPostedFileBase upload)
+        public ActionResult Create(PaymentRequirements paymentRequirements, HttpPostedFileBase upload)
         {
+            var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);
+            paymentRequirements.StatusId = ecp.GET_ECP(user, upload);
             
-
-            var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
-            string s = "";
-
-            if (upload != null)
-            {
-                // получаем имя файла
-                string fileName = System.IO.Path.GetFileName(upload.FileName);
-                // сохраняем файл в папку Files в проекте
-                upload.SaveAs(Server.MapPath("~/Files/" + fileName));
-
-                StreamReader ReadFile = System.IO.File.OpenText(@"C:/Users/Elizaveta/Documents/visual studio 2013/Projects/EEBank/EEBank/Files/" + fileName);
-                string Input = null;
-                while ((Input = ReadFile.ReadLine()) != null)
-                {
-                    s += Input;
-                }
-            }
-
-            string login = "";
-            for (int i = 0; i < user.Email.Length; i++)
-            {
-                if (Char.IsLetter(user.Email[i]))
-                    login += user.Email[i];
-                if (user.Email[i] == ('@'))
-                    break;
-
-            }
-
-            string keys = user.UserInf1.Where(m => m.Email == User.Identity.Name).FirstOrDefault().OpenKey;
-
-            int [] key = new int[2];
-            
-            int iter = 0;
-            for(int i = 0; i < 2; i++){
-                string num = "";
-                for (int j = 0 + iter; j < keys.Length; j++){
-                    if ( !keys[j].Equals(' '))
-                    {
-                        num += keys[j];
-                        
-                    }
-                    else
-                    {
-                        iter = j + 1;
-                        break;
-                    }
-                        
-                        
-                }
-                key[i] = Convert.ToInt32(num);
-            }
-            double[] res;
-            ECP ecp = new ECP();
-            int[] hash = ECP.Hash(login);
-            res =  ecp.Deshifrov_ecp(s, key[0], key[1]);
-            int it = 0;
-            
-            if (hash.Length == res.Length)
-            {
-                for (int i = 0; i < hash.Length; i++)
-                {
-                    if (hash[i] == res[i])
-                        it++;
-                }
-            }
-
             var managers = db.FullInfManagers.Where(p => p.BankID == paymentRequirements.BankID).ToList();
-            Random rn = new Random();
+           
             int index = rn.Next(0, managers.Count);
             
             
             if (ModelState.IsValid)  {
+                int id = Convert.ToInt32(paymentRequirements.Benficiar);
+                paymentRequirements.Benficiar = db.Banks.FirstOrDefault(p => p.BankID == id).Adress;
+                id = Convert.ToInt32(paymentRequirements.BankReceiver);
+                paymentRequirements.BankReceiver = db.Banks.FirstOrDefault(p => p.BankID == id).BanckCode;
                 paymentRequirements.DocType = 4;
                 paymentRequirements.Date = System.DateTime.Now;
                 paymentRequirements.UserID = user.UserId;
                 paymentRequirements.AccountNumber = Convert.ToString(user.UserId);
-                if (it == res.Length)
-                    paymentRequirements.StatusId = 1;
-                if (it != res.Length || it == 0)
-                    paymentRequirements.StatusId = 2;
                 if (paymentRequirements.StatusId == 1)
                     paymentRequirements.ManagerId = managers.ElementAt(index).ManagerID;
                 else
@@ -217,8 +153,8 @@ namespace EEBank.Controllers
         
         public ActionResult Create_by_manager()
         {
-            var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
-            var manager = db.FullInfManagers.Where(p => p.Email == user.Email).FirstOrDefault();
+            var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);
+            var manager = db.FullInfManagers.FirstOrDefault(p => p.Email == user.Email);
             var bank = db.Banks.Where(t => t.BankID == manager.BankID);
             ViewBag.BankID = new SelectList(bank, "BankID", "Adress");
             ViewBag.BankReceiver = new SelectList(bank, "BankID", "BanckCode");
@@ -228,17 +164,23 @@ namespace EEBank.Controllers
             ViewBag.AccountNumber = new SelectList(db.Users, "UserID", "UserID");
             return View();
         }
+
+
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create_by_manager([Bind(Include = "PaymentRequirementsID,Date,TypeOfRequirements,DocType,СurrencyCode,SummOfremittance,UserID,AccountNumber,BankID,Benficiar,BankReceiver,PaymentPurpose,DocNumber,UserUNP,BankUNP,StatusId,ManagerId")] PaymentRequirements paymentRequirements)
         {
-            var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
-            var manager = db.FullInfManagers.Where(p => p.Email == user.Email).FirstOrDefault();
+            var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);
+            var manager = db.FullInfManagers.FirstOrDefault(p => p.Email == user.Email);
 
 
             if (ModelState.IsValid)
             {
+                int id = Convert.ToInt32(paymentRequirements.Benficiar);
+                paymentRequirements.Benficiar = db.Banks.FirstOrDefault(p => p.BankID == id).Adress;
+                id = Convert.ToInt32(paymentRequirements.BankReceiver);
+                paymentRequirements.BankReceiver = db.Banks.FirstOrDefault(p => p.BankID == id).BanckCode;
                 paymentRequirements.ManagerId = manager.ManagerID;
                 paymentRequirements.DocType = 4;
                 paymentRequirements.Date = System.DateTime.Now;
@@ -279,99 +221,40 @@ namespace EEBank.Controllers
             return View(paymentRequirements);
         }
 
-        // POST: PaymentRequirements/Edit/5
-        // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
-        // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PaymentRequirements paymentRequirements, HttpPostedFileBase upload)
         {
 
-            var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
-            string s = "";
+            var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);
 
-            if (upload != null)
-            {
-                // получаем имя файла
-                string fileName = System.IO.Path.GetFileName(upload.FileName);
-                // сохраняем файл в папку Files в проекте
-                upload.SaveAs(Server.MapPath("~/Files/" + fileName));
-
-                StreamReader ReadFile = System.IO.File.OpenText(@"C:/Users/Elizaveta/Documents/visual studio 2013/Projects/EEBank/EEBank/Files/" + fileName);
-                string Input = null;
-                while ((Input = ReadFile.ReadLine()) != null)
-                {
-                    s += Input;
-                }
-            }
-
-            string login = "";
-            for (int i = 0; i < user.Email.Length; i++)
-            {
-                if (Char.IsLetter(user.Email[i]))
-                    login += user.Email[i];
-                if (user.Email[i] == ('@'))
-                    break;
-
-            }
-
-            string keys = user.UserInf1.Where(m => m.Email == User.Identity.Name).FirstOrDefault().OpenKey;
-
-            int[] key = new int[2];
-
-            int iter = 0;
-            for (int i = 0; i < 2; i++)
-            {
-                string num = "";
-                for (int j = 0 + iter; j < keys.Length; j++)
-                {
-                    if (!keys[j].Equals(' '))
-                    {
-                        num += keys[j];
-
-                    }
-                    else
-                    {
-                        iter = j + 1;
-                        break;
-                    }
-
-
-                }
-                key[i] = Convert.ToInt32(num);
-            }
-            double[] res;
-            ECP ecp = new ECP();
-            int[] hash = ECP.Hash(login);
-            res = ecp.Deshifrov_ecp(s, key[0], key[1]);
-            int it = 0;
-
-            if (hash.Length == res.Length)
-            {
-                for (int i = 0; i < hash.Length; i++)
-                {
-                    if (hash[i] == res[i])
-                        it++;
-                }
-            }
+            paymentRequirements.StatusId = ecp.GET_ECP(user, upload);
 
             var managers = db.FullInfManagers.Where(p => p.BankID == paymentRequirements.BankID).ToList();
-            Random rn = new Random();
+           
             int index = rn.Next(0, managers.Count);
 
+            var old_doc = db.PaymentRequirements.Find(paymentRequirements.PaymentRequirementsID);
+            
             if (ModelState.IsValid)
             {
-                if (it == res.Length)
-                    paymentRequirements.StatusId = 1;
-                if (it != res.Length || it == 0)
-                    paymentRequirements.StatusId = 2;
+                int id = Convert.ToInt32(paymentRequirements.Benficiar);
+                paymentRequirements.Benficiar = db.Banks.FirstOrDefault(p => p.BankID == id).Adress;
+                id = Convert.ToInt32(paymentRequirements.BankReceiver);
+                paymentRequirements.BankReceiver = db.Banks.FirstOrDefault(p => p.BankID == id).BanckCode;
                 if (paymentRequirements.StatusId == 1)
                     paymentRequirements.ManagerId = managers.ElementAt(index).ManagerID;
                 else
                     paymentRequirements.ManagerId = null;
-                
-                
-                db.Entry(paymentRequirements).State = EntityState.Modified;
+
+                paymentRequirements.Date = old_doc.Date;
+                paymentRequirements.TypeOfRequirements = old_doc.TypeOfRequirements;
+                paymentRequirements.DocType = 4;
+                paymentRequirements.UserID = old_doc.UserID;
+                paymentRequirements.AccountNumber = old_doc.AccountNumber;
+                paymentRequirements.DocNumber = old_doc.DocNumber;
+
+                db.Entry(old_doc).CurrentValues.SetValues(paymentRequirements);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -397,7 +280,7 @@ namespace EEBank.Controllers
             return View(paymentRequirements);
         }
 
-        // POST: PaymentRequirements/Delete/5
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
