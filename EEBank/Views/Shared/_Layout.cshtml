@@ -27,7 +27,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @{ EEBankEntitie db = new EEBankEntitie();}
-                    @{var user = db.Users.Where(m => m.Email == User.Identity.Name).FirstOrDefault(); }
+                    @{var user = db.Users.FirstOrDefault(m => m.Email == User.Identity.Name); }
                     @if (User.Identity.IsAuthenticated  && user.RoleId == 6) 
                     {
                         <li>@Html.ActionLink("Пользователи", "Index", "UserInfs")</li>

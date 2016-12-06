@@ -33,6 +33,7 @@ namespace EEBank.Controllers
         Random rn = new Random();
 
         // GET: PaymentRequirements
+        [Authorize]
         public ActionResult Index()
         {
             var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);

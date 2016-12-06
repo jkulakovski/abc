@@ -4,23 +4,17 @@
 [class*="fontawesome-"]:before {
     font-family: 'FontAwesome', sans-serif;
 }
-* {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+
+h2 {
+  margin-top: 20px;
+  margin-bottom: 2px;
 }
 .fl{ float:left; }
 .fr{ float: right; }
 .group:before,
 .group:after {
     content: "";
-    display: table;
+    display: inline-block;
 }
 .group:after {
     clear: both;
@@ -30,72 +24,93 @@
 }
 
 body {
-    background: #F2F2F2;
-    font-family: 'Droid Sans', sans-serif;
-    line-height: 1;
-    font-size: 16px;
+    background: #ece6e6;
 }
 .wrapper {
 
 }
 .pricing-table {
-    width: 80%;
+    width: 100%;
+    height: 90%;
     margin: 50px auto;
     text-align: center;
-    padding: 10px;
-    padding-right: 0;
 }
 .pricing-table .heading{
     color: #9C9E9F;
-    text-transform: uppercase;
+    text-transf1orm: uppercase;
     font-size: 1.3rem;
     margin-bottom: 4rem;
+
 }
 .block{
-    width: 30%;
+    width: 25%;
     margin: 0 15px;
     overflow: hidden;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
     border-radius: 5px;
     /*    border: 1px solid red;*/
 }
 /*Shared properties*/
-.title,.pt-footer{
+.title{
     color: #FEFEFE;
-    text-transform: capitalize;
-    line-height: 2.5;
+    text-transform: inherit;
+    font-size: 15px;
+    line-height: 2;
     position: relative;
+    border-radius: 5px;
+    color: black;
+}
+.pt-footer{
+    font-size: 9px;
+    position: inherit;
+    border-radius: 5px;
+    color: black;
+    line-height: 10px;
+    font-weight: 600;
+    font-size: 1.5rem;
+    height: 55px;
+    text-transform: lowercase;
+
+    
 }
 .content{
     position: relative;
-    color: #FEFEFE;
-    padding: 20px 0 10px 0;
+    color: #fffefe;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 15px 0 20px 0;
+    border-radius: 5px;
+
 }
 /*arrow creation*/
 .content:after, .content:before,.pt-footer:before,.pt-footer:after {
     top: 100%;
-    left: 50%;
-    border: solid transparent;
+    left: 880%;
+    border: solid rgba(49, 43, 43, 0);
     content: " ";
     height: 0;
+
     width: 0;
     position: absolute;
     pointer-events: none;
 }
 .pt-footer:after,.pt-footer:before{
     top:0;
+    
 }
 .content:after,.pt-footer:after {
-    border-color: rgba(136, 183, 213, 0);
+    border-color: rgba(35, 106, 152, 0);
     border-width: 5px;
     margin-left: -5px;
+
 }
 /*/arrow creation*/
 .price{
     position: relative;
     display: inline-block;
-    margin-bottom: 0.625rem;
+    margin-bottom: 0.925rem;
+
 }
 .price span{
     font-size: 6rem;
@@ -103,46 +118,52 @@ body {
     font-weight: bold;
 }
 .price sup{
-    font-size: 0.5rem;
+    font-size: 1.5rem;
     position: absolute;
     top: 12px;
     left: -12px;
 }
 .hint{
     font-style: italic;
-    font-size: 0.9rem;
+    font-size: 1.3rem;
+
+
 }
 .features{
     list-style-type: none;
-    background: #FFFFFF;
-    text-align: left;
-    color: #9C9C9C;
-    padding:30px 22%;
-    font-size: 0.9rem;
+    background: #ffffff;
+    text-align: center;
+    color: #3a3939;
+    padding:1px 1%;
+    margin auto;
+    font-size: 1.5rem;
+    margin-bottom: 2px;
+    margin-top: 5px;
+    border-radius: 5px
 }
 .features li{
-    padding:15px 0;
+    padding:5px 2px;
     width: 100%;
 }
 .features li span{
-    padding-right: 0.4rem;
+    padding-right: 1.4rem;
 }
 .pt-footer{
-    font-size: 0.95rem;
-    text-transform: capitalize;
+   
+    
 }
 /*PERSONAL*/
 .personal .title{
-    background: #78CFBF;
+    background: #419c8c;
 }
 .personal .content,.personal .pt-footer{
-    background: #82DACA;
+    background: #419c8c;
 }
 .personal .content:after{
-    border-top-color: #82DACA;
+    border-top-color: #419c8c;
 }
 .personal .pt-footer:after{
-    border-top-color: #FFFFFF;
+    border-top-color: #0a0a0a;
 }
 /*PROFESSIONAL*/
 .professional .title{

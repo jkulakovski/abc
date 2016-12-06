@@ -4,120 +4,68 @@
     ViewBag.Title = "Платежные поручения";
 }
 @{EEBankEntitie db = new EEBankEntitie();
-  var role = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault().RoleId;
-  }
-
-
-<h2>Платежные поручения</h2>
-
-@if (role == 5)
-{
-    <p>
-        @Html.ActionLink("Создать новый", "Create")
-    </p>
-}
-@if (role == 7)
-{
-    <p>
-        @Html.ActionLink("Создать новый", "Create_by_manager")
-    </p>
+var role = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name).RoleId;
+Random rn = new Random();
 }
 
-<table class="table">
-    <tr>
-        <th>
-            ФИО отправителя
-        </th>
-        <th>
-            Дата создания
-        </th>
-        <th>
-            Код валюты
-        </th>
-        <th>
-            Сумма перевода
-        </th>
-        <th>
-            Назначение платежа
-        </th>
-        <th>
-            УНП отправителя
-        </th>
-        <th>
-            УНП банка
-        </th>
-        <th>
-            Адрес банка
-        </th>
-        
-        <th>
-            Название документа
-        </th>
-        
-        <th>
-            Статус
-        </th>
-        <th>
-            Комментарий
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Users.UserInf1.Where(p => p.UserID == item.UserID).FirstOrDefault().FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.СurrencyCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SummOfremittance)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PaymentPurpose)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserUNP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BankUNP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Banks.Adress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TypePaymentRequirements.TypeName)
-        </td>
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.DocStatus.StatusName)
-        </td>
-        <td>
-            @if (item.StatusId == 4)
+<link href="~/Content/tablestyle.css" type="text/css" rel="stylesheet">
+<body>
+    <div align="center" class=" wrapper">
+        <div class="pricing-table group">
+            @foreach (var item in Model)
             {
-                @Html.DisplayFor(modelItem => item.Comment)
-            }
-        </td>
-        <td>
-           
-            @Html.ActionLink("Просмотреть", "Details", new { id=item.PaymentRequirementsID }) 
-        </td>
-        <td>
-            @if (item.StatusId == 2 || item.StatusId == 4)
-            {
-                @Html.ActionLink("Редактировать", "Edit", new { id = item.PaymentRequirementsID })
+                int i = rn.Next(1, 4);
+                string clas = "";
+                if (i == 1)
+                {
+                    clas += "personal";
+                }
+                if (i == 2)
+                {
+                    clas += "professional";
+                }
+                if(i == 3)
+                {
+                    clas += "business";
+                }
 
-            }
-        </td>
-        <td>
-                @Html.ActionLink("Удалить", "Delete", new { id = item.PaymentRequirementsID })
-        </td>
-        
-    </tr>
-}
 
-</table>
+
+                <div class="block @clas fl">
+                            <h2 class="title">@Html.DisplayFor(modelItem => item.TypePaymentRequirements.TypeName)</h2>
+                            <div class="content">
+                                <p class="price">
+                                    <sub>Платежное требование @item.PaymentRequirementsID</sub>
+                                </p>
+                                <p class="hint">@Html.DisplayFor(modelItem => item.Users.UserInf1.FirstOrDefault(p => p.UserID == item.UserID).FullName)</p>
+                            </div>
+                            <ul class="features">
+                                <li><span class="fontawesome-cog"></span>Код валюты: @Html.DisplayFor(modelItem => item.СurrencyCode)</li>
+                                <li><span class="fontawesome-star"></span>Банк получатель: @Html.DisplayFor(modelItem => item.Banks.Adress)</li>
+                                <li><span class="fontawesome-dashboard"></span>Цель отправления: @Html.DisplayFor(modelItem => item.PaymentPurpose)</li>
+                                <li><span class="fontawesome-cloud"></span>@Html.DisplayFor(modelItem => item.TypePaymentRequirements.TypeName)</li>
+                            </ul>
+                            <div class="pt-footer">
+                                <p>@Html.ActionLink("Просмотреть", "Details", new { id = item.PaymentRequirementsID }, new { @style = "color:#133037;" })</p>
+                                <p>@Html.ActionLink("Удалить", "Delete", new { id = item.PaymentRequirementsID }, new { @style = "color:#133037;" })</p>
+                                @if (item.StatusId == 4 || item.StatusId == 2)
+                        {
+                                    <p>@Html.ActionLink("Редактировать", "Edit", new { id = item.PaymentRequirementsID }, new { @style = "color:#133037;" })</p>
+
+                        }
+                        else{
+                                    <p>
+                                        <br />
+                                    </p>
+                        }
+
+
+
+                            </div>
+                        </div>
+                        }
+
+                    </div>
+                        </div>
+</body>
