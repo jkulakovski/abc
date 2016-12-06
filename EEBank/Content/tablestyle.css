@@ -37,7 +37,7 @@ body {
 }
 .pricing-table .heading{
     color: #9C9E9F;
-    text-transf1orm: uppercase;
+    text-transform: uppercase;
     font-size: 1.3rem;
     margin-bottom: 4rem;
 
@@ -60,6 +60,7 @@ body {
     position: relative;
     border-radius: 5px;
     color: black;
+    font-weight: 800;
 }
 .pt-footer{
     font-size: 9px;
@@ -86,7 +87,6 @@ body {
 /*arrow creation*/
 .content:after, .content:before,.pt-footer:before,.pt-footer:after {
     top: 100%;
-    left: 880%;
     border: solid rgba(49, 43, 43, 0);
     content: " ";
     height: 0;

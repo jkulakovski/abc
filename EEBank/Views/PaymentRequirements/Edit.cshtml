@@ -1,10 +1,10 @@
 ﻿@model EEBank.Models.PaymentRequirements
 
 @{
-    ViewBag.Title = "Редактировать";
+    ViewBag.Title = "Редактировать документ №" + @Model.DocNumber;
 }
 
-<h2>Редактировать</h2>
+<h2>Редактировать документ №@Model.DocNumber</h2>
 
 @using (Html.BeginForm("Edit", "PaymentRequirements", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {

@@ -9,10 +9,27 @@ Random rn = new Random();
 }
 
 
+
+
 <link href="~/Content/tablestyle.css" type="text/css" rel="stylesheet">
 <body>
+    
     <div align="center" class=" wrapper">
+       
         <div class="pricing-table group">
+            <h2>Платежные требования</h2>
+            @if (role == 5)
+            {
+                <p>
+                    @Html.ActionLink("Создать новый", "Create")
+                </p>
+            }
+            @if (role == 7)
+            {
+                <p>
+                    @Html.ActionLink("Создать новый", "Create_by_manager")
+                </p>
+            }
             @foreach (var item in Model)
             {
                 int i = rn.Next(1, 4);
@@ -33,23 +50,28 @@ Random rn = new Random();
 
 
                 <div class="block @clas fl">
-                            <h2 class="title">@Html.DisplayFor(modelItem => item.TypePaymentRequirements.TypeName)</h2>
+                            <h2 class="title">Платежное требование @item.DocNumber</h2>
                             <div class="content">
                                 <p class="price">
-                                    <sub>Платежное требование @item.PaymentRequirementsID</sub>
+                                    <sub>Платежное требование</sub>
                                 </p>
                                 <p class="hint">@Html.DisplayFor(modelItem => item.Users.UserInf1.FirstOrDefault(p => p.UserID == item.UserID).FullName)</p>
+                                <p class="hint">@Html.DisplayFor(modelItem => item.Date)</p>
                             </div>
                             <ul class="features">
+                                <li><span class="fontawesome-cloud"></span>Сумма требования: @Html.DisplayFor(modelItem => item.SummOfremittance)</li>
                                 <li><span class="fontawesome-cog"></span>Код валюты: @Html.DisplayFor(modelItem => item.СurrencyCode)</li>
                                 <li><span class="fontawesome-star"></span>Банк получатель: @Html.DisplayFor(modelItem => item.Banks.Adress)</li>
                                 <li><span class="fontawesome-dashboard"></span>Цель отправления: @Html.DisplayFor(modelItem => item.PaymentPurpose)</li>
-                                <li><span class="fontawesome-cloud"></span>@Html.DisplayFor(modelItem => item.TypePaymentRequirements.TypeName)</li>
                             </ul>
                             <div class="pt-footer">
                                 <p>@Html.ActionLink("Просмотреть", "Details", new { id = item.PaymentRequirementsID }, new { @style = "color:#133037;" })</p>
-                                <p>@Html.ActionLink("Удалить", "Delete", new { id = item.PaymentRequirementsID }, new { @style = "color:#133037;" })</p>
-                                @if (item.StatusId == 4 || item.StatusId == 2)
+                                @if (role == 5)
+                                {
+                                    <p>@Html.ActionLink("Удалить", "Delete", new { id = item.PaymentRequirementsID }, new { @style = "color:#133037;" })</p>
+
+                                }
+                                 @if (item.StatusId == 4 || item.StatusId == 2)
                         {
                                     <p>@Html.ActionLink("Редактировать", "Edit", new { id = item.PaymentRequirementsID }, new { @style = "color:#133037;" })</p>
 

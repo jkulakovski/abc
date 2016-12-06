@@ -39,7 +39,7 @@ namespace EEBank.Controllers
             var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);
             if (user.RoleId == 5)
             {
-                var paymentRequirements = db.PaymentRequirements.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.TypePaymentRequirements).Include(p => p.Users).Where(p => p.Users.Email == User.Identity.Name).Where(p => p.StatusId != 3);
+                var paymentRequirements = db.PaymentRequirements.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.TypePaymentRequirements).Include(p => p.Users).Where(p => p.Users.Email == User.Identity.Name).Where(p => p.StatusId != 3).OrderByDescending(p => p.DocNumber);
                 return View(paymentRequirements.ToList());
             }
             if (user.RoleId == 6)
@@ -73,20 +73,26 @@ namespace EEBank.Controllers
 
 
         [HttpPost, ActionName("Details")]
-        [MultiButton(MatchFormKey = "action", MatchFormValue = "Reject")]
-        public ActionResult Reject([Bind(Include = "Comment")] PaymentRequirements paymentRequirements)
+        [ValidateAntiForgeryToken]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "отклонить")]
+        public ActionResult Reject(PaymentRequirements paymentRequirements)
         {
-            
-            var balans = db.UserInf.FirstOrDefault(p => p.UserID == paymentRequirements.UserID).Balans;
-            paymentRequirements.StatusId = db.DocStatus.FirstOrDefault(p => p.StatusName == "Откленен").StatusId;
-            db.Entry(paymentRequirements).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            PaymentRequirements doc = db.PaymentRequirements.Find(paymentRequirements.PaymentRequirementsID);
+            doc.StatusId = 4;
+            doc.Comment = paymentRequirements.Comment;
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(doc).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(paymentRequirements);
 
         }
 
         [HttpPost, ActionName("Details")]
-        [MultiButton(MatchFormKey = "action", MatchFormValue = "Accept")]
+        [MultiButton(MatchFormKey = "action", MatchFormValue = "принять")]
         public ActionResult Accept(int id)
         {
             PaymentRequirements paymentRequirements = db.PaymentRequirements.Find(id);
@@ -123,7 +129,8 @@ namespace EEBank.Controllers
             var managers = db.FullInfManagers.Where(p => p.BankID == paymentRequirements.BankID).ToList();
            
             int index = rn.Next(0, managers.Count);
-            
+
+            int docs_count = db.PaymentRequirements.Count(p => p.UserID == user.UserId);
             
             if (ModelState.IsValid)  {
                 int id = Convert.ToInt32(paymentRequirements.Benficiar);
@@ -132,6 +139,7 @@ namespace EEBank.Controllers
                 paymentRequirements.BankReceiver = db.Banks.FirstOrDefault(p => p.BankID == id).BanckCode;
                 paymentRequirements.DocType = 4;
                 paymentRequirements.Date = System.DateTime.Now;
+                paymentRequirements.DocNumber = docs_count + 1;
                 paymentRequirements.UserID = user.UserId;
                 paymentRequirements.AccountNumber = Convert.ToString(user.UserId);
                 if (paymentRequirements.StatusId == 1)
