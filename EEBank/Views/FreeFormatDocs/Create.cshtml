@@ -1,39 +1,40 @@
 ﻿@model EEBank.Models.FreeFormatDoc
-
 @{
     ViewBag.Title = "Создать документ свободного формата";
 }
-
-<h2>Создать документ свободного формата</h2>
-
-@using (Html.BeginForm("Create", "FreeFormatDocs", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.Document,"Документ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Document, 20,40,null)
-                @Html.ValidationMessageFor(model => model.Document, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StatusID, "Подписать документ", htmlAttributes: new { @class = "control-label col-md-2" })
-            <input type="file" name="upload" /><br>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Создать" class="btn btn-default" />
-            </div>
-        </div>
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h2>Создать документ свободного формата</h2>
     </div>
-}
+    <div class="modal-body">
+        @using (Html.BeginForm("Create", "FreeFormatDocs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
 
-<div>
-    @Html.ActionLink("Вернуться назад", "Index")
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Document, "Документ", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Document, 20, 40, null)
+                        @Html.ValidationMessageFor(model => model.Document, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StatusID, "Подписать документ", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <input type="file" name="upload" /><br>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Создать" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
 </div>

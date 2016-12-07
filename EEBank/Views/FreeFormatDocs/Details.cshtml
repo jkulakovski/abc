@@ -3,77 +3,72 @@
 @{EEBankEntitie db = new EEBankEntitie();
 var user = db.Users.Where(m => m.Email == User.Identity.Name).FirstOrDefault();}
 @{
-    ViewBag.Title = "Документ свободного формата №"  + Model.FreeFormatDocID;
+    ViewBag.Title = "Документ свободного формата №" + Model.FreeFormatDocID;
 }
-
-<h2>Документ свободного формата № @Model.FreeFormatDocID</h2>
-@using (Html.BeginForm("Details", "FreeFormatDocs", FormMethod.Post))
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h2>Документ свободного формата № @Model.FreeFormatDocID</h2>
+    </div>
+    @using (Html.BeginForm("Details", "FreeFormatDocs", FormMethod.Post))
     {
 
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.FreeFormatDocID)
-        <dl class="dl-horizontal">
-            <dt>
-                Дата создания
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Date)
-            </dd>
+        <div class="form-horizontal">
 
-            <dt>
-                ФИО отправителя
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Users.UserInf1.Where(m => m.UserID == model.UserID).FirstOrDefault().FullName)
-            </dd>
-            <dt>
-                Документ
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Document)
-            </dd>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.FreeFormatDocID)
+            <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        Дата создания
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Date)
+                    </dd>
+                    <dt>
+                        ФИО отправителя
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Users.UserInf1.Where(m => m.UserID == model.UserID).FirstOrDefault().FullName)
+                    </dd>
+                    <dt>
+                        Документ
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Document)
+                    </dd>
+                    <dt>
+                        Статус документа
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DocStatus.StatusName)
+                    </dd>
+                    <dt>
+                        Менеджер банка
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.FullInfManagers.FullName)
+                    </dd>
+                </dl>
+                @if (user.RoleId == db.Roles.Where(m => m.RoleName == "Менеджер").FirstOrDefault().RoleId)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Comment, "Причина отказа", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Comment)
+                            @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-            <dt>
-                Статус документа
-            </dt>
+                    <div class="form-actions no-color">
+                        <input type="submit" name="action" value="принять" class="btn btn-default" /> |
+                    </div>
+                    <input type="submit" name="action" value="отклонить" class="btn btn-default" />
 
-            <dd>
-                @Html.DisplayFor(model => model.DocStatus.StatusName)
-            </dd>
-            <dt>
-                Менеджер банка
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.FullInfManagers.FullName)
-            </dd>
-
-        </dl>
-
-        @if (user.RoleId == db.Roles.Where(m => m.RoleName == "Менеджер").FirstOrDefault().RoleId)
-        {
-            <div class="form-group">
-                @Html.LabelFor(model => model.Comment, "Причина отказа", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Comment)
-                    @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
-                </div>
+                }
             </div>
-
-            <div class="form-actions no-color">
-                <input type="submit" name="action" value="принять" class="btn btn-default" /> |
-            </div>
-    <input type="submit" name="action" value="отклонить" class="btn btn-default" />
-
-        }
-
-
-    </div>
+        </div>
     }
-        <p>
-            @Html.ActionLink("Вернуться назад", "Index")
-        </p>
+</div>

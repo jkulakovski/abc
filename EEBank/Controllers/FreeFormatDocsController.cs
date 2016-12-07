@@ -25,7 +25,7 @@ namespace EEBank.Controllers
             var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);
             if (user.RoleId == 5)
             {
-                var freeFormatDoc = db.FreeFormatDoc.Where(p => p.Users.Email == User.Identity.Name).Where(p => p.StatusID != 3);
+                var freeFormatDoc = db.FreeFormatDoc.Where(p => p.Users.Email == User.Identity.Name).Where(p => p.StatusID != 3).OrderByDescending(p => p.Date);
                 return View(freeFormatDoc.ToList());
             }
             if (user.RoleId == 6)
@@ -53,7 +53,7 @@ namespace EEBank.Controllers
             {
                 return HttpNotFound();
             }
-            return View(freeFormatDoc);
+            return PartialView(freeFormatDoc);
         }
 
 
@@ -92,7 +92,7 @@ namespace EEBank.Controllers
         // GET: FreeFormatDocs/Create
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
@@ -122,13 +122,13 @@ namespace EEBank.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(freeFormatDoc);
+            return PartialView(freeFormatDoc);
         }
 
         public ActionResult Create_by_manager()
         {
             ViewBag.UserID = new SelectList(db.UserInf, "UserID", "FullName");
-            return View();
+            return PartialView();
         }
 
         [Authorize]
@@ -153,7 +153,7 @@ namespace EEBank.Controllers
             }
 
             ViewBag.UserID = new SelectList(db.UserInf, "UserID", "FullName", freeFormatDoc.UserID);
-            return View(freeFormatDoc);
+            return PartialView(freeFormatDoc);
         }
 
         
@@ -170,7 +170,7 @@ namespace EEBank.Controllers
             {
                 return HttpNotFound();
             }
-            return View(freeFormatDoc);
+            return PartialView(freeFormatDoc);
         }
 
         [HttpPost]
@@ -198,7 +198,7 @@ namespace EEBank.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(freeFormatDoc);
+            return PartialView(freeFormatDoc);
         }
 
         // GET: FreeFormatDocs/Delete/5
@@ -213,7 +213,7 @@ namespace EEBank.Controllers
             {
                 return HttpNotFound();
             }
-            return View(freeFormatDoc);
+            return PartialView(freeFormatDoc);
         }
 
         // POST: FreeFormatDocs/Delete/5
