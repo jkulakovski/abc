@@ -7,29 +7,50 @@
 var role = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name).RoleId;
 Random rn = new Random();
 }
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".compItem").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+    </script>
+}
 
 
 
 
 <link href="~/Content/tablestyle.css" type="text/css" rel="stylesheet">
 <body>
-    
+   
     <div align="center" class=" wrapper">
-       
+        <h2>Платежные требования</h2>
+        @if (role == 5)
+        {
+            <p>
+                @Html.ActionLink("Создать новый", "Create",null, new { @class = "compItem" })
+
+            </p>
+        }
+        @if (role == 7)
+        {
+            <p>
+                @Html.ActionLink("Создать новый", "Create_by_manager",null, new { @class = "compItem" })
+            </p>
+        }
+        <div id="modDialog" class="modal fade">
+            <div id="dialogContent" class="modal-dialog"></div>
+        </div>
         <div class="pricing-table group">
-            <h2>Платежные требования</h2>
-            @if (role == 5)
-            {
-                <p>
-                    @Html.ActionLink("Создать новый", "Create")
-                </p>
-            }
-            @if (role == 7)
-            {
-                <p>
-                    @Html.ActionLink("Создать новый", "Create_by_manager")
-                </p>
-            }
+           
             @foreach (var item in Model)
             {
                 int i = rn.Next(1, 4);
@@ -42,7 +63,7 @@ Random rn = new Random();
                 {
                     clas += "professional";
                 }
-                if(i == 3)
+                if (i == 3)
                 {
                     clas += "business";
                 }
@@ -50,44 +71,56 @@ Random rn = new Random();
 
 
                 <div class="block @clas fl">
-                            <h2 class="title">Платежное требование @item.DocNumber</h2>
-                            <div class="content">
-                                <p class="price">
-                                    <sub>Платежное требование</sub>
-                                </p>
-                                <p class="hint">@Html.DisplayFor(modelItem => item.Users.UserInf1.FirstOrDefault(p => p.UserID == item.UserID).FullName)</p>
-                                <p class="hint">@Html.DisplayFor(modelItem => item.Date)</p>
-                            </div>
-                            <ul class="features">
-                                <li><span class="fontawesome-cloud"></span>Сумма требования: @Html.DisplayFor(modelItem => item.SummOfremittance)</li>
-                                <li><span class="fontawesome-cog"></span>Код валюты: @Html.DisplayFor(modelItem => item.СurrencyCode)</li>
-                                <li><span class="fontawesome-star"></span>Банк получатель: @Html.DisplayFor(modelItem => item.Banks.Adress)</li>
-                                <li><span class="fontawesome-dashboard"></span>Цель отправления: @Html.DisplayFor(modelItem => item.PaymentPurpose)</li>
-                            </ul>
-                            <div class="pt-footer">
-                                <p>@Html.ActionLink("Просмотреть", "Details", new { id = item.PaymentRequirementsID }, new { @style = "color:#133037;" })</p>
-                                @if (role == 5)
-                                {
-                                    <p>@Html.ActionLink("Удалить", "Delete", new { id = item.PaymentRequirementsID }, new { @style = "color:#133037;" })</p>
-
-                                }
-                                 @if (item.StatusId == 4 || item.StatusId == 2)
+                    <h2 class="title">Платежное требование @item.DocNumber</h2>
+                    <div class="content">
+                        <p class="price">
+                            <sub>Документ: @Html.DisplayFor(modelItem => item.DocStatus.StatusName)</sub>
+                        </p>
+                        <p class="hint">@Html.DisplayFor(modelItem => item.Users.UserInf1.FirstOrDefault(p => p.UserID == item.UserID).FullName)</p>
+                        <p class="hint">@Html.DisplayFor(modelItem => item.Date)</p>
+                    </div>
+                    <ul class="features">
+                        <li><span class="fontawesome-cloud"></span>Сумма требования: @Html.DisplayFor(modelItem => item.SummOfremittance)</li>
+                        <li><span class="fontawesome-cog"></span>Код валюты: @Html.DisplayFor(modelItem => item.СurrencyCode)</li>
+                        <li><span class="fontawesome-star"></span>Банк получатель: @Html.DisplayFor(modelItem => item.Banks.Adress)</li>
+                        <li><span class="fontawesome-dashboard"></span>Цель отправления: @Html.DisplayFor(modelItem => item.PaymentPurpose)</li>
+                        @if (item.StatusId == 4)
                         {
-                                    <p>@Html.ActionLink("Редактировать", "Edit", new { id = item.PaymentRequirementsID }, new { @style = "color:#133037;" })</p>
+                            <li><span class="fontawesome-dashboard"></span>Причина отказа: @Html.DisplayFor(modelItem => item.Comment)</li>
+                        }
+                        else
+                        {
+                            <li><span><br/></span></li>
+                        }
+                    </ul>
+                    <div class="pt-footer">
+                        <p>@Html.ActionLink("Просмотреть", "Details", new { id = item.PaymentRequirementsID }, new { @style = "color:#133037;", @class = "compItem" })</p>
+                        @if (role == 5)
+                        {
+                            <p>@Html.ActionLink("Удалить", "Delete", new { id = item.PaymentRequirementsID }, new { @style = "color:#133037;", @class = "compItem" })</p>
 
                         }
-                        else{
-                                    <p>
-                                        <br />
-                                    </p>
+                        @if (item.StatusId == 4 || item.StatusId == 2)
+                        {
+                            <p>@Html.ActionLink("Редактировать", "Edit", new { id = item.PaymentRequirementsID }, new { @style = "color:#133037;", @class = "compItem" })</p>
+
+                        }
+                        else
+                        {
+                            <p>
+                                <br />
+                            </p>
                         }
 
 
-
-                            </div>
-                        </div>
-                        }
 
                     </div>
-                        </div>
+                </div>
+            }
+
+        </div>
+    </div>
 </body>
+
+
+

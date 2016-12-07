@@ -1,127 +1,141 @@
 ﻿@model EEBank.Models.PaymentRequirements
 
 @{
-    ViewBag.Title = "Удаление поручения №" + @Model.PaymentRequirementsID;
+    ViewBag.Title = "Удаление поручения №" + @Model.DocNumber;
 }
 
-<h2>Удалить поручение №@Model.PaymentRequirementsID</h2>
 
-<h3>Вы уверены что хотите удалить документ?</h3>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Дата создания
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dt>
-            Код валюты
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.СurrencyCode)
-        </dd>
-
-        <dt>
-            Сумма требования
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SummOfremittance)
-        </dd>
-
-        <dt>
-            Номер аккаунта
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AccountNumber)
-        </dd>
-
-        <dt>
-            Бенефициар
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Benficiar)
-        </dd>
-
-        <dt>
-            Код банка
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BankReceiver)
-        </dd>
-
-        <dt>
-            Цель требования
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PaymentPurpose)
-        </dd>
-
-        <dt>
-            Номер документа
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DocNumber)
-        </dd>
-
-        <dt>
-            УНП отправителя
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserUNP)
-        </dd>
-
-        <dt>
-            УНП получателя
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BankUNP)
-        </dd>
-
-        <dt>
-            Банк отправитель
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Banks.Adress)
-        </dd>
-
-        <dt>
-            Тип документа
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TypePaymentRequirements.TypeName)
-        </dd>
-
-        <dt>
-            ФИО отправителя
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Users.UserInf1.FirstOrDefault(p => p.UserID == model.UserID).FullName)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Уалить" class="btn btn-default" /> |
-            @Html.ActionLink("Вернуться к списку требований", "Index")
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h2>Удалить поручение №@Model.DocNumber</h2>
         </div>
-    }
-</div>
+        <h3>Вы уверены что хотите удалить документ?</h3>
+        <div>
+            <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        Дата создания
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Date)
+                    </dd>
+
+                    <dt>
+                        Статус документа
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.DocStatus.StatusName)
+                    </dd>
+
+                    <dt>
+                        Код валюты
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.СurrencyCode)
+                    </dd>
+
+                    <dt>
+                        Сумма требования
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.SummOfremittance)
+                    </dd>
+
+                    <dt>
+                        Номер аккаунта
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.AccountNumber)
+                    </dd>
+
+                    <dt>
+                        Бенефициар
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Benficiar)
+                    </dd>
+
+                    <dt>
+                        Код банка
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.BankReceiver)
+                    </dd>
+
+                    <dt>
+                        Цель требования
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentPurpose)
+                    </dd>
+
+                    <dt>
+                        Номер документа
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.DocNumber)
+                    </dd>
+
+                    <dt>
+                        УНП отправителя
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UserUNP)
+                    </dd>
+
+                    <dt>
+                        УНП получателя
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.BankUNP)
+                    </dd>
+
+                    <dt>
+                        Банк отправитель
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Banks.Adress)
+                    </dd>
+
+                    <dt>
+                        Тип документа
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.TypePaymentRequirements.TypeName)
+                    </dd>
+
+                    <dt>
+                        ФИО отправителя
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Users.UserInf1.FirstOrDefault(p => p.UserID == model.UserID).FullName)
+                    </dd>
+
+                </dl>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Уалить" class="btn btn-default" />
+                    </div>
+                }
+            </div>
+            </div>
+    </div>

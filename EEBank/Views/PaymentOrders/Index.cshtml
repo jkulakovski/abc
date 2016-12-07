@@ -119,10 +119,10 @@ var role = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault().R
             @Html.ActionLink("Просмотреть", "Details", new { id = item.PaymentOrderID })
         </td>
         <td>
-            @if (item.StatusID == 2 || item.StatusID == 4)
+            @if (role == 5)
             {
                 @Html.ActionLink("Редактировать", "Edit", new { id = item.PaymentOrderID })
-
+                @Html.ActionLink("Удалить", "Delete", new { id = item.PaymentOrderID })
             }
         </td>
     </tr>

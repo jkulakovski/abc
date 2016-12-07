@@ -67,7 +67,7 @@ namespace EEBank.Controllers
             {
                 return HttpNotFound();
             }
-            return View(paymentRequirements);
+            return PartialView(paymentRequirements);
         }
 
 
@@ -115,7 +115,7 @@ namespace EEBank.Controllers
             ViewBag.BankReceiver = new SelectList(db.Banks, "BankID", "BanckCode");
             ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress");
             ViewBag.TypeOfRequirements = new SelectList(db.TypePaymentRequirements, "TypeId", "TypeName");
-            return View();
+            return PartialView();
         }
 
 
@@ -157,7 +157,7 @@ namespace EEBank.Controllers
             ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress", paymentRequirements.Benficiar);
             ViewBag.TypeOfRequirements = new SelectList(db.TypePaymentRequirements, "TypeId", "TypeName", paymentRequirements.TypeOfRequirements);
 
-            return View(paymentRequirements);
+            return PartialView(paymentRequirements);
         }
         
         public ActionResult Create_by_manager()
@@ -171,7 +171,7 @@ namespace EEBank.Controllers
             ViewBag.TypeOfRequirements = new SelectList(db.TypePaymentRequirements, "TypeId", "TypeName");
             ViewBag.UserID = new SelectList(db.UserInf, "UserID", "FullName");
             ViewBag.AccountNumber = new SelectList(db.Users, "UserID", "UserID");
-            return View();
+            return PartialView();
         }
 
 
@@ -227,7 +227,7 @@ namespace EEBank.Controllers
             ViewBag.BankReceiver = new SelectList(db.Banks, "BankID", "BanckCode");
             ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress");
             ViewBag.TypeOfRequirements = new SelectList(db.TypePaymentRequirements, "TypeId", "TypeName");
-            return View(paymentRequirements);
+            return PartialView(paymentRequirements);
         }
 
         [HttpPost]
@@ -286,7 +286,7 @@ namespace EEBank.Controllers
             {
                 return HttpNotFound();
             }
-            return View(paymentRequirements);
+            return PartialView(paymentRequirements);
         }
 
 
