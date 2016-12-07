@@ -53,24 +53,25 @@ namespace EEBank.Controllers
             {
                 return HttpNotFound();
             }
-            return View(paymentOrder);
+            return PartialView(paymentOrder);
         }
 
         [HttpPost, ActionName("Details")]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "отклонить")]
-        public ActionResult Reject([Bind(Include = "Comment")] PaymentOrder paymentOrder)
+        [ValidateAntiForgeryToken]
+        public ActionResult Reject(PaymentOrder paymentOrder)
         {
-
-            var balans = db.UserInf.Where(p => p.UserID == paymentOrder.UserID).FirstOrDefault().Balans;
+            PaymentOrder doc = db.PaymentOrder.Find(paymentOrder.PaymentOrderID);
+            var balans = db.UserInf.Where(p =>p.UserID == doc.UserID).FirstOrDefault().Balans;
             if (paymentOrder.Summ > balans)
-                paymentOrder.StatusID = db.DocStatus.FirstOrDefault(p => p.StatusName == "Откленен").StatusId;
+                doc.StatusID = db.DocStatus.FirstOrDefault(p => p.StatusName == "Откленен").StatusId;
             else
             {
-                paymentOrder.StatusID = db.DocStatus.FirstOrDefault(p => p.StatusName == "Картотека №2").StatusId;
-                paymentOrder.Comment = "Недостаточно средств на счету";
+                doc.StatusID = db.DocStatus.FirstOrDefault(p => p.StatusName == "Картотека №2").StatusId;
+                doc.Comment = "Недостаточно средств на счету";
             }
                 
-            db.Entry(paymentOrder).State = EntityState.Modified;
+            db.Entry(doc).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
 
@@ -107,7 +108,7 @@ namespace EEBank.Controllers
             ViewBag.TypeOfPaymatOrder = new SelectList(db.TypeOfPaymentOrder, "TYpeId", "Name");
             ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress");
             ViewBag.PaymentTypeID = new SelectList(db.PaymentType, "PaymentTypeID", "PaymentName");
-            return View();
+            return PartialView();
         }
 
 
@@ -143,7 +144,7 @@ namespace EEBank.Controllers
             ViewBag.BankReceiver = new SelectList(db.Banks, "BankID", "Adress", paymentOrder.BankReceiver);
             ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress", paymentOrder.Benficiar);
             ViewBag.PaymentTypeID = new SelectList(db.PaymentType, "PaymentTypeID", "PaymentName", paymentOrder.PaymentOrderID);
-            return View(paymentOrder);
+            return PartialView(paymentOrder);
         }
 
         public ActionResult Create_by_manager()
@@ -159,7 +160,7 @@ namespace EEBank.Controllers
             ViewBag.PaymentTypeID = new SelectList(db.PaymentType, "PaymentTypeID", "PaymentName");
             ViewBag.UserID = new SelectList(db.UserInf, "UserID", "FullName");
             ViewBag.BankAccount = new SelectList(db.Users, "UserID", "UserID");
-            return View();
+            return PartialView();
         }
         [Authorize]
         [HttpPost]
@@ -207,16 +208,17 @@ namespace EEBank.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.BankCodeID = new SelectList(db.Banks, "BankID", "Adress", paymentOrder.BankCodeID);
+            ViewBag.BankCodeID = new SelectList(db.Banks, "BankID", "BanckCode", paymentOrder.BankCodeID);
+            ViewBag.BankReceiver = new SelectList(db.Banks, "BankID", "Adress", paymentOrder.BankReceiver);
             ViewBag.DocType = new SelectList(db.DocType, "DocTypeId", "DocName", paymentOrder.DocType);
             ViewBag.TypeOfPaymatOrder = new SelectList(db.TypeOfPaymentOrder, "TYpeId", "Name", paymentOrder.TypeOfPaymatOrder);
             ViewBag.UserID = new SelectList(db.Users, "UserId", "Email", paymentOrder.UserID);
-            return View(paymentOrder);
+            ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress", paymentOrder.Benficiar);
+            return PartialView(paymentOrder);
         }
 
-        // POST: PaymentOrders/Edit/5
-        // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
-        // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PaymentOrder paymentOrder, HttpPostedFileBase upload)
@@ -237,8 +239,11 @@ namespace EEBank.Controllers
                 paymentOrder.Benficiar = db.Banks.FirstOrDefault(p => p.BankID == id).Adress;
                 id = Convert.ToInt32(paymentOrder.BankReceiver);
                 paymentOrder.BankReceiver = db.Banks.FirstOrDefault(p => p.BankID == id).BanckCode;
-                if (paymentOrder.StatusID == 1)
+                if (paymentOrder.StatusID == 1){
                     paymentOrder.ManagerID = managers.ElementAt(index).ManagerID;
+                    paymentOrder.Comment = null;
+                }
+                    
                 else
                     paymentOrder.ManagerID = null;
 
@@ -274,7 +279,7 @@ namespace EEBank.Controllers
             {
                 return HttpNotFound();
             }
-            return View(paymentOrder);
+            return PartialView(paymentOrder);
         }
 
         // POST: PaymentOrders/Delete/5

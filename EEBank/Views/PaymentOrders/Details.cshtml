@@ -3,156 +3,140 @@
 @{
     ViewBag.Title = "Платежное поручение";
 }
-
 @{EEBankEntitie db = new EEBankEntitie();}
 @{var user = db.Users.Where(m => m.Email == User.Identity.Name).FirstOrDefault();}
-<h2>Патежные поручение</h2>
-
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Дата создания
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dt>
-            Курс валют
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ExchangeRates)
-        </dd>
-        <dt>
-            Сумма платежа
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Summ)
-        </dd>
-
-        <dt>
-            Банк получатель
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Banks.Adress)
-        </dd>
-
-        <dt>
-            Бенефициар
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Banks.Adress)
-        </dd>
-
-        <dt>
-            Номер счета
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BankAccount)
-        </dd>
-
-        <dt>
-            Назначение платежа
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PaymentPurpose)
-        </dd>
-
-        <dt>
-            УНП Отправителя
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserUNP)
-        </dd>
-
-        <dt>
-            УНП получателя
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ReceiverUNP)
-        </dd>
-
-        <dt>
-            Код платежа
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PaymentCode)
-        </dd>
-
-        <dt>
-            Код банка
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Banks.BanckCode)
-        </dd>
-
-        <dt>
-            тип документа
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DocType1.DocName)
-        </dd>
-
-        <dt>
-            Тип поручения
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TypeOfPaymentOrder.Name)
-        </dd>
-
-        <dt>
-            ФИО отправителя
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Users.UserInf1.Where(p => p.UserID == model.UserID).FirstOrDefault().FullName)
-        </dd>
-        <dt>
-            Менеджер банка
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FullInfManagers.FullName)
-        </dd>
-
-    </dl>
-    @if (user.RoleId == db.Roles.Where(m => m.RoleName == "Менеджер").FirstOrDefault().RoleId)
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h2>Патежные поручение</h2>
+    </div>
+    @using (Html.BeginForm("Details", "PaymentOrders", FormMethod.Post))
     {
-        <div class="form-group">
-            @Html.LabelFor(model => model.Comment, "Причина отказа", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.PaymentOrderID)
+            <div>
+                <div class="modal-body">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            Дата создания
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Date)
+                        </dd>
+                        <dt>
+                            Курс валют
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ExchangeRates)
+                        </dd>
+                        <dt>
+                            Сумма платежа
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Summ)
+                        </dd>
+                        <dt>
+                            Банк получатель
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Banks.Adress)
+                        </dd>
+                        <dt>
+                            Бенефициар
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Banks.Adress)
+                        </dd>
+                        <dt>
+                            Номер счета
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.BankAccount)
+                        </dd>
+                        <dt>
+                            Назначение платежа
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.PaymentPurpose)
+                        </dd>
+                        <dt>
+                            УНП Отправителя
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.UserUNP)
+                        </dd>
+                        <dt>
+                            УНП получателя
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ReceiverUNP)
+                        </dd>
+                        <dt>
+                            Код платежа
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.PaymentCode)
+                        </dd>
+                        <dt>
+                            Код банка
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Banks.BanckCode)
+                        </dd>
+                        <dt>
+                            тип документа
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.DocType1.DocName)
+                        </dd>
+                        <dt>
+                            Тип поручения
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.TypeOfPaymentOrder.Name)
+                        </dd>
+                        <dt>
+                            ФИО отправителя
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Users.UserInf1.Where(p => p.UserID == model.UserID).FirstOrDefault().FullName)
+                        </dd>
+                        <dt>
+                            Менеджер банка
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.FullInfManagers.FullName)
+                        </dd>
+                    </dl>
+                    @if (user.RoleId == db.Roles.Where(m => m.RoleName == "Менеджер").FirstOrDefault().RoleId)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Comment, "Причина отказа", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    }
+                </div>
+
+
+
+                @if (user.RoleId == 7)
+                {<div class="form-actions no-color">
+                    <input type="submit" name="action" value="отклонить" class="btn btn-default" /> |
+                    <input type="submit" name="action" value="принять" class="btn btn-default" /> |
+
+                </div> }
+
+
             </div>
         </div>
-
+    }
     }
 </div>
-@if (user.RoleId == db.Roles.Where(m => m.RoleName == "Менеджер").FirstOrDefault().RoleId)
-{
-    using (Html.BeginForm("Details", "PaymentOrders", FormMethod.Post))
-    {
-
-        <div class="form-actions no-color">
-            <input type="submit" name="action" value="отклонить" class="btn btn-default" /> |
-            <input type="submit" name="action" value="принять" class="btn btn-default" /> |
-
-        </div>
-    }
-}
-<p>
-    @Html.ActionLink("Вернуться к списку", "Index")
-</p>

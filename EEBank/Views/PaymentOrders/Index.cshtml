@@ -1,131 +1,124 @@
 ﻿@model IEnumerable<EEBank.Models.PaymentOrder>
 @using EEBank.Models;
 @{
-    ViewBag.Title = "Платежные требования";
+    ViewBag.Title = "Платежные поручение";
 }
 @{EEBankEntitie db = new EEBankEntitie();
 var role = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault().RoleId;
+Random rn = new Random();
 }
-<h2>Платежные требования</h2>
-
-@if (role == 5)
+@section scripts
 {
-    <p>
-        @Html.ActionLink("Создать новый", "Create")
-    </p>
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".compItem").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+    </script>
 }
+<link href="~/Content/tablestyle.css" type="text/css" rel="stylesheet">
 
-@if (role == 7)
-{
-    <p>
-        @Html.ActionLink("Создать новый", "Create_by_manager")
-    </p>
-}
-<table class="table">
-    <tr>
-        <th>
-            ФИО
-        </th>
-        <th>
-            Дата создания
-        </th>
-        <th>
-            Курс валют
-        </th>
-        <th>
-            Сумма платежа
-        </th>
-        <th>
-            Банк получатель
-        </th>
-        <th>
-            Бенефициар
-        </th>
-        <th>
-            Счет банка
-        </th>
-        <th>
-            Назначение платежа
-        </th>
-        <th>
-            УНП отправителя
-        </th>
-        <th>
-            УНП получателя
-        </th>
-        <th>
-            Код платежа
-        </th>
-        <th>
-            Тип платженого поручения
-        </th>
-        <th>
-            Статус платежа
-        </th>
-        <th>
-            Комментарий
-        </th>
-        
-        <th></th>
-    </tr>
+<body>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Users.UserInf1.Where(p => p.UserID == item.UserID).FirstOrDefault().FullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ExchangeRates)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Summ)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Banks.Adress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Banks.Adress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PaymentPurpose)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserUNP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReceiverUNP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PaymentCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TypeOfPaymentOrder.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DocStatus.StatusName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comment)
-        </td>
+    <div align="center" class=" wrapper">
+        <h2>Платежные поручение</h2>
+        @if (role == 5)
+        {
+            <p>
+                @Html.ActionLink("Создать новый", "Create", null, new { @class = "compItem" })
 
-        <td>
-
-            @Html.ActionLink("Просмотреть", "Details", new { id = item.PaymentOrderID })
-        </td>
-        <td>
-            @if (role == 5)
+            </p>
+        }
+        @if (role == 7)
+        {
+            <p>
+                @Html.ActionLink("Создать новый", "Create_by_manager", null, new { @class = "compItem" })
+            </p>
+        }
+        <div id="modDialog" class="modal fade">
+            <div id="dialogContent" class="modal-dialog"></div>
+        </div>
+        <div class="pricing-table group">
+            @foreach (var item in Model)
             {
-                @Html.ActionLink("Редактировать", "Edit", new { id = item.PaymentOrderID })
-                @Html.ActionLink("Удалить", "Delete", new { id = item.PaymentOrderID })
-            }
-        </td>
-    </tr>
-}
+                int i = rn.Next(1, 4);
+                string clas = "";
+                if (i == 1)
+                {
+                    clas += "personal";
+                }
+                if (i == 2)
+                {
+                    clas += "professional";
+                }
+                if (i == 3)
+                {
+                    clas += "business";
+                }
 
-</table>
+
+
+                <div class="block @clas fl">
+                    <h2 class="title">Платежное требование</h2>
+                    <div class="content">
+                        <p class="price">
+                            <sub>Документ: @Html.DisplayFor(modelItem => item.DocStatus.StatusName)</sub>
+                        </p>
+                        <p class="hint">@Html.DisplayFor(modelItem => item.Users.UserInf1.FirstOrDefault(p => p.UserID == item.UserID).FullName)</p>
+                        <p class="hint">@Html.DisplayFor(modelItem => item.Date)</p>
+                    </div>
+                    <ul class="features">
+                        <li><span class="fontawesome-cloud"></span>Сумма поручения: @Html.DisplayFor(modelItem => item.Summ)</li>
+                        <li><span class="fontawesome-cog"></span>Курс валюты: @Html.DisplayFor(modelItem => item.ExchangeRates)</li>
+                        <li><span class="fontawesome-star"></span>Банк получатель: @Html.DisplayFor(modelItem => item.Banks.Adress)</li>
+                        <li><span class="fontawesome-dashboard"></span>Цель отправления: @Html.DisplayFor(modelItem => item.PaymentPurpose)</li>
+                        @if (item.StatusID == 4)
+                        {
+                            <li><span class="fontawesome-dashboard"></span>Причина отказа: @Html.DisplayFor(modelItem => item.Comment)</li>
+                        }
+                        else
+                        {
+                            <li><span><br /></span></li>
+                        }
+                    </ul>
+                    <div class="pt-footer">
+                        <p>@Html.ActionLink("Просмотреть", "Details", new { id = item.PaymentOrderID }, new { @style = "color:#133037;", @class = "compItem" })</p>
+                        @if (role == 5)
+                        {
+                            <p>@Html.ActionLink("Удалить", "Delete", new { id = item.PaymentOrderID }, new { @style = "color:#133037;", @class = "compItem" })</p>
+
+                        }
+                        @if (item.StatusID == 4 || item.StatusID == 2)
+                        {
+                            <p>@Html.ActionLink("Редактировать", "Edit", new { id = item.PaymentOrderID }, new { @style = "color:#133037;", @class = "compItem" })</p>
+
+                        }
+                        else
+                        {
+                            <p>
+                                <br />
+                            </p>
+                        }
+
+
+
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</body>
+
+
+
+
+
