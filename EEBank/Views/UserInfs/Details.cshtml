@@ -1,17 +1,15 @@
 ﻿@model EEBank.Models.UserInf
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Профиль";
 }
 
-<h2>Details</h2>
+<h2>Номер счета №@Model.AccountNumber</h2>
 
 <div>
-    <h4>UserInf</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FullName)
+            ФИО
         </dt>
 
         <dd>
@@ -19,7 +17,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            Email
         </dt>
 
         <dd>
@@ -27,7 +25,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Password)
+            Пароль
         </dt>
 
         <dd>
@@ -35,40 +33,17 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Phone)
+            Телефон
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Phone)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AccountNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AccountNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ECP)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ECP)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Users1.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Users1.Email)
-        </dd>
-
+       
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UserInfID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Сменить пароль", "Edit", new { id = Model.UserInfID }) |
+    @Html.ActionLink("На главную", "Index", "Home");
 </p>
