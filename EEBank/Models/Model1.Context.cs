@@ -39,5 +39,8 @@ namespace EEBank.Models
         public virtual DbSet<DocStatus> DocStatus { get; set; }
         public virtual DbSet<ArchivePaymentRequirements> ArchivePaymentRequirements { get; set; }
         public virtual DbSet<PaymentType> PaymentType { get; set; }
+        public virtual DbSet<ArchiveFreeFormatDoc> ArchiveFreeFormatDoc { get; set; }
+        public virtual DbSet<ArchivePaymentOrders> ArchivePaymentOrders { get; set; }
+        public virtual DbSet<log_error> log_error { get; set; }
     }
 }

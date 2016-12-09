@@ -178,7 +178,7 @@ namespace EEBank.Controllers
         public ActionResult Add_User()
         {
             ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "RoleName");
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
@@ -210,7 +210,7 @@ namespace EEBank.Controllers
                     return RedirectToAction("Create", "FullInfManagers");
             }
             ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "RoleName", users.RoleId);
-            return View(users);
+            return PartialView(users);
         }
 
 

@@ -14,7 +14,6 @@
 
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.TypeOfPaymatOrder, "Тип платежного поручения", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -22,7 +21,6 @@
                         @Html.ValidationMessageFor(model => model.TypeOfPaymatOrder, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.ExchangeRates, "Курс валют", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -102,8 +100,8 @@
                         <input type="submit" value="Создать" class="btn btn-default" />
                     </div>
                 </div>
-
-                }
             </div>
-        </div>
+
+        }
     </div>
+</div>

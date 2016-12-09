@@ -3,11 +3,15 @@
 @{
     ViewBag.Title = "Создать пользователя";
 }
-
+<style>
+    body {
+        background: url('http://nz4.ru/wp-content/uploads/2014/12/94.jpg');
+    }
+</style>
 <h2>Создать пользователя</h2>
 
 <p>
-    @Html.ActionLink("Добавить пользователя", "Add_User","Account")
+    @Html.ActionLink("Добавить пользователя", "Add_User","Account",new{ @class = "compItem" })
 </p>
 <table class="table">
     <tr>

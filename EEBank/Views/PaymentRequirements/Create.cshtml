@@ -16,7 +16,6 @@
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.TypeOfRequirements, "Тип платежного требования", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -38,7 +37,6 @@
                         @Html.ValidationMessageFor(model => model.SummOfremittance, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.BankID, "Банк", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -82,7 +80,6 @@
                         @Html.ValidationMessageFor(model => model.BankUNP, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.StatusId, "Подписать документ", htmlAttributes: new { @class = "control-label col-md-2" })
                     <input type="file" name="upload" /><br>
@@ -92,8 +89,8 @@
                         <input type="submit" value="Создать" class="btn btn-default" />
                     </div>
                 </div>
-
-                }
             </div>
-        </div>
+
+        }
     </div>
+</div>

@@ -58,6 +58,7 @@ html {
 
 body {
   margin: 0;
+  background: url('http://nz4.ru/wp-content/uploads/2014/12/94.jpg')
 }
 
 a:focus {
@@ -314,7 +315,7 @@ body {
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
-  background-color: #ffffff;
+  background: #fff;
 }
 
 input,

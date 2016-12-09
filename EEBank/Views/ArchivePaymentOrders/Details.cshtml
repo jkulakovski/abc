@@ -1,0 +1,108 @@
+﻿@model EEBank.Models.ArchivePaymentOrders
+
+@{
+    ViewBag.Title = "Патежные поручение";
+}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h2>Патежные поручение</h2>
+    </div>
+    <div class="modal-body">
+        <dl class="dl-horizontal">
+            <dt>
+                Дата создания
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.Date)
+            </dd>
+            <dt>
+                Курс валют
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.ExchangeRates)
+            </dd>
+            <dt>
+                Сумма платежа
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.Summ)
+            </dd>
+            <dt>
+                Банк получатель
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.Banks.Adress)
+            </dd>
+            <dt>
+                Бенефициар
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.Benficiar)
+            </dd>
+            <dt>
+                Номер счета
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.BankAccount)
+            </dd>
+            <dt>
+                Назначение платежа
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.PaymentPurpose)
+            </dd>
+            <dt>
+                УНП Отправителя
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.UserUNP)
+            </dd>
+            <dt>
+                УНП получателя
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.ReceiverUNP)
+            </dd>
+            <dt>
+                Код платежа
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.PaymentCode)
+            </dd>
+            <dt>
+                Код банка
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.Banks.BanckCode)
+            </dd>
+            <dt>
+                тип документа
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.DocType1.DocName)
+            </dd>
+            <dt>
+                Тип поручения
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.TypeOfPaymentOrder.Name)
+            </dd>
+            <dt>
+                ФИО отправителя
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.Users.UserInf1.Where(p => p.UserID == model.PaymentOrder.UserID).FirstOrDefault().FullName)
+            </dd>
+            <dt>
+                Менеджер банка
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PaymentOrder.FullInfManagers.FullName)
+            </dd>
+        </dl>
+
+    </div>
+</div>
+

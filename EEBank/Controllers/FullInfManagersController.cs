@@ -30,14 +30,14 @@ namespace EEBank.Controllers
             {
                 return HttpNotFound();
             }
-            return View(fullInfManagers);
+            return PartialView(fullInfManagers);
         }
 
         // GET: FullInfManagers/Create
         public ActionResult Create()
         {
             ViewBag.BankID = new SelectList(db.Banks, "BankID", "Adress");
-            return View();
+            return PartialView();
         }
 
         // POST: FullInfManagers/Create
@@ -76,7 +76,7 @@ namespace EEBank.Controllers
             }
 
             ViewBag.BankID = new SelectList(db.Banks, "BankID", "Adress", fullInfManagers.BankID);
-            return View(new_userinf);
+            return PartialView(new_userinf);
         }
 
         // GET: FullInfManagers/Edit/5
@@ -93,7 +93,7 @@ namespace EEBank.Controllers
             }
             ViewBag.BankID = new SelectList(db.Banks, "BankID", "Adress", fullInfManagers.BankID);
             ViewBag.RoleID = new SelectList(db.Roles, "RoleId", "RoleName", fullInfManagers.RoleID);
-            return View(fullInfManagers);
+            return PartialView(fullInfManagers);
         }
 
         // POST: FullInfManagers/Edit/5
@@ -126,7 +126,7 @@ namespace EEBank.Controllers
             {
                 return HttpNotFound();
             }
-            return View(fullInfManagers);
+            return PartialView(fullInfManagers);
         }
 
         // POST: FullInfManagers/Delete/5

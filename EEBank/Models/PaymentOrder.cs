@@ -14,6 +14,11 @@ namespace EEBank.Models
     
     public partial class PaymentOrder
     {
+        public PaymentOrder()
+        {
+            this.ArchivePaymentOrders = new HashSet<ArchivePaymentOrders>();
+        }
+    
         public int PaymentOrderID { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<int> TypeOfPaymatOrder { get; set; }
@@ -41,5 +46,6 @@ namespace EEBank.Models
         public virtual DocStatus DocStatus { get; set; }
         public virtual FullInfManagers FullInfManagers { get; set; }
         public virtual PaymentType PaymentType { get; set; }
+        public virtual ICollection<ArchivePaymentOrders> ArchivePaymentOrders { get; set; }
     }
 }

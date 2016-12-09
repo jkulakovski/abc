@@ -30,7 +30,7 @@ namespace EEBank.Controllers
             }
             if (user.RoleId == 6)
             {
-                var freeFormatDoc = db.FreeFormatDoc.Include(p => p.Users);
+                var freeFormatDoc = db.FreeFormatDoc.Include(p => p.Users).Where(p => p.StatusID != 3).OrderByDescending(p => p.Date);
                 return View(freeFormatDoc.ToList());
             }
             else
@@ -84,6 +84,10 @@ namespace EEBank.Controllers
             freeFormatDoc.StatusID = 3;
             freeFormatDoc.Comment = null;
             db.Entry(freeFormatDoc).State = EntityState.Modified;
+            db.SaveChanges();
+            ArchiveFreeFormatDoc archive = new ArchiveFreeFormatDoc();
+            archive.FreeFormatDocID = freeFormatDoc.FreeFormatDocID;
+            db.ArchiveFreeFormatDoc.Add(archive);
             db.SaveChanges();
             return RedirectToAction("Index");
 

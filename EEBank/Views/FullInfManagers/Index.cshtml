@@ -1,39 +1,70 @@
 ﻿@model IEnumerable<EEBank.Models.FullInfManagers>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Менеджеры";
 }
+<style>
+    body {
+        background: url('http://nz4.ru/wp-content/uploads/2014/12/94.jpg');
+    }
+</style>
+@section scripts
+{
+    <script type="text/javascript">
 
-<h2>Index</h2>
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".compItem").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+    </script>
+}
+<h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить пользователя", "Add_User", "Account",null, new { @class = "compItem" })
 </p>
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FullName)
+            Должность
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+           Индефикационный номер
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ECP)
+            ФИО
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OpenKey)
+            Email
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Banks.Adress)
+            Открытый ключ
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Roles.RoleName)
+            Филиал банка
         </th>
+        
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Roles.RoleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ManagerID)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.FullName)
         </td>
@@ -41,23 +72,18 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ECP)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.OpenKey)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Banks.Adress)
         </td>
+        
         <td>
-            @Html.DisplayFor(modelItem => item.Roles.RoleName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ManagerID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ManagerID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ManagerID })
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.ManagerID }, new { @class = "compItem" }) |
+            @Html.ActionLink("Удалить", "Delete", new { id = item.ManagerID }, new { @class = "compItem" })
         </td>
     </tr>
 }
 
 </table>
+

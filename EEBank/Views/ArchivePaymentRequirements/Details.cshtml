@@ -1,0 +1,109 @@
+﻿@model EEBank.Models.ArchivePaymentRequirements
+
+@{
+    ViewBag.Title = "Платежное поручение";
+}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h2>Платежное поручение</h2>
+    </div>
+
+    <div>
+            <div class="modal-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        ФИО отправителя
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.Users.UserInf1.Where(p => p.UserID == model.PaymentRequirements.UserID).FirstOrDefault().FullName)
+                    </dd>
+                    <dt>
+                        Дата создания документа
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.Date)
+                    </dd>
+                    <dt>
+                        Код валюты
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.СurrencyCode)
+                    </dd>
+                    <dt>
+                        Сумма перевода
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.SummOfremittance)
+                    </dd>
+                    <dt>
+                        Номер аккаунта
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.AccountNumber)
+                    </dd>
+                    <dt>
+                        Банк получатель
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.Banks.Adress)
+                    </dd>
+                    <dt>
+                        Бенефициар
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.Benficiar)
+                    </dd>
+                    <dt>
+                        Банк отправитель
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.BankReceiver)
+                    </dd>
+                    <dt>
+                        Цель отправления
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.PaymentPurpose)
+                    </dd>
+                    <dt>
+                        Номер документа
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.DocNumber)
+                    </dd>
+                    <dt>
+                        УНП отправителя
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.UserUNP)
+                    </dd>
+                    <dt>
+                        УНП банка
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.BankUNP)
+                    </dd>
+                    <dt>
+                        Документ
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.DocType1.DocName)
+                    </dd>
+                    <dt>
+                        Тип платежного поручения
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.TypePaymentRequirements.TypeName)
+                    </dd>
+                    <dt>
+                        Менеджер
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.FullInfManagers.FullName)
+                    </dd>
+                </dl>
+            </div>
+     </div>
+</div>

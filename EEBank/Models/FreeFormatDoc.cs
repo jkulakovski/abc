@@ -14,6 +14,11 @@ namespace EEBank.Models
     
     public partial class FreeFormatDoc
     {
+        public FreeFormatDoc()
+        {
+            this.ArchiveFreeFormatDoc = new HashSet<ArchiveFreeFormatDoc>();
+        }
+    
         public int FreeFormatDocID { get; set; }
         public Nullable<int> DocTypeID { get; set; }
         public string Document { get; set; }
@@ -27,5 +32,6 @@ namespace EEBank.Models
         public virtual FullInfManagers FullInfManagers { get; set; }
         public virtual Users Users { get; set; }
         public virtual DocStatus DocStatus { get; set; }
+        public virtual ICollection<ArchiveFreeFormatDoc> ArchiveFreeFormatDoc { get; set; }
     }
 }

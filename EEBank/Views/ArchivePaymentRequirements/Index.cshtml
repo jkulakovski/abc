@@ -1,0 +1,111 @@
+﻿@model IEnumerable<EEBank.Models.ArchivePaymentRequirements>
+
+@{
+    ViewBag.Title = "Архив платежных требований";
+}
+
+<style>
+    body {
+        background: url('http://99px.ru/sstorage/53/2014/04/tmb_100436_4458.jpg');
+    }
+</style>
+
+<h2>@ViewBag.Title</h2>  
+
+
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            ФИО отправителя
+        </th>
+        <th>
+            Дата создания документа
+        </th>
+        <th>
+            Код валюты
+        </th>
+        <th>
+            Сумма перевода
+        </th>
+        <th>
+            Номер аккаунта
+        </th>
+        <th>
+            Банк получатель
+        </th>
+        <th>
+            Бенефициар
+        </th>
+        <th>
+            Цель отправления
+        </th>
+        <th>
+            УНП отправителя
+        </th>
+        <th>
+            УНП банка
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentRequirements.Users.UserInf1.Where(p => p.UserID == item.PaymentRequirements.UserID).FirstOrDefault().FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentRequirements.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentRequirements.СurrencyCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentRequirements.SummOfremittance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentRequirements.AccountNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentRequirements.Banks.Adress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentRequirements.Benficiar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentRequirements.PaymentPurpose)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentRequirements.UserUNP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentRequirements.BankUNP)
+        </td>
+        <td>
+            @Html.ActionLink("Просмотреть", "Details", new { id = item.ArchivePaymentRequirementsId }, new { @class = "compItem" })
+        </td>
+    </tr>
+}
+
+</table>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".compItem").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+    </script>
+}

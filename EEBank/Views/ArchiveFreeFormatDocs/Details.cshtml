@@ -1,0 +1,46 @@
+﻿@model EEBank.Models.ArchiveFreeFormatDoc
+
+@{
+    ViewBag.Title = "Документ свободного формата";
+}
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h2>Документ свободного формата</h2>
+    </div>
+
+    <div class="modal-body">
+        <dl class="dl-horizontal">
+            <dt>
+                ФИО отправителя
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FreeFormatDoc.Users.UserInf1.FirstOrDefault(p => p.UserID == model.FreeFormatDoc.UserID).FullName))
+            </dd>
+            <dt>
+                Дата создания
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FreeFormatDoc.Date)
+            </dd>
+            <dt>
+                Содержание документа
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FreeFormatDoc.Document)
+            </dd>
+
+            <dt>
+                ФИО менеджера
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FreeFormatDoc.FullInfManagers.FullName)
+            </dd>
+
+        </dl>
+    </div>
+</div>

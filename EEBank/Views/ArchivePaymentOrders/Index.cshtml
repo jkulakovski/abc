@@ -1,0 +1,101 @@
+﻿@model IEnumerable<EEBank.Models.ArchivePaymentOrders>
+
+@{
+    ViewBag.Title = "Платежное поручение";
+}
+<style>
+    body {
+        background: url('http://99px.ru/sstorage/53/2014/04/tmb_100436_4458.jpg');
+    }
+</style>
+
+<h2>Платежное поручение</h2>
+
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            ФИО отправителя
+        </th>
+        <th>
+            Дата создания
+        </th>
+        <th>
+            Курс валют
+        </th>
+        <th>
+            Сумма платежа
+        </th>
+        <th>
+            Банк получатель
+        </th>
+        <th>
+            Бенефициар
+        </th>
+        <th>
+            Назначение платежа
+        </th>
+        <th>
+            Код платежа
+        </th>
+        <th>
+            Тип поручения
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentOrder.Users.UserInf1.FirstOrDefault(p => p.UserID == item.PaymentOrder.UserID).FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentOrder.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentOrder.ExchangeRates)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentOrder.Summ)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentOrder.Banks.Adress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentOrder.Benficiar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentOrder.PaymentPurpose)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentOrder.PaymentCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentOrder.TypeOfPaymentOrder.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Просмотреть", "Details", new { id = item.ArchivePaymentOrderID }, new {@class = "compItem" }) 
+        </td>
+    </tr>
+}
+
+</table>
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".compItem").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+    </script>
+}

@@ -12,7 +12,11 @@ namespace EEBank.Controllers
         {
             return View();
         }
-
+        [Authorize]
+        public ActionResult Archive_Index()
+        {
+            return View();
+        }
         public ActionResult About()
         {
             return View();

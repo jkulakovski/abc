@@ -31,7 +31,7 @@ namespace EEBank.Controllers
             }
             if (user.RoleId == 6)
             {
-                var paymentOrder = db.PaymentOrder.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.Users);
+                var paymentOrder = db.PaymentOrder.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.Users).Where(p => p.StatusID != 3).OrderByDescending(p => p.Date);
                 return View(paymentOrder.ToList());
             }
             else
@@ -82,12 +82,17 @@ namespace EEBank.Controllers
         public ActionResult Accept(int id)
         {
             PaymentOrder paymentOrder = db.PaymentOrder.Find(id);
+            ArchivePaymentOrders archive = new ArchivePaymentOrders();
            
             var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name).UserInf1.FirstOrDefault(p => p.UserID == paymentOrder.UserID);
             if (user.Balans >= paymentOrder.Summ)
             {
                 paymentOrder.StatusID = 3;
                 user.Balans = user.Balans - paymentOrder.Summ;
+                archive.PaymentOrderID = paymentOrder.PaymentOrderID;
+                db.ArchivePaymentOrders.Add(archive);
+                db.SaveChanges();
+
             }
             db.Entry(paymentOrder).State = EntityState.Modified;
             db.SaveChanges();

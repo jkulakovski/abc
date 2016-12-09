@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<EEBank.Models.Users>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Добавить профиль";
 }
 
-<h2>Index</h2>
+<h2>Добавить пользователя</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Добавить пользователя", "Add_User", "Account")
 </p>
 <table class="table">
     <tr>
@@ -29,9 +29,8 @@
             @Html.DisplayFor(modelItem => item.Password)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.UserId }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.UserId })
         </td>
     </tr>
 }

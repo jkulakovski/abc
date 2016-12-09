@@ -44,7 +44,7 @@ namespace EEBank.Controllers
             }
             if (user.RoleId == 6)
             {
-                var paymentRequirements = db.PaymentRequirements.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.TypePaymentRequirements).Include(p => p.Users);
+                var paymentRequirements = db.PaymentRequirements.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.TypePaymentRequirements).Include(p => p.Users).Where(p => p.StatusId != 3).OrderByDescending(p => p.Date);
                 return View(paymentRequirements.ToList());
             }
             else

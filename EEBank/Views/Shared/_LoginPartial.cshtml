@@ -1,52 +1,53 @@
 ﻿@using Microsoft.AspNet.Identity
 @using EEBank.Models
 @{ EEBankEntitie db = new EEBankEntitie();
-var user = db.Users.Where(m => m.Email == User.Identity.Name).FirstOrDefault(); }
+ var user = db.Users.Where(m => m.Email == User.Identity.Name).FirstOrDefault(); }
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <link rel="stylesheet" type="text/css" href="~/Content/select_button/css/select_style.css" />
-    <ul class="nav navbar-nav navbar-right">
-        <li>               
-            
+        <link rel="stylesheet" type="text/css" href="~/Content/select_button/css/select_style.css" />
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+
                 <div class="container">
                     <section class="main">
                         <div class="wrapper-demo">
                             <div id="dd" class="wrapper-dropdown" tabindex="1">
                                 @User.Identity.Name
                                 <ul class="dropdown">
-                                    
-                                @if (User.Identity.IsAuthenticated && user.RoleId == 5)
-                                {
-                                    <li>
-                                        @Html.ActionLink("Профиль", "Details", "UserInfs")
-                                    </li>
-                                    <li>@Html.ActionLink("Мои документы", "Index", "DocTypes")</li>
-                                }
-                                @if (User.Identity.IsAuthenticated && user.RoleId == 7)
-                                {
-                                    <li>
-                                        @Html.ActionLink("Профиль", "Details", "FullInfManagers")
-                                    </li>
-                                    <li>@Html.ActionLink("Входящие документы", "Index", "DocTypes")</li>
-                                }
-                                
+
+                                    @if (User.Identity.IsAuthenticated && user.RoleId == 5)
+                                    {
+                                        <li>
+                                            @Html.ActionLink("Профиль", "Details", "UserInfs")
+                                        </li>
+                                        <li>@Html.ActionLink("Мои документы", "Archive_Index", "DocTypes")</li>
+
+    <li>@Html.ActionLink("Архив", "Archive_Index", "Home")</li>
+                                    }
+                                    @if (User.Identity.IsAuthenticated && user.RoleId == 7)
+                                    {
+                                        <li>
+                                            @Html.ActionLink("Профиль", "Details", "FullInfManagers")
+                                        </li>
+                                        <li>@Html.ActionLink("Входящие документы", "Index", "DocTypes")</li>
+                                        <li>@Html.ActionLink("Архив", "Archive_Index", "Home")</li>
+                                    }
                                 </ul>
                             </div>
                         </div>
                     </section>
-
                 </div>
-                
-        </li>
-        <li class="nav navbar-nav">
-            @Html.ActionLink("О нас", "About", "Home")
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
-    </ul>
+
+            </li>
+            <li class="nav navbar-nav">
+                @Html.ActionLink("О нас", "About", "Home")
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
+        </ul>
     }
 }
 else
@@ -59,7 +60,6 @@ else
         </li>
     </ul>
 }
-
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script type="text/javascript">
 

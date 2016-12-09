@@ -1,5 +1,4 @@
 ﻿@using EEBank.Models
-@model EEBank.Models.UserInf
 
 
 <!DOCTYPE html>
@@ -28,9 +27,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @{ EEBankEntitie db = new EEBankEntitie();}
-                    @{var user = db.Users.FirstOrDefault(m => m.Email == User.Identity.Name); }
+                   
+                        @{var user = db.Users.FirstOrDefault(m => m.Email == User.Identity.Name); }
 
-                    <li class="balans">Баланс @Html.DisplayFor(model => user.UserInf1.FirstOrDefault(p => p.Email == User.Identity.Name).Balans)</li>
                     @if (User.Identity.IsAuthenticated  && user.RoleId == 6) 
                     {
                         <li>@Html.ActionLink("Пользователи", "Index", "UserInfs")</li>

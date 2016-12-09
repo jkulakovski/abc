@@ -41,6 +41,11 @@
         <AssociationConnector Association="EEBankModel.FK_FreeFormatDoc_FullInfManagers_ManagerID" />
         <AssociationConnector Association="EEBankModel.FK_FreeFormatDoc_Users_UserId" />
         <AssociationConnector Association="EEBankModel.FK_FreeFormatDoc_DocStatus_StatusId" />
+        <EntityTypeShape EntityType="EEBankModel.ArchiveFreeFormatDoc" PointX="5.25" PointY="19.875" Width="1.5" />
+        <EntityTypeShape EntityType="EEBankModel.ArchivePaymentOrders" PointX="8.25" PointY="7.625" Width="1.5" />
+        <EntityTypeShape EntityType="EEBankModel.log_error" PointX="8.375" PointY="3.75" Width="1.5" />
+        <AssociationConnector Association="EEBankModel.FK__ArchiveFr__FreeF__73852659" />
+        <AssociationConnector Association="EEBankModel.FK__ArchivePa__Payme__70A8B9AE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

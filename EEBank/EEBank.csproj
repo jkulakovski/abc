@@ -187,6 +187,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ArchiveFreeFormatDocsController.cs" />
+    <Compile Include="Controllers\ArchivePaymentOrdersController.cs" />
+    <Compile Include="Controllers\ArchivePaymentRequirementsController.cs" />
     <Compile Include="Controllers\BanksController.cs" />
     <Compile Include="Controllers\DocTypesController.cs" />
     <Compile Include="Controllers\FreeFormatDocsController.cs" />
@@ -203,6 +206,12 @@
     <Compile Include="Methods\ECP.cs" />
     <Compile Include="Methods\Get_ecp.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ArchiveFreeFormatDoc.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArchivePaymentOrders.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ArchivePaymentRequirements.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -222,6 +231,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\log_error.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
@@ -348,12 +360,12 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Home\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Home\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Home\Manage\Index.cshtml" />
+    <Content Include="Views\Home\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Home\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Home\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
@@ -400,6 +412,16 @@
     <Content Include="Views\FreeFormatDocs\Edit.cshtml" />
     <Content Include="Views\FreeFormatDocs\Index.cshtml" />
     <Content Include="Views\FreeFormatDocs\Create_by_manager.cshtml" />
+    <Content Include="Views\ArchivePaymentOrders\Delete.cshtml" />
+    <Content Include="Views\ArchivePaymentOrders\Details.cshtml" />
+    <Content Include="Views\ArchivePaymentOrders\Index.cshtml" />
+    <Content Include="Views\ArchiveFreeFormatDocs\Delete.cshtml" />
+    <Content Include="Views\ArchiveFreeFormatDocs\Details.cshtml" />
+    <Content Include="Views\ArchiveFreeFormatDocs\Index.cshtml" />
+    <Content Include="Views\Home\Archive_Index.cshtml" />
+    <Content Include="Views\ArchivePaymentRequirements\Delete.cshtml" />
+    <Content Include="Views\ArchivePaymentRequirements\Details.cshtml" />
+    <Content Include="Views\ArchivePaymentRequirements\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
