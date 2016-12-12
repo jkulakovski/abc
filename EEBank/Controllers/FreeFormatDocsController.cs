@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using EEBank.Models;
 using EEBank.Methods;
 using System.IO;
+using Exel = Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
 
 namespace EEBank.Controllers
 {
@@ -40,6 +42,43 @@ namespace EEBank.Controllers
             }
         }
 
+
+        public ActionResult Export()
+        {
+                Exel.Application application = new Exel.Application();
+                Exel.Workbook workbook = application.Workbooks.Add(System.Reflection.Missing.Value);
+                Exel.Worksheet worksheet = workbook.ActiveSheet;
+                var docs = db.FreeFormatDoc.Where(p => p.Users.Email == User.Identity.Name).Where(p =>p.StatusID == 3).Where(p => p.Date.Month >= p.Date.Month - 1 ).ToList();
+                worksheet.Cells[1, 1] = "Дата создания";
+                worksheet.Cells[1, 2] = "Документ";
+                worksheet.Cells[1, 3] = "Менеджер";
+                int row = 2;
+                foreach (FreeFormatDoc doc in docs)
+                {
+                    worksheet.Cells[row, 1] = doc.Date.ToString("MM/dd/yyyy");
+                    worksheet.Cells[row, 2] = doc.Document;
+                    worksheet.Cells[row, 3] = doc.FullInfManagers.FullName;
+                    row ++;
+                }
+                worksheet.get_Range("A1", "C1").EntireColumn.AutoFit();
+
+                var head = worksheet.get_Range("A1", "C1");
+                head.Font.Bold = true;
+                head.Font.Color = System.Drawing.Color.Blue;
+                head.Font.Size = 13;
+
+                workbook.SaveAs("L:\\extract.xls");
+                workbook.Close();
+                Marshal.ReleaseComObject(workbook);
+
+                application.Quit();
+                Marshal.FinalReleaseComObject(application);
+
+                Response.AddHeader("Content-Disposition", "attachment;filename=extract.xls");
+                Response.WriteFile("L:\\extract.xls");
+                Response.End();
+                return null;
+        }
         // GET: FreeFormatDocs/Details/5
       
         public ActionResult Details(int? id)

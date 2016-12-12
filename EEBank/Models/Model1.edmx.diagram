@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c0febad267d44a61b3770c1582910e01" Name="Diagram1" ZoomLevel="69">
+      <Diagram DiagramId="c0febad267d44a61b3770c1582910e01" Name="Diagram1" ZoomLevel="66">
         <EntityTypeShape EntityType="EEBankModel.Banks" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EEBankModel.DocType" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EEBankModel.FreeFormatDoc" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
@@ -46,6 +46,8 @@
         <EntityTypeShape EntityType="EEBankModel.log_error" PointX="8.375" PointY="3.75" Width="1.5" />
         <AssociationConnector Association="EEBankModel.FK__ArchiveFr__FreeF__73852659" />
         <AssociationConnector Association="EEBankModel.FK__ArchivePa__Payme__70A8B9AE" />
+        <EntityTypeShape EntityType="EEBankModel.Currency" Width="1.5" PointX="9.375" PointY="0.75" />
+        <AssociationConnector Association="EEBankModel.FK_UserInf_Currency_CurrencyId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -7,47 +7,46 @@
 @{
     ViewBag.Title = "Профиль";
 }
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h2>Номер счета №@Model.AccountNumber</h2>
+    </div>
+    <div>
+        <div class="modal-body">
+            <dl class="dl-horizontal">
+                <dt>
+                    Код валюты
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Currency.CurrencyName)
+                </dd>
+                <dt>
+                    ФИО
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.FullName)
+                </dd>
+                <dt>
+                    Email
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt>
+                    Баланс
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Balans)
+                </dd>
+                <dt>
+                    Телефон
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Phone)
+                </dd>
 
-<h2>Номер счета №@Model.AccountNumber</h2>
-
-<div>
-    <dl class="dl-horizontal">
-        <dt>
-            ФИО
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
-
-        <dt>
-            Email
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            Пароль
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-
-        <dt>
-            Телефон
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-
-       
-    </dl>
+            </dl>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Сменить пароль", "Edit", new { id = Model.UserInfID }) |
-    @Html.ActionLink("На главную", "Index", "Home");
-</p>

@@ -37,6 +37,8 @@ Random rn = new Random();
         {
             <p>
                 @Html.ActionLink("Создать новый", "Create",null, new { @class = "compItem" })
+                |
+                @Html.ActionLink("Сделать выписку за последний месяц", "Export")
 
             </p>
         }

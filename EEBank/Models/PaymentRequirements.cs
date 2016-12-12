@@ -20,7 +20,7 @@ namespace EEBank.Models
         }
     
         public int PaymentRequirementsID { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public System.DateTime Date { get; set; }
         public Nullable<int> TypeOfRequirements { get; set; }
         public Nullable<int> DocType { get; set; }
         public string СurrencyCode { get; set; }

@@ -49,6 +49,9 @@
     <Reference Include="Microsoft.Data.OData, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.OData.5.6.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="SampleData">
       <HintPath>..\packages\SampleData.1.2.2\lib\net40\SampleData.dll</HintPath>
     </Reference>
@@ -223,6 +226,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Banks.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Currency.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DocStatus.cs">
@@ -429,6 +435,10 @@
     <Content Include="Views\ArchivePaymentRequirements\Delete.cshtml" />
     <Content Include="Views\ArchivePaymentRequirements\Details.cshtml" />
     <Content Include="Views\ArchivePaymentRequirements\Index.cshtml" />
+    <Content Include="Views\FreeFormatDocs\Export.cshtml" />
+    <Content Include="Views\UserInfs\Add_new_account.cshtml" />
+    <Content Include="Views\UserInfs\Account_Index.cshtml" />
+    <Content Include="Views\UserInfs\Null.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

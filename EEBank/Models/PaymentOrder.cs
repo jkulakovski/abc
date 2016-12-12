@@ -20,7 +20,7 @@ namespace EEBank.Models
         }
     
         public int PaymentOrderID { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public System.DateTime Date { get; set; }
         public Nullable<int> TypeOfPaymatOrder { get; set; }
         public Nullable<int> DocType { get; set; }
         public Nullable<int> ExchangeRates { get; set; }

@@ -18,8 +18,25 @@ namespace EEBank.Controllers
         // GET: UserInfs
         public ActionResult Index()
         {
-            var userInf = db.UserInf.Include(u => u.Users1);
-            return View(userInf.ToList());
+                var userInf = db.UserInf.Include(u => u.Users1);
+                return View(userInf.ToList());
+            
+        }
+
+        public ActionResult Account_Index()
+        {
+            var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);
+            if (user.RoleId == 5)
+            {
+                var userInf = db.UserInf.Include(u => u.Users1).Where(p => p.Email == User.Identity.Name);
+                return View(userInf.ToList());
+            }
+            else
+            {
+                var userInf = db.UserInf.Include(u => u.Users1);
+                return View(userInf.ToList());
+            }
+
         }
 
         // GET: UserInfs/Details/5
@@ -31,7 +48,7 @@ namespace EEBank.Controllers
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return PartialView(user);
         }
 
         // GET: UserInfs/Create
@@ -73,7 +90,7 @@ namespace EEBank.Controllers
 
             
 
-            var new_userinf = new UserInf { FullName = userInf.FullName, Email = user.Email, Password = user.Password, Phone = userInf.Phone, AccountNumber = user.UserId.ToString(), ECP = sign, OpenKey = open_key, UserID = user.UserId, Adress = userInf.Adress };
+            var new_userinf = new UserInf { FullName = userInf.FullName, Email = user.Email, Password = user.Password, Phone = userInf.Phone, AccountNumber = user.UserId.ToString(), ECP = sign, OpenKey = open_key, UserID = user.UserId, Adress = userInf.Adress, CurrencyCodeId = 4 };
             new_userinf.Balans = 0;
             db.SaveChanges();
             if (ModelState.IsValid)
@@ -87,6 +104,47 @@ namespace EEBank.Controllers
             return View(userInf);
         }
 
+        public ActionResult Add_new_account()
+        {
+            ViewBag.CurrencyCodeId = new SelectList(db.Currency, "CurrencyId", "CodeISO");
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Add_new_account(UserInf userInf)
+        {
+
+            var user = db.UserInf.Where(p => p.Email == User.Identity.Name).FirstOrDefault(p => p.CurrencyCodeId == 4);
+            userInf.UserID = user.UserID;
+            userInf.FullName = user.FullName;
+            userInf.Password = user.Password;
+            userInf.Phone = user.Phone;
+            userInf.AccountNumber = ( db.UserInf.ToList().LastOrDefault().UserInfID + 1).ToString();
+            userInf.ECP = user.ECP;
+            userInf.Adress = user.Adress;
+            userInf.OpenKey = user.OpenKey;
+            userInf.Email = user.Email;
+            userInf.Balans = 0;
+            var exist_acc = db.UserInf.Where(p => p.Email == User.Identity.Name).FirstOrDefault(p => p.CurrencyCodeId == userInf.CurrencyCodeId);
+            if (exist_acc == null)
+            {
+                if (ModelState.IsValid)
+                {
+
+                    db.UserInf.Add(userInf);
+                    db.SaveChanges();
+                    return RedirectToAction("Account_Index");
+                }
+            }
+            else
+            {
+                return View("Null");
+            }
+
+            ViewBag.CurrencyCodeId = new SelectList(db.Currency, "CurrencyId", "CodeISO", userInf.CurrencyCodeId);
+            return PartialView(userInf);
+        }
 
         
 

@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using EEBank.Models;
 using System.IO;
 using EEBank.Methods;
+using Exel = Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
 
 namespace EEBank.Controllers
 {
@@ -39,6 +41,61 @@ namespace EEBank.Controllers
                 var paymentOrder = db.PaymentOrder.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.Users).Where(p => p.FullInfManagers.Email == user.Email).Where(p => p.StatusID == 1);
                 return View(paymentOrder.ToList());
             }
+        }
+
+        public ActionResult Export()
+        {
+            Exel.Application application = new Exel.Application();
+            Exel.Workbook workbook = application.Workbooks.Add(System.Reflection.Missing.Value);
+            Exel.Worksheet worksheet = workbook.ActiveSheet;
+            var docs = db.PaymentOrder.Where(p => p.Users.Email == User.Identity.Name).Where(p => p.StatusID == 3).Where(p => p.Date.Month >= p.Date.Month - 1).ToList();
+            worksheet.Cells[1, 1] = "Дата создания";
+            worksheet.Cells[1, 2] = "Тип поручения";
+            worksheet.Cells[1, 3] = "Курс обмена";
+            worksheet.Cells[1, 4] = "Сумма поручения";
+            worksheet.Cells[1, 5] = "Код банка";
+            worksheet.Cells[1, 6] = "Банк получатель";
+            worksheet.Cells[1, 7] = "Бенефициар";
+            worksheet.Cells[1, 8] = "Назначение платежа";
+            worksheet.Cells[1, 9] = "Код платежа";
+            worksheet.Cells[1, 10] = "УНП отправителя";
+            worksheet.Cells[1, 11] = "УНП получателя";
+            worksheet.Cells[1, 12] = "Менеджер банка";
+            int row = 2;
+            foreach (PaymentOrder doc in docs)
+            {
+                worksheet.Cells[row, 1] = doc.Date.ToString("MM/dd/yyyy");
+                worksheet.Cells[row, 2] = doc.TypeOfPaymentOrder.Name;
+                worksheet.Cells[row, 3] = doc.ExchangeRates;
+                worksheet.Cells[row, 4] = doc.Summ;
+                worksheet.Cells[row, 5] = doc.Banks.BanckCode;
+                worksheet.Cells[row, 6] = doc.Banks.Adress;
+                worksheet.Cells[row, 7] = doc.Benficiar;
+                worksheet.Cells[row, 8] = doc.PaymentPurpose;
+                worksheet.Cells[row, 9] = doc.PaymentCode;
+                worksheet.Cells[row, 10] = doc.UserUNP;
+                worksheet.Cells[row, 11] = doc.ReceiverUNP;
+                worksheet.Cells[row, 12] = doc.FullInfManagers.FullName;
+                row++;
+            }
+            worksheet.get_Range("A1", "K1").EntireColumn.AutoFit();
+
+            var head = worksheet.get_Range("A1", "K1");
+            head.Font.Bold = true;
+            head.Font.Color = System.Drawing.Color.Blue;
+            head.Font.Size = 13;
+
+            workbook.SaveAs("L:\\extract_payment_order.xls");
+            workbook.Close();
+            Marshal.ReleaseComObject(workbook);
+
+            application.Quit();
+            Marshal.FinalReleaseComObject(application);
+
+            Response.AddHeader("Content-Disposition", "attachment;filename=extract_payment_order.xls");
+            Response.WriteFile("L:\\extract_payment_order.xls");
+            Response.End();
+            return null;
         }
 
         // GET: PaymentOrders/Details/5
@@ -107,11 +164,13 @@ namespace EEBank.Controllers
         // GET: PaymentOrders/Create
         public ActionResult Create()
         {
+            var user = db.UserInf.Where(p => p.Email == User.Identity.Name).ToList();
             ViewBag.BankReceiver = new SelectList(db.Banks, "BankID", "Adress");
             ViewBag.BankCodeID = new SelectList(db.Banks, "BankID", "BanckCode");
             ViewBag.DocType = new SelectList(db.DocType, "DocTypeId", "DocName");
             ViewBag.TypeOfPaymatOrder = new SelectList(db.TypeOfPaymentOrder, "TYpeId", "Name");
             ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress");
+            ViewBag.BankAccount = new SelectList(user, "UserInfID", "AccountNumber");
             ViewBag.PaymentTypeID = new SelectList(db.PaymentType, "PaymentTypeID", "PaymentName");
             return PartialView();
         }
@@ -133,7 +192,6 @@ namespace EEBank.Controllers
                 paymentOrder.DocType = 5;
                 paymentOrder.Date = System.DateTime.Now;
                 paymentOrder.UserID = user.UserId;
-                paymentOrder.BankAccount = user.UserId;
                 if (paymentOrder.StatusID == 1)
                     paymentOrder.ManagerID = managers.ElementAt(index).ManagerID;
                 else
@@ -149,6 +207,7 @@ namespace EEBank.Controllers
             ViewBag.BankReceiver = new SelectList(db.Banks, "BankID", "Adress", paymentOrder.BankReceiver);
             ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress", paymentOrder.Benficiar);
             ViewBag.PaymentTypeID = new SelectList(db.PaymentType, "PaymentTypeID", "PaymentName", paymentOrder.PaymentOrderID);
+            ViewBag.BankAccount = new SelectList(db.UserInf, "UserInfID", "AccountNumber", paymentOrder.BankAccount);
             return PartialView(paymentOrder);
         }
 

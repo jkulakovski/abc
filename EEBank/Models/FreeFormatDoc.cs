@@ -26,7 +26,7 @@ namespace EEBank.Models
         public Nullable<int> UserID { get; set; }
         public Nullable<int> StatusID { get; set; }
         public string Comment { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public System.DateTime Date { get; set; }
     
         public virtual DocType DocType { get; set; }
         public virtual FullInfManagers FullInfManagers { get; set; }

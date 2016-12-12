@@ -12,22 +12,19 @@ namespace EEBank.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class UserInf
+    public partial class Currency
     {
-        public int UserInfID { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Phone { get; set; }
-        public string AccountNumber { get; set; }
-        public string ECP { get; set; }
-        public Nullable<int> UserID { get; set; }
-        public string OpenKey { get; set; }
-        public string Adress { get; set; }
-        public Nullable<int> Balans { get; set; }
-        public Nullable<int> CurrencyCodeId { get; set; }
+        public Currency()
+        {
+            this.UserInf = new HashSet<UserInf>();
+        }
     
-        public virtual Users Users1 { get; set; }
-        public virtual Currency Currency { get; set; }
+        public int CurrencyId { get; set; }
+        public Nullable<int> Code { get; set; }
+        public string CodeISO { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> PerOne { get; set; }
+    
+        public virtual ICollection<UserInf> UserInf { get; set; }
     }
 }

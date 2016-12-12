@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using EEBank.Models;
 using EEBank.Methods;
 using System.Reflection;
+using Exel = Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
 
 namespace EEBank.Controllers
 
@@ -53,8 +55,59 @@ namespace EEBank.Controllers
                 return View(paymentRequirements.ToList());
             }
         }
-              
 
+        public ActionResult Export()
+        {
+            Exel.Application application = new Exel.Application();
+            Exel.Workbook workbook = application.Workbooks.Add(System.Reflection.Missing.Value);
+            Exel.Worksheet worksheet = workbook.ActiveSheet;
+            var docs = db.PaymentRequirements.Where(p => p.Users.Email == User.Identity.Name).Where(p => p.StatusId == 3).Where(p => p.Date.Month >= p.Date.Month - 1).ToList();
+            worksheet.Cells[1, 1] = "Дата создания";
+            worksheet.Cells[1, 2] = "Тип требования";
+            worksheet.Cells[1, 3] = "Код валюты";
+            worksheet.Cells[1, 4] = "Сумма требования";
+            worksheet.Cells[1, 5] = "Банк получатель";
+            worksheet.Cells[1, 6] = "Бенефициар";
+            worksheet.Cells[1, 7] = "Код банка";
+            worksheet.Cells[1, 8] = "Назначение платежа";
+            worksheet.Cells[1, 9] = "УНП отправителя";
+            worksheet.Cells[1, 10] = "УНП получателя";
+            worksheet.Cells[1, 11] = "Менеджер банка";
+            int row = 2;
+            foreach(PaymentRequirements doc in docs)
+            {
+                worksheet.Cells[row, 1] = doc.Date.ToString("MM/dd/yyyy");
+                worksheet.Cells[row, 2] = doc.TypePaymentRequirements.TypeName;
+                worksheet.Cells[row, 3] = doc.СurrencyCode;
+                worksheet.Cells[row, 4] = doc.SummOfremittance;
+                worksheet.Cells[row, 5] = doc.Banks.Adress;
+                worksheet.Cells[row, 6] = doc.Benficiar;
+                worksheet.Cells[row, 7] = doc.BankReceiver;
+                worksheet.Cells[row, 8] = doc.PaymentPurpose;
+                worksheet.Cells[row, 9] = doc.UserUNP;
+                worksheet.Cells[row, 10] = doc.BankUNP;
+                worksheet.Cells[row, 11] = doc.FullInfManagers.FullName;
+                row++;
+            }
+            worksheet.get_Range("A1", "K1").EntireColumn.AutoFit();
+
+            var head = worksheet.get_Range("A1", "K1");
+            head.Font.Bold = true;
+            head.Font.Color = System.Drawing.Color.Blue;
+            head.Font.Size = 13;
+
+            workbook.SaveAs("L:\\extract_payment_requirement.xls");
+            workbook.Close();
+            Marshal.ReleaseComObject(workbook);
+
+            application.Quit();
+            Marshal.FinalReleaseComObject(application);
+
+            Response.AddHeader("Content-Disposition", "attachment;filename=extract_payment_requirement.xls");
+            Response.WriteFile("L:\\extract_payment_requirement.xls");
+            Response.End();
+            return null;
+        }
         // GET: PaymentRequirements/Details/5
         public ActionResult Details(int? id)
         {

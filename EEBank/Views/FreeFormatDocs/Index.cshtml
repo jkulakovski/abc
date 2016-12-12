@@ -33,13 +33,13 @@ Random rn = new Random();
 
     <div align="center" class=" wrapper">
         <h2>Документ свободного формата</h2>
-        @if (role == 5)
-        {
-            <p>
-                @Html.ActionLink("Создать новый", "Create", null, new { @class = "compItem" })
-
-            </p>
-        }
+                @if (role == 5)
+                {
+                    <p>
+                        @Html.ActionLink("Создать новый", "Create", null, new { @class = "compItem" })
+        | 
+                        @Html.ActionLink("Сделать выписку за последний месяц", "Export")
+            </p>}
         @if (role == 7)
         {
             <p>

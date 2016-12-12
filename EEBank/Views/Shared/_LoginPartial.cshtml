@@ -22,7 +22,7 @@
                                     @if (User.Identity.IsAuthenticated && user.RoleId == 5)
                                     {
                                         <li>
-                                            @Html.ActionLink("Профиль", "Details", "UserInfs")
+                                            @Html.ActionLink("Профиль", "Account_Index", "UserInfs")
                                         </li>
                                         <li>@Html.ActionLink("Мои документы", "Index", "DocTypes")</li>
 
