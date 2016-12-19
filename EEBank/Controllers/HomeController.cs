@@ -40,13 +40,9 @@ namespace EEBank.Controllers
         public ActionResult Requaest_Currency()
         {
             var role = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name).RoleId;
-            if (role == 5)
-            {
-                var currency = db.Currency;
-                return PartialView(currency.ToList());
-            }
-
-            return View();
+            
+             var currency = db.Currency;
+             return PartialView(currency.ToList());
         }
 
         public ActionResult Requaest_DocStatus_PaymentReq()

@@ -1,12 +1,13 @@
-﻿@model IEnumerable<EEBank.Models.DocType>
+﻿
 @{
-    ViewBag.Title = "Архивы документов";
+    ViewBag.Title = "Документы";
 }
 <style>
     body {
         background: url('http://nz4.ru/wp-content/uploads/2014/12/94.jpg');
     }
 </style>
+
 <link href="~/Content/main.css" type="text/css" rel="stylesheet" />
 <link href="~/Content/waves.min.css" type="text/css" rel="stylesheet" />
 <script src="~/Content/waves.min.js" type="text/javascript"></script>
@@ -17,19 +18,24 @@
     };
 </script>
 <div id="page">
-    <h2>Архивы</h2>
+
+    <h2>Документы</h2>
+
     <div id="box-button" class="box">
         <p id="colored-button" class="text-center">
-            <button class="btn1 float-buttons">
-                @Html.ActionLink("Архив документов платежного требования", "Index", "ArchivePaymentRequirements");
-            </button>
-            <button class="btn1 float-buttons">
-                @Html.ActionLink("Архив документов платежного поручения", "Index", "ArchivePaymentOrders");
-            </button>
-                <button class="btn1 float-buttons">
-                    @Html.ActionLink("Архив документов свободного формата", "Index", "ArchiveFreeFormatDocs");                    
-                </button>
 
+                    <button class="btn1 float-buttons" type="button" onclick="location.href='@Url.Action("Index", "ArchivePaymentRequirements")'">
+                        Платежные требования
+                    </button>
+
+                    <button class="btn1 float-buttons" type="button" onclick="location.href='@Url.Action("Index", "ArchivePaymentOrders")'">
+                        Платежные поручения
+                    </button>
+               
+                    <button class="btn1 float-buttons" type="button" onclick="location.href='@Url.Action("Index", "ArchiveFreeFormatDocs")'">
+                        Документ свободного формата
+                    </button>
+                
 
 
 

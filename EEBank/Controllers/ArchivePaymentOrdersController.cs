@@ -17,8 +17,23 @@ namespace EEBank.Controllers
         // GET: ArchivePaymentOrders
         public ActionResult Index()
         {
-            var archivePaymentOrders = db.ArchivePaymentOrders.Include(a => a.PaymentOrder);
-            return View(archivePaymentOrders.ToList());
+            var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);
+
+            if (user.RoleId == 5)
+            {
+                var archivepaymentOrder = db.ArchivePaymentOrders.Include(a => a.PaymentOrder).Where(p => p.PaymentOrder.UserID == user.UserId); ;
+                return View(archivepaymentOrder.ToList());
+            }
+            if (user.RoleId == 6)
+            {
+                var archivepaymentOrder = db.ArchivePaymentOrders.Include(a => a.PaymentOrder);
+                return View(archivepaymentOrder.ToList());
+            }
+            else
+            {
+                var archivepaymentOrder = db.ArchivePaymentOrders.Include(a => a.PaymentOrder).Where(p => p.PaymentOrder.FullInfManagers.Email == User.Identity.Name);
+                return View(archivepaymentOrder.ToList());
+            }
         }
 
         // GET: ArchivePaymentOrders/Details/5

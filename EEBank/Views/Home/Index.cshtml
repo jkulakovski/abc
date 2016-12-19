@@ -1,4 +1,8 @@
-﻿@{
+﻿@using EEBank.Models;
+
+
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -80,37 +84,40 @@ transition: all .3s ease-out;
     <h2>Клиент-Банк</h2>
 
 
+@if (User.Identity.IsAuthenticated)
+{
+    <ul class="rounded">
+        <li>
+            <p class="c1">
+                @Html.ActionLink("Состояние банковских счетов", "Requaest_Acoount", "Home", null, new { @class = "compItem" })
+            </p>
+        </li>
+        <li>
+            <p class="c1">
+                @Html.ActionLink("Курс валют", "Requaest_Currency", "Home", null, new { @class = "compItem" })
+            </p>
+        </li>
+        <li>
+            Состояние документов:
+            <ul>
+                <li>
+                    <p class="c1">
+                        @Html.ActionLink("Платежных требования", "Requaest_DocStatus_PaymentReq", "Home", null, new { @class = "compItem" })
+                    </p>
+                </li>
+                <li>
+                    <p class="c1">
+                        @Html.ActionLink("Платежных поручений", "Requaest_DocStatus_PaymentOrder", "Home", null, new { @class = "compItem" })
+                    </p>
+                </li>
+                <li>
+                    <p class="c1">
+                        @Html.ActionLink("Свободного формата", "Requaest_DocStatus_FreeFormat", "Home", null, new { @class = "compItem" })
+                    </p>
+                </li>
+            </ul>
 
-<ul class="rounded">
-    <li>
-    <p class="c1">
-        @Html.ActionLink("Состояние банковских счетов", "Requaest_Acoount", "Home", null, new { @class = "compItem" })
-    </p>
-</li>
-    <li>
-        <p class="c1">
-            @Html.ActionLink("Курс валют", "Requaest_Currency", "Home", null, new { @class = "compItem" })
-        </p>
-    </li>
-    <li>
-        Состояние документов:
-        <ul>
-            <li>
-                <p class="c1">
-                    @Html.ActionLink("Платежных требования", "Requaest_DocStatus_PaymentReq", "Home", null, new { @class = "compItem" })
-                </p>
-            </li>
-            <li>
-                <p class="c1">
-                    @Html.ActionLink("Платежных поручений", "Requaest_DocStatus_PaymentOrder", "Home", null, new { @class = "compItem" })
-                </p>
-            </li>
-            <li>
-                <p class="c1">
-                    @Html.ActionLink("Свободного формата", "Requaest_DocStatus_FreeFormat", "Home", null, new { @class = "compItem" })
-                </p>
-            </li>
-        </ul>
+        </li>
+    </ul>
 
-    </li>
-</ul>
+}

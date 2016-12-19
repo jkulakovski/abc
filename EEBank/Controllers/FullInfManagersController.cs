@@ -37,7 +37,7 @@ namespace EEBank.Controllers
         public ActionResult Create()
         {
             ViewBag.BankID = new SelectList(db.Banks, "BankID", "Adress");
-            return PartialView();
+            return View();
         }
 
         // POST: FullInfManagers/Create
@@ -76,7 +76,7 @@ namespace EEBank.Controllers
             }
 
             ViewBag.BankID = new SelectList(db.Banks, "BankID", "Adress", fullInfManagers.BankID);
-            return PartialView(new_userinf);
+            return View(new_userinf);
         }
 
         // GET: FullInfManagers/Edit/5

@@ -207,7 +207,7 @@ namespace EEBank.Controllers
                 if (users.RoleId == 5)
                     return RedirectToAction("Create", "UserInfs");
                 else
-                    return RedirectToAction("Create", "FullInfManagers");
+                    return RedirectToAction("Create", "FullInfManagers" );
             }
             ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "RoleName", users.RoleId);
             return PartialView(users);

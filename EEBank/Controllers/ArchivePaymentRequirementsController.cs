@@ -25,7 +25,7 @@ namespace EEBank.Controllers
             }
             if (user.RoleId == 6)
             {
-                var archivePaymentRequirements = db.ArchivePaymentRequirements.Include(a => a.PaymentRequirements);
+                var archivePaymentRequirements = db.ArchivePaymentRequirements.Include(a => a.PaymentRequirements).Where(p => p.PaymentRequirementId != null);
                 return View(archivePaymentRequirements.ToList());
             }
             else

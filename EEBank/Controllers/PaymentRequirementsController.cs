@@ -46,7 +46,7 @@ namespace EEBank.Controllers
             }
             if (user.RoleId == 6)
             {
-                var paymentRequirements = db.PaymentRequirements.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.TypePaymentRequirements).Include(p => p.Users).Where(p => p.StatusId != 3).OrderByDescending(p => p.Date);
+                var paymentRequirements = db.PaymentRequirements.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.TypePaymentRequirements).Include(p => p.Users).OrderByDescending(p => p.Date).Where(p =>p.PaymentRequirementsID != null).Where(p => p.Date != null);
                 return View(paymentRequirements.ToList());
             }
             else
@@ -59,7 +59,7 @@ namespace EEBank.Controllers
         public ActionResult Export()
         {
             Exel.Application application = new Exel.Application();
-            Exel.Workbook workbook = application.Workbooks.Add(System.Reflection.Missing.Value);
+            Exel.Workbook workbook = application.Workbooks.Add();
             Exel.Worksheet worksheet = workbook.ActiveSheet;
             var docs = db.PaymentRequirements.Where(p => p.Users.Email == User.Identity.Name).Where(p => p.StatusId == 3).Where(p => p.Date.Month >= p.Date.Month - 1).ToList();
             worksheet.Cells[1, 1] = "Дата создания";
@@ -99,17 +99,22 @@ namespace EEBank.Controllers
             head.Font.Color = System.Drawing.Color.Blue;
             head.Font.Size = 13;
 
-            workbook.SaveAs("D:\\extract_payment_requirement.xls");
+            workbook.SaveAs("D:\\extract_payment_requirement.xlsx");
             workbook.Close();
             Marshal.ReleaseComObject(workbook);
 
             application.Quit();
             Marshal.FinalReleaseComObject(application);
 
-            Response.AddHeader("Content-Disposition", "attachment;filename=extract_payment_requirement.xls");
-            Response.WriteFile("D:\\extract_payment_requirement.xls");
+            Response.AddHeader("Content-Disposition", "attachment;filename=extract_payment_requirement.xlsx");
+            Response.WriteFile("D:\\extract_payment_requirement.xlsx");
             Response.End();
             return null;
+        }
+
+        private void SetNewCurrentCulture()
+        {
+            throw new NotImplementedException();
         }
         // GET: PaymentRequirements/Details/5
         public ActionResult Details(int? id)

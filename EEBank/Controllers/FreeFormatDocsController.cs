@@ -32,7 +32,7 @@ namespace EEBank.Controllers
             }
             if (user.RoleId == 6)
             {
-                var freeFormatDoc = db.FreeFormatDoc.Include(p => p.Users).Where(p => p.StatusID != 3).OrderByDescending(p => p.Date);
+                var freeFormatDoc = db.FreeFormatDoc.Include(p => p.Users).Where(p => p.FreeFormatDocID != null).Where(p => p.Date != null).OrderByDescending(p => p.Date);
                 return View(freeFormatDoc.ToList());
             }
             else
@@ -67,15 +67,15 @@ namespace EEBank.Controllers
                 head.Font.Color = System.Drawing.Color.Blue;
                 head.Font.Size = 13;
 
-                workbook.SaveAs("D:\\extract_free_format.xls");
+                workbook.SaveAs("D:\\extract_free_format.xlsx");
                 workbook.Close();
                 Marshal.ReleaseComObject(workbook);
 
                 application.Quit();
                 Marshal.FinalReleaseComObject(application);
 
-                Response.AddHeader("Content-Disposition", "attachment;filename=extract_free_format.xls");
-                Response.WriteFile("D:\\extract_free_format.xls");
+                Response.AddHeader("Content-Disposition", "attachment;filename=extract_free_format.xlsx");
+                Response.WriteFile("D:\\extract_free_format.xlsx");
                 Response.End();
                 return null;
         }

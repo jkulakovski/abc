@@ -33,7 +33,7 @@ namespace EEBank.Controllers
             }
             if (user.RoleId == 6)
             {
-                var paymentOrder = db.PaymentOrder.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.Users).Where(p => p.StatusID != 3).OrderByDescending(p => p.Date);
+                var paymentOrder = db.PaymentOrder.Include(p => p.Banks).Include(p => p.DocType1).Include(p => p.Users).Where(p => p.PaymentOrderID != null).Where(p => p.Date != null).OrderByDescending(p => p.Date);
                 return View(paymentOrder.ToList());
             }
             else
@@ -88,15 +88,15 @@ namespace EEBank.Controllers
             head.Font.Color = System.Drawing.Color.Blue;
             head.Font.Size = 13;
 
-            workbook.SaveAs("D:\\extract_payment_order.xls");
+            workbook.SaveAs("D:\\extract_payment_order.xlsx");
             workbook.Close();
             Marshal.ReleaseComObject(workbook);
 
             application.Quit();
             Marshal.FinalReleaseComObject(application);
 
-            Response.AddHeader("Content-Disposition", "attachment;filename=extract_payment_order.xls");
-            Response.WriteFile("D:\\extract_payment_order.xls");
+            Response.AddHeader("Content-Disposition", "attachment;filename=extract_payment_order.xlsx");
+            Response.WriteFile("D:\\extract_payment_order.xlsx");
             Response.End();
             return null;
         }
