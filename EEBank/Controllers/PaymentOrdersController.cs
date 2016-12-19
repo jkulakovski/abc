@@ -66,7 +66,10 @@ namespace EEBank.Controllers
             {
                 worksheet.Cells[row, 1] = doc.Date.ToString("MM/dd/yyyy");
                 worksheet.Cells[row, 2] = doc.TypeOfPaymentOrder.Name;
-                worksheet.Cells[row, 3] = doc.ExchangeRates;
+                if (doc.ExchageID != null)
+                    worksheet.Cells[row, 3] = doc.Currency.PerOne;
+                else
+                    worksheet.Cells[row, 3] = " ";
                 worksheet.Cells[row, 4] = doc.Summ;
                 worksheet.Cells[row, 5] = doc.Banks.BanckCode;
                 worksheet.Cells[row, 6] = doc.Banks.Adress;
@@ -78,14 +81,14 @@ namespace EEBank.Controllers
                 worksheet.Cells[row, 12] = doc.FullInfManagers.FullName;
                 row++;
             }
-            worksheet.get_Range("A1", "K1").EntireColumn.AutoFit();
+            worksheet.get_Range("A1", "L1").EntireColumn.AutoFit();
 
-            var head = worksheet.get_Range("A1", "K1");
+            var head = worksheet.get_Range("A1", "L1");
             head.Font.Bold = true;
             head.Font.Color = System.Drawing.Color.Blue;
             head.Font.Size = 13;
 
-            workbook.SaveAs("L:\\extract_payment_order.xls");
+            workbook.SaveAs("D:\\extract_payment_order.xls");
             workbook.Close();
             Marshal.ReleaseComObject(workbook);
 
@@ -93,7 +96,7 @@ namespace EEBank.Controllers
             Marshal.FinalReleaseComObject(application);
 
             Response.AddHeader("Content-Disposition", "attachment;filename=extract_payment_order.xls");
-            Response.WriteFile("L:\\extract_payment_order.xls");
+            Response.WriteFile("D:\\extract_payment_order.xls");
             Response.End();
             return null;
         }
@@ -119,10 +122,11 @@ namespace EEBank.Controllers
         public ActionResult Reject(PaymentOrder paymentOrder)
         {
             PaymentOrder doc = db.PaymentOrder.Find(paymentOrder.PaymentOrderID);
-            var balans = db.UserInf.Where(p =>p.UserID == doc.UserID).FirstOrDefault().Balans;
-            if (paymentOrder.Summ > balans)
+            
+            var balanse = db.UserInf.Where(p => p.UserID == paymentOrder.UserID).FirstOrDefault(p => p.AccountNumber == paymentOrder.BankAccount.ToString()).Balans;
+            if (paymentOrder.Summ > balanse )
                 doc.StatusID = db.DocStatus.FirstOrDefault(p => p.StatusName == "Откленен").StatusId;
-            else
+            else 
             {
                 doc.StatusID = db.DocStatus.FirstOrDefault(p => p.StatusName == "Картотека №2").StatusId;
                 doc.Comment = "Недостаточно средств на счету";
@@ -130,6 +134,7 @@ namespace EEBank.Controllers
                 
             db.Entry(doc).State = EntityState.Modified;
             db.SaveChanges();
+            
             return RedirectToAction("Index");
 
         }
@@ -140,18 +145,23 @@ namespace EEBank.Controllers
         {
             PaymentOrder paymentOrder = db.PaymentOrder.Find(id);
             ArchivePaymentOrders archive = new ArchivePaymentOrders();
-           
-            var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name).UserInf1.FirstOrDefault(p => p.UserID == paymentOrder.UserID);
-            if (user.Balans >= paymentOrder.Summ)
+            var user_id = db.UserInf.FirstOrDefault(p => p.AccountNumber == paymentOrder.BankAccount.ToString()).UserInfID;
+            UserInf usernf = db.UserInf.Find(user_id);
+            var balanse = db.UserInf.FirstOrDefault(p => (p.AccountNumber) == paymentOrder.BankAccount.ToString()).Balans;
+
+            if (balanse >= paymentOrder.Summ)
             {
                 paymentOrder.StatusID = 3;
-                user.Balans = user.Balans - paymentOrder.Summ;
+                balanse = balanse - paymentOrder.Summ;
                 archive.PaymentOrderID = paymentOrder.PaymentOrderID;
                 db.ArchivePaymentOrders.Add(archive);
                 db.SaveChanges();
 
             }
             db.Entry(paymentOrder).State = EntityState.Modified;
+            db.SaveChanges();
+            usernf.Balans = balanse;
+            db.Entry(usernf).State = EntityState.Modified;
             db.SaveChanges();
             ArchivePaymentRequirements achive = new ArchivePaymentRequirements();
             /*achive.PaymentRequirementId = id;
@@ -170,7 +180,8 @@ namespace EEBank.Controllers
             ViewBag.DocType = new SelectList(db.DocType, "DocTypeId", "DocName");
             ViewBag.TypeOfPaymatOrder = new SelectList(db.TypeOfPaymentOrder, "TYpeId", "Name");
             ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress");
-            ViewBag.BankAccount = new SelectList(user, "UserInfID", "AccountNumber");
+            ViewBag.BankAccount = new SelectList(user, "AccountNumber", "AccountNumber");
+            ViewBag.ExchageID = new SelectList(db.Currency, "CurrencyId", "CurrencyName"); 
             ViewBag.PaymentTypeID = new SelectList(db.PaymentType, "PaymentTypeID", "PaymentName");
             return PartialView();
         }
@@ -206,8 +217,9 @@ namespace EEBank.Controllers
             ViewBag.TypeOfPaymatOrder = new SelectList(db.TypeOfPaymentOrder, "TYpeId", "Name", paymentOrder.TypeOfPaymatOrder);
             ViewBag.BankReceiver = new SelectList(db.Banks, "BankID", "Adress", paymentOrder.BankReceiver);
             ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress", paymentOrder.Benficiar);
+            ViewBag.ExchageID = new SelectList(db.Currency, "CurrencyId", "CurrencyName", paymentOrder.ExchageID);
             ViewBag.PaymentTypeID = new SelectList(db.PaymentType, "PaymentTypeID", "PaymentName", paymentOrder.PaymentOrderID);
-            ViewBag.BankAccount = new SelectList(db.UserInf, "UserInfID", "AccountNumber", paymentOrder.BankAccount);
+            ViewBag.BankAccount = new SelectList(db.UserInf, "AccountNumber", "AccountNumber", paymentOrder.BankAccount);
             return PartialView(paymentOrder);
         }
 
@@ -223,13 +235,14 @@ namespace EEBank.Controllers
             ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress");
             ViewBag.PaymentTypeID = new SelectList(db.PaymentType, "PaymentTypeID", "PaymentName");
             ViewBag.UserID = new SelectList(db.UserInf, "UserID", "FullName");
-            ViewBag.BankAccount = new SelectList(db.Users, "UserID", "UserID");
+            ViewBag.BankAccount = new SelectList(db.UserInf, "AccountNumber", "AccountNumber");
+            ViewBag.ExchageID = new SelectList(db.Currency, "CurrencyId", "CurrencyName");
             return PartialView();
         }
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create_by_manager([Bind(Include = "PaymentOrderID,Date,TypeOfPaymatOrder,DocType,ExchangeRates,UserID,Summ,BankReceiver,BankCodeID,Benficiar,BankAccount,PaymentPurpose,UserUNP,ReceiverUNP,PaymentCode, PaymentTypeID, ManagerID,StatusID,Comment")] PaymentOrder paymentOrder)
+        public ActionResult Create_by_manager(PaymentOrder paymentOrder)
         {
             var manager = db.FullInfManagers.FirstOrDefault(p => p.Email == User.Identity.Name) ;
 
@@ -256,7 +269,8 @@ namespace EEBank.Controllers
             ViewBag.Benficiar = new SelectList(bank, "BankID", "Adress",paymentOrder.Benficiar);
             ViewBag.PaymentTypeID = new SelectList(db.PaymentType, "PaymentTypeID", "PaymentName",paymentOrder.PaymentOrderID);
             ViewBag.UserID = new SelectList(db.UserInf, "UserID", "FullName",paymentOrder.UserID);
-            ViewBag.BankAccount = new SelectList( db.Users, "UserID", "UserID", paymentOrder.BankAccount);
+            ViewBag.ExchageID = new SelectList(db.Currency, "CurrencyId", "CurrencyName", paymentOrder.ExchageID);
+            ViewBag.BankAccount = new SelectList(db.UserInf, "AccountNumber", "AccountNumber", paymentOrder.BankAccount);
             return View(paymentOrder);
         }
 

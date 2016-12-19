@@ -67,15 +67,15 @@ namespace EEBank.Controllers
                 head.Font.Color = System.Drawing.Color.Blue;
                 head.Font.Size = 13;
 
-                workbook.SaveAs("L:\\extract.xls");
+                workbook.SaveAs("D:\\extract_free_format.xls");
                 workbook.Close();
                 Marshal.ReleaseComObject(workbook);
 
                 application.Quit();
                 Marshal.FinalReleaseComObject(application);
 
-                Response.AddHeader("Content-Disposition", "attachment;filename=extract.xls");
-                Response.WriteFile("L:\\extract.xls");
+                Response.AddHeader("Content-Disposition", "attachment;filename=extract_free_format.xls");
+                Response.WriteFile("D:\\extract_free_format.xls");
                 Response.End();
                 return null;
         }

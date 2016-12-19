@@ -22,6 +22,9 @@
             ФИО отправителя
         </th>
         <th>
+            Номер банковского счета
+        </th>
+        <th>
             Дата создания документа
         </th>
         <th>
@@ -30,9 +33,7 @@
         <th>
             Сумма перевода
         </th>
-        <th>
-            Номер аккаунта
-        </th>
+       
         <th>
             Банк получатель
         </th>
@@ -57,17 +58,18 @@
             @Html.DisplayFor(modelItem => item.PaymentRequirements.Users.UserInf1.Where(p => p.UserID == item.PaymentRequirements.UserID).FirstOrDefault().FullName)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.PaymentRequirements.AccountNumber)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.PaymentRequirements.Date)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PaymentRequirements.СurrencyCode)
+            @Html.DisplayFor(modelItem => item.PaymentRequirements.Currency.CurrencyName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PaymentRequirements.SummOfremittance)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PaymentRequirements.AccountNumber)
-        </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.PaymentRequirements.Banks.Adress)
         </td>

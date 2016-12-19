@@ -1,0 +1,74 @@
+﻿@model IEnumerable<EEBank.Models.PaymentRequirements>
+
+@{
+    ViewBag.Title = "Состояние платежных требований";
+}
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h2>@ViewBag.Title</h2>
+    </div>
+    <div class="modal-body">
+
+        <table class="table">
+            <tr>
+                <th>
+                    Статус требования
+                </th>
+                <th>
+                    Дата создания
+                </th>
+                <th>
+                    Сумма требования
+                </th>
+                <th>
+
+                    Номер счета
+                </th>
+                <th>
+                    Номер документа
+                </th>
+                <th>
+                    Код валюты
+                </th>
+               
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DocStatus.StatusName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SummOfremittance)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountNumber)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DocNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Currency.CodeISO)
+                    </td>
+                    @if (item.Comment != null)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Comment)
+                        </td>
+                    }
+
+
+
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

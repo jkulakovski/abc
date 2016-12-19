@@ -80,7 +80,7 @@ namespace EEBank.Models
         [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
         public string ConfirmPassword { get; set; }
 
-        
+
 
     }
 

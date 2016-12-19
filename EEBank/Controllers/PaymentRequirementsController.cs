@@ -78,7 +78,10 @@ namespace EEBank.Controllers
             {
                 worksheet.Cells[row, 1] = doc.Date.ToString("MM/dd/yyyy");
                 worksheet.Cells[row, 2] = doc.TypePaymentRequirements.TypeName;
-                worksheet.Cells[row, 3] = doc.СurrencyCode;
+                if (doc.CurrencyID != null)
+                    worksheet.Cells[row, 3] = doc.Currency.CurrencyName;
+                else
+                    worksheet.Cells[row, 3] = " ";                
                 worksheet.Cells[row, 4] = doc.SummOfremittance;
                 worksheet.Cells[row, 5] = doc.Banks.Adress;
                 worksheet.Cells[row, 6] = doc.Benficiar;
@@ -96,7 +99,7 @@ namespace EEBank.Controllers
             head.Font.Color = System.Drawing.Color.Blue;
             head.Font.Size = 13;
 
-            workbook.SaveAs("L:\\extract_payment_requirement.xls");
+            workbook.SaveAs("D:\\extract_payment_requirement.xls");
             workbook.Close();
             Marshal.ReleaseComObject(workbook);
 
@@ -104,7 +107,7 @@ namespace EEBank.Controllers
             Marshal.FinalReleaseComObject(application);
 
             Response.AddHeader("Content-Disposition", "attachment;filename=extract_payment_requirement.xls");
-            Response.WriteFile("L:\\extract_payment_requirement.xls");
+            Response.WriteFile("D:\\extract_payment_requirement.xls");
             Response.End();
             return null;
         }
@@ -150,7 +153,13 @@ namespace EEBank.Controllers
         {
             PaymentRequirements paymentRequirements = db.PaymentRequirements.Find(id);
             paymentRequirements.StatusId = 3;
-            
+            var user_id = db.UserInf.FirstOrDefault(p => p.AccountNumber == paymentRequirements.AccountNumber).UserInfID;
+            UserInf usernf = db.UserInf.Find(user_id);
+            var balanse = db.UserInf.FirstOrDefault(p => (p.AccountNumber) == paymentRequirements.AccountNumber).Balans;
+            balanse = balanse + paymentRequirements.SummOfremittance;
+            usernf.Balans = balanse;
+            db.Entry(usernf).State = EntityState.Modified;
+            db.SaveChanges();
             db.Entry(paymentRequirements).State = EntityState.Modified;
             db.SaveChanges();
             ArchivePaymentRequirements achive = new ArchivePaymentRequirements();
@@ -164,10 +173,13 @@ namespace EEBank.Controllers
         // GET: PaymentRequirements/Create
         public ActionResult Create()
         {
+            var user = db.UserInf.Where(p => p.Email == User.Identity.Name);
             ViewBag.BankID = new SelectList(db.Banks, "BankID", "Adress");
             ViewBag.BankReceiver = new SelectList(db.Banks, "BankID", "BanckCode");
             ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress");
             ViewBag.TypeOfRequirements = new SelectList(db.TypePaymentRequirements, "TypeId", "TypeName");
+            ViewBag.AccountNumber = new SelectList(user, "AccountNumber", "AccountNumber");
+            ViewBag.CurrencyID = new SelectList(db.Currency, "CurrencyId", "CurrencyName");
             return PartialView();
         }
 
@@ -194,7 +206,6 @@ namespace EEBank.Controllers
                 paymentRequirements.Date = System.DateTime.Now;
                 paymentRequirements.DocNumber = docs_count + 1;
                 paymentRequirements.UserID = user.UserId;
-                paymentRequirements.AccountNumber = Convert.ToString(user.UserId);
                 if (paymentRequirements.StatusId == 1)
                     paymentRequirements.ManagerId = managers.ElementAt(index).ManagerID;
                 else
@@ -204,19 +215,20 @@ namespace EEBank.Controllers
                 
                 return RedirectToAction("Index");
 
-            }      
+            }
+            var user_list = db.UserInf.Where(p => p.Email == User.Identity.Name);
             ViewBag.BankID = new SelectList(db.Banks, "BankID", "Adress", paymentRequirements.BankID);
             ViewBag.BankReceiver = new SelectList(db.Banks, "BankID", "BanckCode", paymentRequirements.BankReceiver);
             ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress", paymentRequirements.Benficiar);
             ViewBag.TypeOfRequirements = new SelectList(db.TypePaymentRequirements, "TypeId", "TypeName", paymentRequirements.TypeOfRequirements);
-
+            ViewBag.AccountNumber = new SelectList(user_list, "AccountNumber", "AccountNumber", paymentRequirements.AccountNumber);
+            ViewBag.CurrencyID = new SelectList(db.Currency, "CurrencyId", "CurrencyName",paymentRequirements.CurrencyID);
             return PartialView(paymentRequirements);
         }
         
         public ActionResult Create_by_manager()
         {
-            var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);
-            var manager = db.FullInfManagers.FirstOrDefault(p => p.Email == user.Email);
+            var manager = db.FullInfManagers.FirstOrDefault(p => p.Email == User.Identity.Name);
             var bank = db.Banks.Where(t => t.BankID == manager.BankID);
             ViewBag.BankID = new SelectList(bank, "BankID", "Adress");
             ViewBag.BankReceiver = new SelectList(bank, "BankID", "BanckCode");
@@ -224,6 +236,8 @@ namespace EEBank.Controllers
             ViewBag.TypeOfRequirements = new SelectList(db.TypePaymentRequirements, "TypeId", "TypeName");
             ViewBag.UserID = new SelectList(db.UserInf, "UserID", "FullName");
             ViewBag.AccountNumber = new SelectList(db.Users, "UserID", "UserID");
+            ViewBag.AccountNumber = new SelectList(db.UserInf, "AccountNumber", "AccountNumber");
+            ViewBag.CurrencyID = new SelectList(db.Currency, "CurrencyId", "CurrencyName");
             return PartialView();
         }
 
@@ -260,8 +274,8 @@ namespace EEBank.Controllers
             ViewBag.Benficiar = new SelectList(bank, "BankID", "Adress", paymentRequirements.Benficiar);
             ViewBag.TypeOfRequirements = new SelectList(db.TypePaymentRequirements, "TypeId", "TypeName",paymentRequirements.TypeOfRequirements);
             ViewBag.UserID = new SelectList(db.UserInf, "UserID", "FullName", paymentRequirements.UserID);
-            ViewBag.AccountNumber = new SelectList(db.Users, "UserID", "UserID",paymentRequirements.AccountNumber);
-
+            ViewBag.AccountNumber = new SelectList(db.UserInf, "AccountNumber", "AccountNumber",paymentRequirements.AccountNumber);
+            ViewBag.CurrencyID = new SelectList(db.Currency, "CurrencyId", "CurrencyName",paymentRequirements.CurrencyID);
             return View(paymentRequirements);
         }
         // GET: PaymentRequirements/Edit/5
@@ -275,11 +289,15 @@ namespace EEBank.Controllers
             if (paymentRequirements == null)
             {
                 return HttpNotFound();
+
             }
+            var user = db.UserInf.Where(p => p.Email == User.Identity.Name);
             ViewBag.BankID = new SelectList(db.Banks, "BankID", "Adress");
             ViewBag.BankReceiver = new SelectList(db.Banks, "BankID", "BanckCode");
             ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress");
             ViewBag.TypeOfRequirements = new SelectList(db.TypePaymentRequirements, "TypeId", "TypeName");
+            ViewBag.AccountNumber = new SelectList(user, "AccountNumber", "AccountNumber");
+            ViewBag.CurrencyID = new SelectList(db.Currency, "CurrencyId", "CurrencyName");
             return PartialView(paymentRequirements);
         }
 
@@ -320,10 +338,13 @@ namespace EEBank.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            var user_list = db.UserInf.Where(p => p.Email == User.Identity.Name);
             ViewBag.BankID = new SelectList(db.Banks, "BankID", "Adress", paymentRequirements.BankID);
             ViewBag.BankReceiver = new SelectList(db.Banks, "BankID", "BanckCode", paymentRequirements.BankReceiver);
             ViewBag.Benficiar = new SelectList(db.Banks, "BankID", "Adress", paymentRequirements.Benficiar);
             ViewBag.TypeOfRequirements = new SelectList(db.TypePaymentRequirements, "TypeId", "TypeName", paymentRequirements.TypePaymentRequirements);
+            ViewBag.AccountNumber = new SelectList(user_list, "AccountNumber", "AccountNumber",paymentRequirements.AccountNumber);
+            ViewBag.CurrencyID = new SelectList(db.Currency, "CurrencyId", "CurrencyName",paymentRequirements.CurrencyID);
             return View(paymentRequirements);
         }
 

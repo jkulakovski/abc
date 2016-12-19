@@ -23,7 +23,6 @@ namespace EEBank.Models
         public System.DateTime Date { get; set; }
         public Nullable<int> TypeOfPaymatOrder { get; set; }
         public Nullable<int> DocType { get; set; }
-        public Nullable<int> ExchangeRates { get; set; }
         public Nullable<int> UserID { get; set; }
         public string BankReceiver { get; set; }
         public Nullable<int> BankCodeID { get; set; }
@@ -38,6 +37,7 @@ namespace EEBank.Models
         public Nullable<int> StatusID { get; set; }
         public string Comment { get; set; }
         public Nullable<int> Summ { get; set; }
+        public Nullable<int> ExchageID { get; set; }
     
         public virtual Banks Banks { get; set; }
         public virtual DocType DocType1 { get; set; }
@@ -47,5 +47,6 @@ namespace EEBank.Models
         public virtual FullInfManagers FullInfManagers { get; set; }
         public virtual PaymentType PaymentType { get; set; }
         public virtual ICollection<ArchivePaymentOrders> ArchivePaymentOrders { get; set; }
+        public virtual Currency Currency { get; set; }
     }
 }

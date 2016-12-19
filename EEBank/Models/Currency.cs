@@ -17,6 +17,8 @@ namespace EEBank.Models
         public Currency()
         {
             this.UserInf = new HashSet<UserInf>();
+            this.PaymentOrder = new HashSet<PaymentOrder>();
+            this.PaymentRequirements = new HashSet<PaymentRequirements>();
         }
     
         public int CurrencyId { get; set; }
@@ -26,5 +28,7 @@ namespace EEBank.Models
         public Nullable<double> PerOne { get; set; }
     
         public virtual ICollection<UserInf> UserInf { get; set; }
+        public virtual ICollection<PaymentOrder> PaymentOrder { get; set; }
+        public virtual ICollection<PaymentRequirements> PaymentRequirements { get; set; }
     }
 }

@@ -17,13 +17,13 @@ namespace EEBank.Models
         public PaymentRequirements()
         {
             this.ArchivePaymentRequirements = new HashSet<ArchivePaymentRequirements>();
+            this.PaymentRequirements1 = new HashSet<PaymentRequirements>();
         }
     
         public int PaymentRequirementsID { get; set; }
         public System.DateTime Date { get; set; }
         public Nullable<int> TypeOfRequirements { get; set; }
         public Nullable<int> DocType { get; set; }
-        public string СurrencyCode { get; set; }
         public Nullable<int> SummOfremittance { get; set; }
         public Nullable<int> UserID { get; set; }
         public string AccountNumber { get; set; }
@@ -37,6 +37,7 @@ namespace EEBank.Models
         public Nullable<int> StatusId { get; set; }
         public Nullable<int> ManagerId { get; set; }
         public string Comment { get; set; }
+        public Nullable<int> CurrencyID { get; set; }
     
         public virtual Banks Banks { get; set; }
         public virtual DocType DocType1 { get; set; }
@@ -45,5 +46,8 @@ namespace EEBank.Models
         public virtual DocStatus DocStatus { get; set; }
         public virtual FullInfManagers FullInfManagers { get; set; }
         public virtual ICollection<ArchivePaymentRequirements> ArchivePaymentRequirements { get; set; }
+        public virtual ICollection<PaymentRequirements> PaymentRequirements1 { get; set; }
+        public virtual PaymentRequirements PaymentRequirements2 { get; set; }
+        public virtual Currency Currency { get; set; }
     }
 }

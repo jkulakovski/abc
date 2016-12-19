@@ -30,8 +30,8 @@
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Добавить валютный счет", "Add_new_account",null, new { @class = "compItem" })
-</p>
+    @Html.ActionLink("Добавить валютный счет", "Add_new_account",null, new { @class = "compItem" }) |
+    @Html.ActionLink("Изменить пароль", "ChangePassword", "Manage")
 <div id="modDialog" class="modal fade">
     <div id="dialogContent" class="modal-dialog"></div>
 </div>

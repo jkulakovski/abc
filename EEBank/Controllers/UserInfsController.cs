@@ -40,10 +40,10 @@ namespace EEBank.Controllers
         }
 
         // GET: UserInfs/Details/5
-        public ActionResult Details()
+        public ActionResult Details(int? id)
         {
             
-            UserInf user = db.UserInf.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
+            UserInf user = db.UserInf.Find(id);
             if (user == null)
             {
                 return HttpNotFound();

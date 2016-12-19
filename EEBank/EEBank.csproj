@@ -332,6 +332,7 @@
     <Content Include="Content\font\fontawesome-webfont-v=3.2.1.eot" />
     <Content Include="Content\font\fontawesome-webfont-v=3.2.1.ttf" />
     <Content Include="Content\font\fontawesome-webfont-v=3.2.1.woff" />
+    <None Include="Properties\PublishProfiles\Lissa.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -344,10 +345,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\DocTypes\main.css" />
-    <Content Include="Views\DocTypes\waves.min.css" />
-    <Content Include="Views\DocTypes\waves.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -373,12 +373,12 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Home\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Home\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Home\Manage\Index.cshtml" />
-    <Content Include="Views\Home\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Home\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Home\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
@@ -439,6 +439,12 @@
     <Content Include="Views\UserInfs\Add_new_account.cshtml" />
     <Content Include="Views\UserInfs\Account_Index.cshtml" />
     <Content Include="Views\UserInfs\Null.cshtml" />
+    <Content Include="Views\Account\ChangeProfile.cshtml" />
+    <Content Include="Views\Home\Requaest_Currency.cshtml" />
+    <Content Include="Views\Home\Requaest_Acoount.cshtml" />
+    <Content Include="Views\Home\Requaest_DocStatus_PaymentReq.cshtml" />
+    <Content Include="Views\Home\Requaest_DocStatus_PaymentOrder.cshtml" />
+    <Content Include="Views\Home\Requaest_DocStatus_FreeFormat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

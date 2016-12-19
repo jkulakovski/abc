@@ -83,7 +83,7 @@ Random rn = new Random();
                     </div>
                     <ul class="features">
                         <li><span class="fontawesome-cloud"></span>Сумма требования: @Html.DisplayFor(modelItem => item.SummOfremittance)</li>
-                        <li><span class="fontawesome-cog"></span>Код валюты: @Html.DisplayFor(modelItem => item.СurrencyCode)</li>
+                        <li><span class="fontawesome-cog"></span>Код валюты: @Html.DisplayFor(modelItem => item.Currency.CurrencyName)</li>
                         <li><span class="fontawesome-star"></span>Банк получатель: @Html.DisplayFor(modelItem => item.Banks.Adress)</li>
                         <li><span class="fontawesome-dashboard"></span>Цель отправления: @Html.DisplayFor(modelItem => item.PaymentPurpose)</li>
                         @if (item.StatusId == 4)

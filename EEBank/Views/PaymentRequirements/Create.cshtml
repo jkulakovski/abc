@@ -24,16 +24,23 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.СurrencyCode, "Код валюты", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.AccountNumber, "Номер счета", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.СurrencyCode, "Код валюты", new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.СurrencyCode, "", new { @class = "text-danger" })
+                        @Html.DropDownList("AccountNumber", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.AccountNumber, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.SummOfremittance, "Сумма перевода", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.CurrencyID, "Код валюты", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.SummOfremittance, "Сумма перевода", new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.DropDownList("CurrencyID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SummOfremittance, "Сумма", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SummOfremittance, "Сумма", new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.SummOfremittance, "", new { @class = "text-danger" })
                     </div>
                 </div>

@@ -23,7 +23,7 @@ namespace EEBank.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -35,9 +35,9 @@ namespace EEBank.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -121,7 +121,7 @@ namespace EEBank.Controllers
             // Если пользователь введет неправильные коды за указанное время, его учетная запись 
             // будет заблокирована на заданный период. 
             // Параметры блокирования учетных записей можно настроить в IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -154,15 +154,15 @@ namespace EEBank.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
-                var roleId = db.Roles.Where(p => p.RoleName == "Пользователь").FirstOrDefault().RoleId;                
-               
-  
+                var roleId = db.Roles.Where(p => p.RoleName == "Пользователь").FirstOrDefault().RoleId;
+
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     var new_user = new Users { Email = model.Email, Password = model.Password, RoleId = roleId };
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     db.Users.Add(new_user);
                     db.SaveChanges();
                     return RedirectToAction("Create", "UserInfs");
@@ -192,18 +192,18 @@ namespace EEBank.Controllers
 
                 var result = UserManager.Create(user, model.Password);
 
-                
+
 
                 users.Email = model.Email;
                 users.Password = model.Password;
 
-                
-                
-               
+
+
+
                 db.Users.Add(users);
                 db.SaveChanges();
-               // var selected = db.Roles.Where(w => w.RoleName == "Пользователь").Last();
-               // if (selected.RoleName == "Пользователь")
+                // var selected = db.Roles.Where(w => w.RoleName == "Пользователь").Last();
+                // if (selected.RoleName == "Пользователь")
                 if (users.RoleId == 5)
                     return RedirectToAction("Create", "UserInfs");
                 else

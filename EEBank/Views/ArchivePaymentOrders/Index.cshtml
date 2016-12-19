@@ -17,6 +17,9 @@
 <table class="table">
     <tr>
         <th>
+            Номер банковского счета
+        </th>
+        <th>
             ФИО отправителя
         </th>
         <th>
@@ -49,13 +52,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.PaymentOrder.BankAccount)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.PaymentOrder.Users.UserInf1.FirstOrDefault(p => p.UserID == item.PaymentOrder.UserID).FullName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PaymentOrder.Date)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PaymentOrder.ExchangeRates)
+            @Html.DisplayFor(modelItem => item.PaymentOrder.Currency.PerOne)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PaymentOrder.Summ)

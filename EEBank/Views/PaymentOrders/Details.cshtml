@@ -28,10 +28,16 @@
                             @Html.DisplayFor(model => model.Date)
                         </dd>
                         <dt>
+                            Валюта платежа
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Currency.CurrencyName)
+                        </dd>
+                        <dt>
                             Курс валют
                         </dt>
                         <dd>
-                            @Html.DisplayFor(model => model.ExchangeRates)
+                            @Html.DisplayFor(model => model.Currency.PerOne)
                         </dd>
                         <dt>
                             Сумма платежа

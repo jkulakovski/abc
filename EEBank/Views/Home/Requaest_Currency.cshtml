@@ -1,0 +1,51 @@
+﻿@model IEnumerable<EEBank.Models.Currency>
+
+@{
+    ViewBag.Title = "Курас валют" + System.DateTime.Now;
+}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h2>Курас валют на @System.DateTime.Now</h2>
+    </div>
+
+    <div class="modal-body">
+        <table class="table">
+            <tr>
+                <th>
+                    Код валюты
+                </th>
+                <th>
+                    Код ISO
+                </th>
+                <th>
+                    Название валюты
+                </th>
+                <th>
+                    Курс к единице BYN
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CodeISO)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CurrencyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PerOne)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

@@ -29,10 +29,10 @@
 
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ExchangeRates, "Курс валют", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.ExchageID, "Валюта платежа", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.ExchangeRates, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.ExchangeRates, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.ExchageID, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ExchageID, "", new { @class = "text-danger" })
                     </div>
                 </div>
 

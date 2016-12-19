@@ -27,23 +27,28 @@
 
             @foreach (var item in Model)
             {
-
-                <button class="btn1 float-buttons">
-                   @if (item.DocTypeId == 4)
-                   {
-                       @Html.ActionLink(item.DocName, "Index", "PaymentRequirements", new { id = item.DocTypeId }, null);
-                   }
-                   @if (item.DocTypeId == 5)
-                   {
-                       @Html.ActionLink(item.DocName, "Index", "PaymentOrders", new { id = item.DocTypeId }, null);
-                   }
-                   @if (item.DocTypeId == 6)
-                   {
-                       @Html.ActionLink(item.DocName, "Index", "FreeFormatDocs", new { id = item.DocTypeId }, null);
-                   }
-                    
-                 
+                if (item.DocTypeId == 4)
+                {
+                <button  class="btn1 float-buttons" type="button"  onclick="location.href='@Url.Action("Index", "PaymentRequirements")'">
+                    Платежные требования
                 </button>
+
+                }
+                
+        if (item.DocTypeId == 5)
+        {
+            <button class="btn1 float-buttons" type="button" onclick="location.href='@Url.Action("Index", "PaymentOrders")'">
+                Платежные поручения
+            </button>
+        }
+        if (item.DocTypeId == 6)
+        {
+            <button class="btn1 float-buttons" type="button" onclick="location.href='@Url.Action("Index", "FreeFormatDocs")'">
+                Документ свободного формата
+            </button>
+        }
+
+
 
 
 

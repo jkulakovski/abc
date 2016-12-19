@@ -103,7 +103,6 @@
           <Property Name="Date" Type="date" />
           <Property Name="TypeOfPaymatOrder" Type="int" />
           <Property Name="DocType" Type="int" />
-          <Property Name="ExchangeRates" Type="int" />
           <Property Name="UserID" Type="int" />
           <Property Name="Summ" Type="int" />
           <Property Name="BankReceiver" Type="varchar" MaxLength="100" />
@@ -118,6 +117,7 @@
           <Property Name="ManagerID" Type="int" />
           <Property Name="StatusID" Type="int" />
           <Property Name="Comment" Type="text" />
+          <Property Name="ExchageID" Type="int" />
         </EntityType>
         <EntityType Name="PaymentRequirements">
           <Key>
@@ -127,7 +127,6 @@
           <Property Name="Date" Type="datetime" />
           <Property Name="TypeOfRequirements" Type="int" />
           <Property Name="DocType" Type="int" />
-          <Property Name="СurrencyCode" Type="varchar" MaxLength="40" />
           <Property Name="SummOfremittance" Type="int" />
           <Property Name="UserID" Type="int" />
           <Property Name="AccountNumber" Type="varchar" MaxLength="100" />
@@ -141,6 +140,7 @@
           <Property Name="StatusId" Type="int" />
           <Property Name="ManagerId" Type="int" />
           <Property Name="Comment" Type="text" />
+          <Property Name="CurrencyID" Type="int" />
         </EntityType>
         <EntityType Name="PaymentType">
           <Key>
@@ -400,6 +400,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PaymentOrder_Currency_CurrencyId">
+          <End Role="Currency" Type="Self.Currency" Multiplicity="0..1" />
+          <End Role="PaymentOrder" Type="Self.PaymentOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currency">
+              <PropertyRef Name="CurrencyId" />
+            </Principal>
+            <Dependent Role="PaymentOrder">
+              <PropertyRef Name="ExchageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PaymentOrder_DocStatus_StatusId">
           <End Role="DocStatus" Type="Self.DocStatus" Multiplicity="0..1" />
           <End Role="PaymentOrder" Type="Self.PaymentOrder" Multiplicity="*" />
@@ -457,6 +469,18 @@
             </Principal>
             <Dependent Role="PaymentRequirements">
               <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentRequirements_PaymentRequirements_PaymentRequirementsID">
+          <End Role="Currency" Type="Self.Currency" Multiplicity="0..1" />
+          <End Role="PaymentRequirements" Type="Self.PaymentRequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currency">
+              <PropertyRef Name="CurrencyId" />
+            </Principal>
+            <Dependent Role="PaymentRequirements">
+              <PropertyRef Name="CurrencyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -590,6 +614,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="FreeFormatDoc" EntitySet="FreeFormatDoc" />
           </AssociationSet>
+          <AssociationSet Name="FK_PaymentOrder_Currency_CurrencyId" Association="Self.FK_PaymentOrder_Currency_CurrencyId">
+            <End Role="Currency" EntitySet="Currency" />
+            <End Role="PaymentOrder" EntitySet="PaymentOrder" />
+          </AssociationSet>
           <AssociationSet Name="FK_PaymentOrder_DocStatus_StatusId" Association="Self.FK_PaymentOrder_DocStatus_StatusId">
             <End Role="DocStatus" EntitySet="DocStatus" />
             <End Role="PaymentOrder" EntitySet="PaymentOrder" />
@@ -608,6 +636,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_PaymentRequirements_FullInfManagers_ManagerID" Association="Self.FK_PaymentRequirements_FullInfManagers_ManagerID">
             <End Role="FullInfManagers" EntitySet="FullInfManagers" />
+            <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentRequirements_PaymentRequirements_PaymentRequirementsID" Association="Self.FK_PaymentRequirements_PaymentRequirements_PaymentRequirementsID">
+            <End Role="Currency" EntitySet="Currency" />
             <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
           </AssociationSet>
           <AssociationSet Name="FK_UserInf_Currency_CurrencyId" Association="Self.FK_UserInf_Currency_CurrencyId">
@@ -675,7 +707,6 @@
           <Property Name="Date" Type="DateTime" Precision="0" />
           <Property Name="TypeOfPaymatOrder" Type="Int32" />
           <Property Name="DocType" Type="Int32" />
-          <Property Name="ExchangeRates" Type="Int32" />
           <Property Name="UserID" Type="Int32" />
           <Property Name="BankReceiver" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="BankCodeID" Type="Int32" />
@@ -698,6 +729,8 @@
           <NavigationProperty Name="PaymentType" Relationship="EEBankModel.FK_PaymentOrder_PaymentType_PaymentTypeID" FromRole="PaymentOrder" ToRole="PaymentType" />
           <Property Name="Summ" Type="Int32" />
           <NavigationProperty Name="ArchivePaymentOrders" Relationship="EEBankModel.FK__ArchivePa__Payme__70A8B9AE" FromRole="PaymentOrder" ToRole="ArchivePaymentOrders" />
+          <Property Name="ExchageID" Type="Int32" />
+          <NavigationProperty Name="Currency" Relationship="EEBankModel.FK_PaymentOrder_Currency_CurrencyId" FromRole="PaymentOrder" ToRole="Currency" />
         </EntityType>
         <EntityType Name="PaymentRequirements">
           <Key>
@@ -707,7 +740,6 @@
           <Property Name="Date" Type="DateTime" Precision="3" />
           <Property Name="TypeOfRequirements" Type="Int32" />
           <Property Name="DocType" Type="Int32" />
-          <Property Name="СurrencyCode" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="SummOfremittance" Type="Int32" />
           <Property Name="UserID" Type="Int32" />
           <Property Name="AccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -728,6 +760,10 @@
           <NavigationProperty Name="FullInfManagers" Relationship="EEBankModel.FK_PaymentRequirements_FullInfManagers_ManagerID" FromRole="PaymentRequirements" ToRole="FullInfManagers" />
           <NavigationProperty Name="ArchivePaymentRequirements" Relationship="EEBankModel.FK__ArchivePa__Payme__0E6E26BF" FromRole="PaymentRequirements" ToRole="ArchivePaymentRequirements" />
           <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CurrencyID" Type="Int32" />
+          <NavigationProperty Name="PaymentRequirements1" Relationship="EEBankModel.FK_PaymentRequirements_PaymentRequirements_PaymentRequirementsID" FromRole="PaymentRequirements" ToRole="PaymentRequirements1" />
+          <NavigationProperty Name="PaymentRequirements2" Relationship="EEBankModel.FK_PaymentRequirements_PaymentRequirements_PaymentRequirementsID" FromRole="PaymentRequirements1" ToRole="PaymentRequirements" />
+          <NavigationProperty Name="Currency" Relationship="EEBankModel.FK_PaymentRequirements_PaymentRequirements_PaymentRequirementsID1" FromRole="PaymentRequirements" ToRole="Currency" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -1007,6 +1043,18 @@
             <End Role="Currency" EntitySet="Currency" />
             <End Role="UserInf" EntitySet="UserInf" />
           </AssociationSet>
+          <AssociationSet Name="FK_PaymentOrder_Currency_CurrencyId" Association="EEBankModel.FK_PaymentOrder_Currency_CurrencyId">
+            <End Role="Currency" EntitySet="Currency" />
+            <End Role="PaymentOrder" EntitySet="PaymentOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentRequirements_PaymentRequirements_PaymentRequirementsID" Association="EEBankModel.FK_PaymentRequirements_PaymentRequirements_PaymentRequirementsID">
+            <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
+            <End Role="PaymentRequirements1" EntitySet="PaymentRequirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaymentRequirements_PaymentRequirements_PaymentRequirementsID1" Association="EEBankModel.FK_PaymentRequirements_PaymentRequirements_PaymentRequirementsID1">
+            <End Role="Currency" EntitySet="Currency" />
+            <End Role="PaymentRequirements" EntitySet="PaymentRequirements" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserInf">
           <Key>
@@ -1273,6 +1321,8 @@
           <Property Name="CurrencyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PerOne" Type="Double" />
           <NavigationProperty Name="UserInf" Relationship="EEBankModel.FK_UserInf_Currency_CurrencyId" FromRole="Currency" ToRole="UserInf" />
+          <NavigationProperty Name="PaymentOrder" Relationship="EEBankModel.FK_PaymentOrder_Currency_CurrencyId" FromRole="Currency" ToRole="PaymentOrder" />
+          <NavigationProperty Name="PaymentRequirements" Relationship="EEBankModel.FK_PaymentRequirements_PaymentRequirements_PaymentRequirementsID1" FromRole="Currency" ToRole="PaymentRequirements" />
         </EntityType>
         <Association Name="FK_UserInf_Currency_CurrencyId">
           <End Type="EEBankModel.Currency" Role="Currency" Multiplicity="0..1" />
@@ -1283,6 +1333,42 @@
             </Principal>
             <Dependent Role="UserInf">
               <PropertyRef Name="CurrencyCodeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentOrder_Currency_CurrencyId">
+          <End Type="EEBankModel.Currency" Role="Currency" Multiplicity="0..1" />
+          <End Type="EEBankModel.PaymentOrder" Role="PaymentOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currency">
+              <PropertyRef Name="CurrencyId" />
+            </Principal>
+            <Dependent Role="PaymentOrder">
+              <PropertyRef Name="ExchageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentRequirements_PaymentRequirements_PaymentRequirementsID">
+          <End Type="EEBankModel.PaymentRequirements" Role="PaymentRequirements" Multiplicity="0..1" />
+          <End Type="EEBankModel.PaymentRequirements" Role="PaymentRequirements1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentRequirements">
+              <PropertyRef Name="PaymentRequirementsID" />
+            </Principal>
+            <Dependent Role="PaymentRequirements1">
+              <PropertyRef Name="CurrencyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaymentRequirements_PaymentRequirements_PaymentRequirementsID1">
+          <End Type="EEBankModel.Currency" Role="Currency" Multiplicity="0..1" />
+          <End Type="EEBankModel.PaymentRequirements" Role="PaymentRequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currency">
+              <PropertyRef Name="CurrencyId" />
+            </Principal>
+            <Dependent Role="PaymentRequirements">
+              <PropertyRef Name="CurrencyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1327,6 +1413,7 @@
           <EntitySetMapping Name="PaymentOrder">
             <EntityTypeMapping TypeName="EEBankModel.PaymentOrder">
               <MappingFragment StoreEntitySet="PaymentOrder">
+                <ScalarProperty Name="ExchageID" ColumnName="ExchageID" />
                 <ScalarProperty Name="Summ" ColumnName="Summ" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="StatusID" ColumnName="StatusID" />
@@ -1336,7 +1423,6 @@
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="TypeOfPaymatOrder" ColumnName="TypeOfPaymatOrder" />
                 <ScalarProperty Name="DocType" ColumnName="DocType" />
-                <ScalarProperty Name="ExchangeRates" ColumnName="ExchangeRates" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="BankReceiver" ColumnName="BankReceiver" />
                 <ScalarProperty Name="BankCodeID" ColumnName="BankCodeID" />
@@ -1352,6 +1438,7 @@
           <EntitySetMapping Name="PaymentRequirements">
             <EntityTypeMapping TypeName="EEBankModel.PaymentRequirements">
               <MappingFragment StoreEntitySet="PaymentRequirements">
+                <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
@@ -1359,7 +1446,6 @@
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="TypeOfRequirements" ColumnName="TypeOfRequirements" />
                 <ScalarProperty Name="DocType" ColumnName="DocType" />
-                <ScalarProperty Name="СurrencyCode" ColumnName="СurrencyCode" />
                 <ScalarProperty Name="SummOfremittance" ColumnName="SummOfremittance" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />

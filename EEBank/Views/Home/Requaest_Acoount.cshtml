@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EEBank.Models.UserInf>
+
+@{
+    ViewBag.Title = "Requaest_Acoount";
+}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h2>Состояние счетов</h2>
+    </div>
+    <div>
+        <div class="modal-body">
+            <table class="table">
+                <tr>
+                    <th>
+                        Номер счета
+                    </th>
+                    <th>
+                        Код валюты
+                    </th>
+
+                    <th>
+                        Баланс
+                    </th>
+
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AccountNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Currency.CodeISO)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Balans)
+                        </td>
+
+
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+
+</div>

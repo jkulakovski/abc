@@ -20,6 +20,12 @@
                         @Html.DisplayFor(model => model.PaymentRequirements.Users.UserInf1.Where(p => p.UserID == model.PaymentRequirements.UserID).FirstOrDefault().FullName)
                     </dd>
                     <dt>
+                        Номер банковского счета
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PaymentRequirements.AccountNumber)
+                    </dd>
+                     <dt>
                         Дата создания документа
                     </dt>
                     <dd>
@@ -29,7 +35,7 @@
                         Код валюты
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.PaymentRequirements.СurrencyCode)
+                        @Html.DisplayFor(model => model.PaymentRequirements.Currency.CurrencyName)
                     </dd>
                     <dt>
                         Сумма перевода
@@ -37,12 +43,7 @@
                     <dd>
                         @Html.DisplayFor(model => model.PaymentRequirements.SummOfremittance)
                     </dd>
-                    <dt>
-                        Номер аккаунта
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.PaymentRequirements.AccountNumber)
-                    </dd>
+                    
                     <dt>
                         Банк получатель
                     </dt>

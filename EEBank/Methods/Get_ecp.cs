@@ -31,7 +31,7 @@ namespace EEBank.Methods
                 upload.SaveAs(System.Web.HttpContext.Current.Server.MapPath("~/Files/" + fileName));
 
 
-                StreamReader ReadFile = System.IO.File.OpenText(@"C:/Users/Elizaveta/Documents/visual studio 2013/Projects/EEBank/EEBank/Files/" + fileName);
+                StreamReader ReadFile = System.IO.File.OpenText(@"C:/inetpub/wwwroot/EEBank/Files/" + fileName);
                 string Input = null;
                 while ((Input = ReadFile.ReadLine()) != null)
                 {

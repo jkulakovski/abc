@@ -1,0 +1,69 @@
+﻿@model IEnumerable<EEBank.Models.PaymentOrder>
+
+@{
+    ViewBag.Title = "Состояние платежных поручений";
+}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h2>@ViewBag.Title</h2>
+    </div>
+    <div class="modal-body">
+        <table class="table">
+            <tr>
+                <th>
+                    Статус платежа
+                </th>
+                <th>
+                    Дата создания
+                </th>
+                <th>
+                    Сумма платежа
+                </th>
+                <th>
+
+                    Номер счета
+                </th>
+                <th>
+                    Код валюты
+                </th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DocStatus.StatusName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BankAccount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Summ)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Currency.CodeISO)
+                    </td>
+                    @if (item.Comment != null)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Comment)
+                        </td>
+                    }
+
+
+
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
