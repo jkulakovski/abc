@@ -72,7 +72,7 @@ namespace EEBank.Controllers
             string login = "";
             for (int i = 0; i < user.Email.Length; i++)
             {
-                    if (Char.IsLetter(user.Email[i]))
+                if (Char.IsLetter(user.Email[i])|| Char.IsDigit(user.Email[i]))
                         login += user.Email[i];
                     if (user.Email[i] == ('@'))
                         break;

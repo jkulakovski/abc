@@ -3,9 +3,31 @@
 @{
     ViewBag.Title = "Создать пользователя";
 }
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".compItem").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+    </script>
+}
 <style>
     body {
-        background: url('http://nz4.ru/wp-content/uploads/2014/12/94.jpg');
+        background: url('http://flebtiz.ru/ff/2/tekstury_seryy_zheltyy_goluboy_fon_tekstura_2560x1440.jpg');
+    }
+
+    h2 {
+        font-weight: 600;
     }
 </style>
 <h2>Создать пользователя</h2>
@@ -13,6 +35,10 @@
 <p>
     @Html.ActionLink("Добавить пользователя", "Add_User","Account",null, new{ @class = "compItem" }) 
 </p>
+
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
 
 <table class="table">
     <tr>

@@ -39,7 +39,14 @@ Random rn = new Random();
                         @Html.ActionLink("Создать новый", "Create", null, new { @class = "compItem" })
         | 
                         @Html.ActionLink("Сделать выписку за последний месяц", "Export")
-            </p>}
+            </p>
+
+    <p>
+        @Html.ActionLink("Перейти к платежным требованиям", "Index", "PaymentRequirements")
+        |
+        @Html.ActionLink("Перейти к платежным поручениям", "Index", "PaymentOrders")
+    </p>
+                }
         @if (role == 7)
         {
             <p>

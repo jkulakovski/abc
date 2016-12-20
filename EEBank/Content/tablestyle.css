@@ -5,10 +5,13 @@
     font-family: 'FontAwesome', sans-serif;
 }
 
-h2 {
-  margin-top: 20px;
-  margin-bottom: 2px;
-}
+body {
+        background: url('http://i075.radikal.ru/1002/e7/6cadddcd73ff.jpg') 15% 15%;
+    }
+
+ h2 {
+        font-weight: 600;
+    }
 .fl{ float:left; }
 .fr{ float: right; }
 .group:before,
@@ -23,9 +26,6 @@ h2 {
     zoom: 1;
 }
 
-body {
-    background: #ece6e6;
-}
 .wrapper {
 
 }
@@ -154,39 +154,39 @@ body {
 }
 /*PERSONAL*/
 .personal .title{
-    background: #419c8c;
+    background: rgba(185, 166, 71, 0.65);
 }
 .personal .content,.personal .pt-footer{
-    background: #419c8c;
+    background: rgba(185, 166, 71, 0.65);
 }
 .personal .content:after{
-    border-top-color: #419c8c;
+    border-top-color: rgba(185, 166, 71, 0.65);
 }
 .personal .pt-footer:after{
     border-top-color: #0a0a0a;
 }
 /*PROFESSIONAL*/
 .professional .title{
-    background: #3EC6E0;
+    background: rgba(86, 150, 175, 0.65);
 }
 .professional .content,.professional .pt-footer{
-    background: #53CFE9;
+    background: rgba(86, 150, 175, 0.65);
 }
 .professional .content:after{
-    border-top-color: #53CFE9;
+    border-top-color: rgba(86, 150, 175, 0.65);
 }
 .professional .pt-footer:after{
     border-top-color: #FFFFFF;
 }
 /*BUSINESS*/
 .business .title{
-    background: #E3536C;
+    background: rgba(153, 175, 86, 0.65);
 }
 .business .content,.business .pt-footer{
-    background: #EB6379;
+    background: rgba(153, 175, 86, 0.65);
 }
 .business .content:after{
-    border-top-color: #EB6379;
+    border-top-color: rgba(153, 175, 86, 0.65);
 }
 .business .pt-footer:after {
     border-top-color: #FFFFFF;

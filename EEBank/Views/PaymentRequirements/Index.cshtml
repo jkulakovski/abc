@@ -26,7 +26,15 @@ Random rn = new Random();
 }
 
 
+<style>
+    body {
+        background: url('http://i075.radikal.ru/1002/e7/6cadddcd73ff.jpg') 15% 15%;
+    }
 
+    h2 {
+        font-weight: 600;
+    }
+</style>
 
 <link href="~/Content/tablestyle.css" type="text/css" rel="stylesheet">
 <body>
@@ -41,6 +49,12 @@ Random rn = new Random();
                 @Html.ActionLink("Сделать выписку за последний месяц", "Export")
 
             </p>
+    <p>
+        @Html.ActionLink("Перейти к платежным поручениям", "Index", "PaymentOrders")
+        |
+        @Html.ActionLink("Перейти к документам свободного формата", "Index", "PaymentOrders")
+    </p>
+        
         }
         @if (role == 7)
         {

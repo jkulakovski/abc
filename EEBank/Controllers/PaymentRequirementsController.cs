@@ -59,7 +59,7 @@ namespace EEBank.Controllers
         public ActionResult Export()
         {
             Exel.Application application = new Exel.Application();
-            Exel.Workbook workbook = application.Workbooks.Add();
+            Exel.Workbook workbook = application.Workbooks.Add(System.Reflection.Missing.Value);
             Exel.Worksheet worksheet = workbook.ActiveSheet;
             var docs = db.PaymentRequirements.Where(p => p.Users.Email == User.Identity.Name).Where(p => p.StatusId == 3).Where(p => p.Date.Month >= p.Date.Month - 1).ToList();
             worksheet.Cells[1, 1] = "Дата создания";
@@ -99,15 +99,21 @@ namespace EEBank.Controllers
             head.Font.Color = System.Drawing.Color.Blue;
             head.Font.Size = 13;
 
-            workbook.SaveAs("D:\\extract_payment_requirement.xlsx");
+            
+            Random rn = new Random();
+            string date = Convert.ToString(rn.Next(0x0061, 0x007A));
+            String path = String.Format("D:\\extract_payment_requirement{0}.xls",date);
+
+
+            workbook.SaveAs(path);
             workbook.Close();
             Marshal.ReleaseComObject(workbook);
 
             application.Quit();
             Marshal.FinalReleaseComObject(application);
 
-            Response.AddHeader("Content-Disposition", "attachment;filename=extract_payment_requirement.xlsx");
-            Response.WriteFile("D:\\extract_payment_requirement.xlsx");
+            Response.AddHeader("Content-Disposition", String.Format("attachment;filename={0}",path));
+            Response.WriteFile(path);
             Response.End();
             return null;
         }

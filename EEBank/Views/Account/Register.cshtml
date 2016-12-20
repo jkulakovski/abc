@@ -3,6 +3,17 @@
     ViewBag.Title = "Регистрация";
 }
 
+
+<style>
+    body {
+        background: url('http://i075.radikal.ru/1002/e7/6cadddcd73ff.jpg') 15% 15%;
+    }
+
+    h2 {
+        font-weight: 600;
+    }
+</style>
+
 <h2>@ViewBag.Title.</h2>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))

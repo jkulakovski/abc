@@ -38,6 +38,12 @@ Random rn = new Random();
                 @Html.ActionLink("Получить выписку за месяц", "Export")
 
             </p>
+
+    <p>
+        @Html.ActionLink("Перейти к платежным поручениям", "Index", "PaymentRequirements")
+        |
+        @Html.ActionLink("Перейти к документам свободного формата", "Index", "FreeFormatDocs")
+    </p>
         }
         @if (role == 7)
         {

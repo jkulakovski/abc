@@ -27,7 +27,7 @@ namespace EEBank.Methods
                 string fileName = System.IO.Path.GetFileName(upload.FileName);
                 Random rn = new Random();
                 // сохраняем файл в папку Files в проекте
-                fileName = fileName + Convert.ToString(rn.Next(0x0061, 0x007A));
+                fileName = fileName + Convert.ToString(rn.Next(0x0033, 0x007A));
                 upload.SaveAs(System.Web.HttpContext.Current.Server.MapPath("~/Files/" + fileName));
 
 
@@ -42,14 +42,14 @@ namespace EEBank.Methods
             string login = "";
             for (int i = 0; i < user.Email.Length; i++)
             {
-                if (Char.IsLetter(user.Email[i]))
+                if (Char.IsLetter(user.Email[i]) || Char.IsDigit(user.Email[i]))
                     login += user.Email[i];
                 if (user.Email[i] == ('@'))
                     break;
 
             }
 
-            string keys = user.UserInf1.Where(m => m.Email == System.Web.HttpContext.Current.User.Identity.Name).FirstOrDefault().OpenKey;
+            string keys = user.UserInf1.Where(m => m.Email == user.Email).FirstOrDefault().OpenKey;
 
             int[] key = new int[2];
 
@@ -73,9 +73,9 @@ namespace EEBank.Methods
                 key[i] = Convert.ToInt32(num);
             }
             double[] res;
-            ECP ecp = new ECP();
+            ECP ecp1 = new ECP();
             int[] hash = ECP.Hash(login);
-            res = ecp.Deshifrov_ecp(s, key[0], key[1]);
+            res = ecp1.Deshifrov_ecp(s, key[0], key[1]);
             int it = 0;
 
             if (hash.Length == res.Length)
@@ -86,12 +86,10 @@ namespace EEBank.Methods
                         it++;
                 }
             }
-            if (it == res.Length)
+            if(it == res.Length && it != 0)
                 return 1;
-            if (it != res.Length || it == 0)
-                return 2;
             else
-                return 0;
+                return 2;
         }
     }
 }
