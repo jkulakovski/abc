@@ -15,6 +15,7 @@ namespace EEBank.Controllers
         private EEBankEntitie db = new EEBankEntitie();
 
         // GET: ArchivePaymentOrders
+        [Authorize]
         public ActionResult Index()
         {
             var archivePaymentOrders = db.ArchivePaymentOrders.Include(a => a.PaymentOrder);
@@ -37,6 +38,7 @@ namespace EEBank.Controllers
         }
 
         // GET: ArchivePaymentOrders/Create
+
         public ActionResult Create()
         {
             ViewBag.PaymentOrderID = new SelectList(db.PaymentOrder, "PaymentOrderID", "BankReceiver");

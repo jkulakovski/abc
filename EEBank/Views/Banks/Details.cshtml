@@ -4,31 +4,38 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+        <h2>Подробнее</h2>
+    </div>
+    <div class="modal-body">
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    Адрес
+                </dt>
 
-<div>
-    <h4>Banks</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Adress)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Adress)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Adress)
-        </dd>
+                <dt>
+                    Код банка
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.BanckCode)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.BanckCode)
+                </dd>
+                <dt>
+                    Контактный номер
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.BanckCode)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Phone)
+                </dd>
 
-    </dl>
+            </dl>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.BankID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

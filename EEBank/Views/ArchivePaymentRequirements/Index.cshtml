@@ -5,9 +5,11 @@
 }
 
 <style>
-    body {
-        background: url('http://99px.ru/sstorage/53/2014/04/tmb_100436_4458.jpg');
-    }
+    
+        body {
+            background:url('http://ultradesktop.us/wallpaper_3840x2160/textures_background_gray_yellow_blue_ultra_3840x2160_hd-wallpaper-243053.jpg') 20% 20%;
+        }
+    
 </style>
 
 <h2>@ViewBag.Title</h2>  
@@ -16,6 +18,11 @@
 <div id="modDialog" class="modal fade">
     <div id="dialogContent" class="modal-dialog"></div>
 </div>
+<p>
+    @Html.ActionLink("Перейти к архиву документов свободного формата", "Index", "ArchiveFreeFormatDocs")
+    |
+    @Html.ActionLink("Перейти к архиву платежных поручений", "Index", "ArchivePaymentOrders")
+</p>
 <table class="table">
     <tr>
         <th>

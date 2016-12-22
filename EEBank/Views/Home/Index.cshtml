@@ -1,7 +1,9 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@using EEBank.Models
 
+      
 
 @section scripts
 {
@@ -21,96 +23,104 @@
     </script>
 }
 <style>
-
     body {
-        background: url('http://nz4.ru/wp-content/uploads/2014/12/94.jpg')
+        background: url('http://i075.radikal.ru/1002/e7/6cadddcd73ff.jpg') 20% 20%;
     }
-      .c1{
+
+    .c1 {
         color: black;
     }
-    a{
+
+    a {
         color: black;
     }
+
     .rounded {
-counter-reset: li; 
-list-style: none; 
-font: 14px "Trebuchet MS", "Lucida Sans";
-padding: 0;
-text-shadow: 0 1px 0 rgba(255,255,255,.5);
-}
-.rounded a {
-position: relative;
-display: block;
-padding: .4em .4em .4em 2em;
-margin: .5em 0;
-background: #DAD2CA;
-color: #444;
-text-decoration: none;
-border-radius: .3em;
-transition: .3s ease-out;
-}
-.rounded a:hover {
-background: #E9E4E0;
-}
-.rounded a:hover:before {
-transform: rotate(360deg);
-}
-.rounded a:before {
-content: counter(li);
-counter-increment: li;
-position: absolute;
-left: -1.3em;
-top: 50%;
-margin-top: -1.3em;
-background: #8FD4C1;
-height: 2em;
-width: 2em;
-line-height: 2em;
-border: .3em solid white;
-text-align: center;
-font-weight: bold;
-border-radius: 2em;
-transition: all .3s ease-out;
-}
+        counter-reset: li;
+        list-style: none;
+        font: 14px "Trebuchet MS", "Lucida Sans";
+        padding: 0;
+        text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    }
+
+        .rounded a {
+            position: relative;
+            display: block;
+            padding: .4em .4em .4em 2em;
+            margin: .5em 0;
+            background: #d1c7be;
+            color: #444;
+            text-decoration: none;
+            border-radius: .3em;
+            transition: .3s ease-out;
+        }
+
+            .rounded a:hover {
+                background: #E9E4E0;
+            }
+
+                .rounded a:hover:before {
+                    transform: rotate(360deg);
+                }
+
+            .rounded a:before {
+                content: counter(li);
+                counter-increment: li;
+                position: absolute;
+                left: -1.3em;
+                top: 50%;
+                margin-top: -1.3em;
+                background: #d6985a;
+                height: 2em;
+                width: 2em;
+                line-height: 2em;
+                border: .3em solid white;
+                text-align: center;
+                font-weight: bold;
+                border-radius: 2em;
+                transition: all .3s ease-out;
+            }
 </style>
 <div id="modDialog" class="modal fade">
     <div id="dialogContent" class="modal-dialog"></div>
 </div>
-    <h1>EEBank</h1>
-    <h2>Клиент-Банк</h2>
+<h1>EEBank</h1>
+<h2>Клиент-Банк</h2>
+@if (User.Identity.IsAuthenticated)
+{
 
 
 
-<ul class="rounded">
-    <li>
-    <p class="c1">
-        @Html.ActionLink("Состояние банковских счетов", "Requaest_Acoount", "Home", null, new { @class = "compItem" })
-    </p>
-</li>
-    <li>
-        <p class="c1">
-            @Html.ActionLink("Курс валют", "Requaest_Currency", "Home", null, new { @class = "compItem" })
-        </p>
-    </li>
-    <li>
-        Состояние документов:
-        <ul>
-            <li>
-                <p class="c1">
-                    @Html.ActionLink("Платежных требования", "Requaest_DocStatus_PaymentReq", "Home", null, new { @class = "compItem" })
-                </p>
-            </li>
-            <li>
-                <p class="c1">
-                    @Html.ActionLink("Платежных поручений", "Requaest_DocStatus_PaymentOrder", "Home", null, new { @class = "compItem" })
-                </p>
-            </li>
-            <li>
-                <p class="c1">
-                    @Html.ActionLink("Свободного формата", "Requaest_DocStatus_FreeFormat", "Home", null, new { @class = "compItem" })
-                </p>
-            </li>
-        </ul>
-
-    </li>
-</ul>
+    <ul class="rounded">
+        <li>
+            <p class="c1">
+                @Html.ActionLink("Состояние банковских счетов", "Requaest_Acoount", "Home", null, new { @class = "compItem" })
+            </p>
+        </li>
+        <li>
+            <p class="c1">
+                @Html.ActionLink("Курс валют", "Requaest_Currency", "Home", null, new { @class = "compItem" })
+            </p>
+        </li>
+        <li>
+            Состояние документов:
+            <ul>
+                <li>
+                    <p class="c1">
+                        @Html.ActionLink("Платежных требования", "Requaest_DocStatus_PaymentReq", "Home", null, new { @class = "compItem" })
+                    </p>
+                </li>
+                <li>
+                    <p class="c1">
+                        @Html.ActionLink("Платежных поручений", "Requaest_DocStatus_PaymentOrder", "Home", null, new { @class = "compItem" })
+                    </p>
+                </li>
+                <li>
+                    <p class="c1">
+                        @Html.ActionLink("Свободного формата", "Requaest_DocStatus_FreeFormat", "Home", null, new { @class = "compItem" })
+                    </p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+}

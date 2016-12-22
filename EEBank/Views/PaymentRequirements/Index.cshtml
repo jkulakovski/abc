@@ -7,6 +7,25 @@
 var role = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name).RoleId;
 Random rn = new Random();
 }
+
+@if (role == 6)
+{
+    <style>
+        body {
+            background-color: #aed7c6;
+        }
+    </style>
+}
+else
+{
+    <style>
+        body {
+            background: url('http://i075.radikal.ru/1002/e7/6cadddcd73ff.jpg') 20% 20%;
+        }
+    </style>
+}
+
+
 @section scripts
 {
     <script type="text/javascript">
@@ -41,6 +60,7 @@ Random rn = new Random();
                 @Html.ActionLink("Сделать выписку за последний месяц", "Export")
 
             </p>
+   
         }
         @if (role == 7)
         {
@@ -48,6 +68,12 @@ Random rn = new Random();
                 @Html.ActionLink("Создать новый", "Create_by_manager",null, new { @class = "compItem" })
             </p>
         }
+        
+        <p>
+            @Html.ActionLink("Перейти к платежные поручения", "Index", "PaymentOrders")
+            |
+            @Html.ActionLink("Перейти к документам свободного формата", "Index", "FreeFormatDocs")
+        </p>
         <div id="modDialog" class="modal fade">
             <div id="dialogContent" class="modal-dialog"></div>
         </div>

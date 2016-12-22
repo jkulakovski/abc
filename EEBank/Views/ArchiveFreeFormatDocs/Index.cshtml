@@ -7,14 +7,21 @@
 
 <body>
     <style>
+
         body {
-            background: url('http://99px.ru/sstorage/53/2014/04/tmb_100436_4458.jpg');
+            background:url('http://ultradesktop.us/wallpaper_3840x2160/textures_background_gray_yellow_blue_ultra_3840x2160_hd-wallpaper-243053.jpg') 20% 20%;
         }
+    
     </style>
     <h2>Архив принятых документов свободного формата</h2>
     <div id="modDialog" class="modal fade">
         <div id="dialogContent" class="modal-dialog"></div>
     </div>
+    <p>
+        @Html.ActionLink("Перейти к архиву платежных поручений", "Index", "ArchivePaymentOrders")
+        |
+        @Html.ActionLink("Перейти к архиву платежных требований", "Index", "ArchivePaymentRequirements")
+    </p>
     <table class="table">
         <tr>
             <th>
@@ -39,7 +46,7 @@
                     @Html.DisplayFor(modelItem => item.FreeFormatDoc.Date)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FreeFormatDoc.Users.UserInf1.FirstOrDefault(p => p.UserID == item.FreeFormatDoc.UserID).FullName))
+                    @Html.DisplayFor(modelItem => item.FreeFormatDoc.Users.UserInf1.FirstOrDefault(p => p.UserID == item.FreeFormatDoc.UserID).FullName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FreeFormatDoc.Document)

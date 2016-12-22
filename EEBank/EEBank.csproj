@@ -445,6 +445,7 @@
     <Content Include="Views\Home\Requaest_DocStatus_PaymentReq.cshtml" />
     <Content Include="Views\Home\Requaest_DocStatus_PaymentOrder.cshtml" />
     <Content Include="Views\Home\Requaest_DocStatus_FreeFormat.cshtml" />
+    <Content Include="Views\UserInfs\ECP.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

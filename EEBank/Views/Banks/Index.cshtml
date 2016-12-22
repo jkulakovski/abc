@@ -1,16 +1,43 @@
 ﻿@model IEnumerable<EEBank.Models.Banks>
+@using EEBank.Models
+@{EEBankEntitie db = new EEBankEntitie();
+var role = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault().RoleId;
+}
+<style>
+    body {
+        background: url('http://ultradesktop.us/wallpaper_3840x2160/textures_background_gray_yellow_blue_ultra_3840x2160_hd-wallpaper-243053.jpg') 20% 20%;
+    }
+</style>
 
 @{
     ViewBag.Title = "Банки";
 }
+@section scripts
+{
+    <script type="text/javascript">
 
-<h2>Филиалы E'&'EBank</h2>
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".compItem").click(function (e) {
 
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+    </script>
+}
+<h2>Банки E&EBank</h2>
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
 <p>
-    @if (User.Identity.Name == "admin@gmail.com")
-                    {
-            @Html.ActionLink("Добавить банк", "Create")
-            }
+    @if (role == 6)
+    {
+        @Html.ActionLink("Добавить банк", "Create", null, new { @class = "compItem" })
+    }
 </p>
 <table class="table">
     <tr>
@@ -25,28 +52,31 @@
         </th>
         <th></th>
     </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BanckCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @if (role == 6)
+                {
+                    @Html.ActionLink("Редактировать", "Edit", new { id = item.BankID }, new { @class = "compItem" })
+                } 
+                @if (role == 6)
+                {
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.BankID }, new { @class = "compItem" }) 
+                    
+                } 
+                @Html.ActionLink("Подробнее", "Details", new { id = item.BankID }, new { @class = "compItem" })
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Adress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BanckCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-@if (User.Identity.Name == "admin@gmail.com")
-                    {
-            @Html.ActionLink("Edit", "Edit", new { id=item.BankID }) 
-            @Html.ActionLink("Delete", "Delete", new { id=item.BankID })
-            }
-            @Html.ActionLink("Details", "Details", new { id=item.BankID }) 
-            
-        </td>
-    </tr>
-}
-
+            </td>
+        </tr>
+    }
 </table>

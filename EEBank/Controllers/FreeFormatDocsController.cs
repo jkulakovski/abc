@@ -21,6 +21,7 @@ namespace EEBank.Controllers
         Random rn = new Random();
 
         // GET: FreeFormatDocs
+        [Authorize]
         public ActionResult Index()
         {
 
@@ -67,7 +68,12 @@ namespace EEBank.Controllers
                 head.Font.Color = System.Drawing.Color.Blue;
                 head.Font.Size = 13;
 
-                workbook.SaveAs("D:\\extract_free_format.xls");
+                string date = Convert.ToString(rn.Next(0x0061, 0x007A));
+                string path = String.Format("D:\\extract_free_format{0}.xls", date);
+
+
+
+                workbook.SaveAs(path);
                 workbook.Close();
                 Marshal.ReleaseComObject(workbook);
 
@@ -75,12 +81,13 @@ namespace EEBank.Controllers
                 Marshal.FinalReleaseComObject(application);
 
                 Response.AddHeader("Content-Disposition", "attachment;filename=extract_free_format.xls");
-                Response.WriteFile("D:\\extract_free_format.xls");
+                Response.WriteFile(path);
                 Response.End();
                 return null;
         }
         // GET: FreeFormatDocs/Details/5
-      
+
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -95,7 +102,7 @@ namespace EEBank.Controllers
             return PartialView(freeFormatDoc);
         }
 
-
+        [Authorize]
         [HttpPost, ActionName("Details")]
         [ValidateAntiForgeryToken]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "отклонить")]
@@ -114,7 +121,7 @@ namespace EEBank.Controllers
             return View(freeFormatDoc);
 
         }
-
+        [Authorize]
       [HttpPost, ActionName("Details")]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "принять")]
         public ActionResult Accept(int id)
@@ -131,7 +138,8 @@ namespace EEBank.Controllers
             return RedirectToAction("Index");
 
         }
-        
+
+        [Authorize]
         // GET: FreeFormatDocs/Create
         public ActionResult Create()
         {
@@ -168,6 +176,7 @@ namespace EEBank.Controllers
             return PartialView(freeFormatDoc);
         }
 
+        [Authorize]
         public ActionResult Create_by_manager()
         {
             ViewBag.UserID = new SelectList(db.UserInf, "UserID", "FullName");
@@ -199,8 +208,9 @@ namespace EEBank.Controllers
             return PartialView(freeFormatDoc);
         }
 
-        
 
+
+        [Authorize]
         // GET: FreeFormatDocs/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -217,6 +227,7 @@ namespace EEBank.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(FreeFormatDoc freeFormatDoc, HttpPostedFileBase upload){
 
@@ -244,7 +255,9 @@ namespace EEBank.Controllers
             return PartialView(freeFormatDoc);
         }
 
+        
         // GET: FreeFormatDocs/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -261,6 +274,7 @@ namespace EEBank.Controllers
 
         // POST: FreeFormatDocs/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

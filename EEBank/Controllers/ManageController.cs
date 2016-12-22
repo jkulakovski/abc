@@ -215,7 +215,7 @@ namespace EEBank.Controllers
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
-            return View();
+            return PartialView();
         }
 
         //
@@ -239,7 +239,7 @@ namespace EEBank.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
-            return View(model);
+            return PartialView(model);
         }
 
         //

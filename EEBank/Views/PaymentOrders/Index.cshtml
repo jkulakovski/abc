@@ -7,6 +7,26 @@
 var role = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault().RoleId;
 Random rn = new Random();
 }
+
+@if (role == 6)
+{
+    <style>
+        body {
+            background-color: #aed7c6;
+        }
+    </style>
+}
+else{
+<style>
+    body {
+        background: url('http://i075.radikal.ru/1002/e7/6cadddcd73ff.jpg') 20% 20%;
+    }
+</style>
+}
+
+
+
+
 @section scripts
 {
     <script type="text/javascript">
@@ -45,6 +65,11 @@ Random rn = new Random();
                 @Html.ActionLink("Создать новый", "Create_by_manager", null, new { @class = "compItem" })
             </p>
         }
+        <p>
+            @Html.ActionLink("Перейти к платежные требованиям", "Index", "PaymentRequirements")
+            |
+            @Html.ActionLink("Перейти к документам свободного формата", "Index", "FreeFormatDocs")
+        </p>
         <div id="modDialog" class="modal fade">
             <div id="dialogContent" class="modal-dialog"></div>
         </div>
@@ -69,7 +94,7 @@ Random rn = new Random();
 
 
                 <div class="block @clas fl">
-                    <h2 class="title">Платежное требование</h2>
+                    <h2 class="title">Платежное поручения</h2>
                     <div class="content">
                         <p class="price">
                             <sub>Документ: @Html.DisplayFor(modelItem => item.DocStatus.StatusName)</sub>

@@ -99,7 +99,10 @@ namespace EEBank.Controllers
             head.Font.Color = System.Drawing.Color.Blue;
             head.Font.Size = 13;
 
-            workbook.SaveAs("D:\\extract_payment_requirement.xls");
+            string date = Convert.ToString(rn.Next(0x0061, 0x007A));
+            string path = String.Format("D:\\extract_payment_requirement{0}.xls", date);
+
+            workbook.SaveAs(path);
             workbook.Close();
             Marshal.ReleaseComObject(workbook);
 
@@ -107,7 +110,7 @@ namespace EEBank.Controllers
             Marshal.FinalReleaseComObject(application);
 
             Response.AddHeader("Content-Disposition", "attachment;filename=extract_payment_requirement.xls");
-            Response.WriteFile("D:\\extract_payment_requirement.xls");
+            Response.WriteFile(path);
             Response.End();
             return null;
         }
@@ -185,6 +188,7 @@ namespace EEBank.Controllers
 
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create(PaymentRequirements paymentRequirements, HttpPostedFileBase upload)
         {
@@ -302,6 +306,7 @@ namespace EEBank.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PaymentRequirements paymentRequirements, HttpPostedFileBase upload)
         {
@@ -365,6 +370,7 @@ namespace EEBank.Controllers
 
 
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

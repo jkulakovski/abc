@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using EEBank.Models;
 using EEBank.Methods;
+using System.IO;
 
 namespace EEBank.Controllers
 {
@@ -16,6 +17,7 @@ namespace EEBank.Controllers
         private EEBankEntitie db = new EEBankEntitie();
 
         // GET: UserInfs
+        [Authorize]
         public ActionResult Index()
         {
                 var userInf = db.UserInf.Include(u => u.Users1);
@@ -23,6 +25,8 @@ namespace EEBank.Controllers
             
         }
 
+
+        [Authorize]
         public ActionResult Account_Index()
         {
             var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);
@@ -40,6 +44,7 @@ namespace EEBank.Controllers
         }
 
         // GET: UserInfs/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             
@@ -52,9 +57,16 @@ namespace EEBank.Controllers
         }
 
         // GET: UserInfs/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.UserID = new SelectList(db.Users, "UserId", "Email");
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult ECP()
+        {
             return View();
         }
 
@@ -62,6 +74,7 @@ namespace EEBank.Controllers
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserInfID,FullName,Email,Password,Phone,AccountNumber,ECP,UserID,Adress,Balans")] UserInf userInf)
         {
@@ -74,6 +87,8 @@ namespace EEBank.Controllers
             {
                     if (Char.IsLetter(user.Email[i]))
                         login += user.Email[i];
+                    if (Char.IsDigit(user.Email[i]))
+                        login += user.Email[i];
                     if (user.Email[i] == ('@'))
                         break;
                 
@@ -83,10 +98,18 @@ namespace EEBank.Controllers
 
             string sign = ecp.Create_ECP(login, keys);
 
+
             string open_key = "";
             open_key += keys[0].ToString();
             open_key += ' ';
             open_key += keys[1].ToString();
+
+            string path = String.Format("D:\\ecp{0}.txt",login);
+            StreamWriter file = new StreamWriter(path);
+
+            file.Write(sign);
+            file.Close();
+            
 
             
 
@@ -98,12 +121,15 @@ namespace EEBank.Controllers
               
                 db.UserInf.Add(new_userinf);
                 db.SaveChanges();
-                return RedirectToAction("Index","Home");
+                
+                return RedirectToAction("ECP");
+                
             }
 
             return View(userInf);
         }
 
+        [Authorize]
         public ActionResult Add_new_account()
         {
             ViewBag.CurrencyCodeId = new SelectList(db.Currency, "CurrencyId", "CodeISO");
@@ -111,6 +137,7 @@ namespace EEBank.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Add_new_account(UserInf userInf)
         {
@@ -152,6 +179,7 @@ namespace EEBank.Controllers
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "UserInfID,FullName,Email,Password,Phone,AccountNumber,ECP,UserID")] UserInf userInf)
         {
@@ -166,6 +194,7 @@ namespace EEBank.Controllers
         }
 
         // GET: UserInfs/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -182,6 +211,7 @@ namespace EEBank.Controllers
 
         // POST: UserInfs/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

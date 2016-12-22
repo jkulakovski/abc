@@ -15,6 +15,7 @@ namespace EEBank.Controllers
     {
         private EEBankEntitie db = new EEBankEntitie();
 
+        [Authorize]
         // GET: FullInfManagers
         public ActionResult Index()
         {
@@ -22,7 +23,9 @@ namespace EEBank.Controllers
             return View(fullInfManagers.ToList());
         }
 
+
         // GET: FullInfManagers/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             FullInfManagers fullInfManagers = db.FullInfManagers.Find(id);
@@ -33,6 +36,7 @@ namespace EEBank.Controllers
             return PartialView(fullInfManagers);
         }
 
+        [Authorize]
         // GET: FullInfManagers/Create
         public ActionResult Create()
         {
@@ -44,6 +48,7 @@ namespace EEBank.Controllers
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ManagerID,FullName,Email,ECP,OpenKey,RoleID,BankID")] FullInfManagers fullInfManagers)
         {
@@ -54,6 +59,8 @@ namespace EEBank.Controllers
             for (int i = 0; i < user.Email.Length; i++)
             {
                 if (Char.IsLetter(user.Email[i]))
+                    login += user.Email[i];
+                if (Char.IsDigit(user.Email[i]))
                     login += user.Email[i];
                 if (user.Email[i] == ('@'))
                     break;
@@ -80,6 +87,7 @@ namespace EEBank.Controllers
         }
 
         // GET: FullInfManagers/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -100,6 +108,7 @@ namespace EEBank.Controllers
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ManagerID,FullName,Email,ECP,OpenKey,RoleID,BankID")] FullInfManagers fullInfManagers)
         {
@@ -115,6 +124,7 @@ namespace EEBank.Controllers
         }
 
         // GET: FullInfManagers/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -131,6 +141,7 @@ namespace EEBank.Controllers
 
         // POST: FullInfManagers/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<EEBank.Models.UserInf>
+           @using EEBank.Models
+@{EEBankEntitie db = new EEBankEntitie();
+var ecp = db.UserInf.FirstOrDefault(p => p.Email == User.Identity.Name).ECP;
+}
+@{
+    ViewBag.Title = "Электронно-цифровая подпись";
+}
+<style>
+    body {
+        background: url('http://ultradesktop.us/wallpaper_3840x2160/textures_background_gray_yellow_blue_ultra_3840x2160_hd-wallpaper-243053.jpg') 20% 20%;
+    }
+    p{
+        font-weight:600;
+        color:red;
+    }
+</style>
+
+<h2 align="center"> @ViewBag.Title</h2>
+<div align="center">
+    Ваша электронно-цифровая подпись: <p class="ecp">@ecp</p>  <br />
+
+    Это сообщение выводится всего один раз при регистрации.<br />
+    Сохраните подпись в любой текстовый документ.<br />
+    Также вы можете ее найти у себя на компьюетере на диске D:\ в текстовом документе ecp.txt <br />
+    Будте аккуратны с хранением и перезаписью.<br />
+    С Уважением Ваш Клиент-Банк.<br />
+    
+</div>
+<p align="center">@Html.ActionLink("Перейти на главную","Index","Home")</p>

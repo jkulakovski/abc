@@ -42,7 +42,7 @@ namespace EEBank.Methods
             string login = "";
             for (int i = 0; i < user.Email.Length; i++)
             {
-                if (Char.IsLetter(user.Email[i]))
+                if (Char.IsLetter(user.Email[i]) || Char.IsDigit(user.Email[i]))
                     login += user.Email[i];
                 if (user.Email[i] == ('@'))
                     break;
@@ -86,12 +86,10 @@ namespace EEBank.Methods
                         it++;
                 }
             }
-            if (it == res.Length)
+            if (it == res.Length && it != 0)
                 return 1;
-            if (it != res.Length || it == 0)
-                return 2;
             else
-                return 0;
+                return 2;
         }
     }
 }

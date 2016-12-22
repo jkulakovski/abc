@@ -88,7 +88,10 @@ namespace EEBank.Controllers
             head.Font.Color = System.Drawing.Color.Blue;
             head.Font.Size = 13;
 
-            workbook.SaveAs("D:\\extract_payment_order.xls");
+            string date = Convert.ToString(rn.Next(0x0061, 0x007A));
+            string path = String.Format("D:\\extract_payment_order{0}.xls", date);
+
+            workbook.SaveAs(path);
             workbook.Close();
             Marshal.ReleaseComObject(workbook);
 
@@ -96,12 +99,13 @@ namespace EEBank.Controllers
             Marshal.FinalReleaseComObject(application);
 
             Response.AddHeader("Content-Disposition", "attachment;filename=extract_payment_order.xls");
-            Response.WriteFile("D:\\extract_payment_order.xls");
+            Response.WriteFile(path);
             Response.End();
             return null;
         }
 
         // GET: PaymentOrders/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -116,6 +120,7 @@ namespace EEBank.Controllers
             return PartialView(paymentOrder);
         }
 
+        [Authorize]
         [HttpPost, ActionName("Details")]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "отклонить")]
         [ValidateAntiForgeryToken]
@@ -139,6 +144,7 @@ namespace EEBank.Controllers
 
         }
 
+        [Authorize]
         [HttpPost, ActionName("Details")]
         [MultiButton(MatchFormKey = "action", MatchFormValue = "принять")]
         public ActionResult Accept(int id)
@@ -172,6 +178,7 @@ namespace EEBank.Controllers
         }
 
         // GET: PaymentOrders/Create
+        [Authorize]
         public ActionResult Create()
         {
             var user = db.UserInf.Where(p => p.Email == User.Identity.Name).ToList();
@@ -188,6 +195,7 @@ namespace EEBank.Controllers
 
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create(PaymentOrder paymentOrder, HttpPostedFileBase upload)
         {
@@ -223,6 +231,7 @@ namespace EEBank.Controllers
             return PartialView(paymentOrder);
         }
 
+        [Authorize]
         public ActionResult Create_by_manager()
         {
             var user = db.Users.Where(p => p.Email == User.Identity.Name).FirstOrDefault();
@@ -275,6 +284,7 @@ namespace EEBank.Controllers
         }
 
         // GET: PaymentOrders/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -298,6 +308,7 @@ namespace EEBank.Controllers
 
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PaymentOrder paymentOrder, HttpPostedFileBase upload)
         {
@@ -346,6 +357,7 @@ namespace EEBank.Controllers
         }
 
         // GET: PaymentOrders/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -362,6 +374,7 @@ namespace EEBank.Controllers
 
         // POST: PaymentOrders/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

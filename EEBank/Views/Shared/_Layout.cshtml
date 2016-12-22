@@ -30,6 +30,7 @@
                 @Html.ActionLink("E&EBank", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                 
             </div>
+            
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @{ EEBankEntitie db = new EEBankEntitie();}
@@ -41,7 +42,9 @@
                         <li>@Html.ActionLink("Пользователи", "Index", "UserInfs")</li>
                         <li>@Html.ActionLink("Менеджеры", "Index", "FullInfManagers")</li>
                     }
+                    <li>@Html.ActionLink("Банки", "Index", "Banks")</li>
                 </ul>
+                
                 
                 @Html.Partial("_LoginPartial")
                 
@@ -50,7 +53,6 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
     </div>
     <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>

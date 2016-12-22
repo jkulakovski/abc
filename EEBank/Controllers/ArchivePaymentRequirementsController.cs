@@ -15,6 +15,7 @@ namespace EEBank.Controllers
         private EEBankEntitie db = new EEBankEntitie();
 
         // GET: ArchivePaymentRequirements
+        [Authorize]
         public ActionResult Index()
         {
             var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);
@@ -25,7 +26,7 @@ namespace EEBank.Controllers
             }
             if (user.RoleId == 6)
             {
-                var archivePaymentRequirements = db.ArchivePaymentRequirements.Include(a => a.PaymentRequirements);
+                var archivePaymentRequirements = db.ArchivePaymentRequirements.Include(a => a.PaymentRequirements).Where(p => p.PaymentRequirements.Date != null);
                 return View(archivePaymentRequirements.ToList());
             }
             else
@@ -37,6 +38,7 @@ namespace EEBank.Controllers
         }
 
         // GET: ArchivePaymentRequirements/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -52,6 +54,7 @@ namespace EEBank.Controllers
         }
 
         // GET: ArchivePaymentRequirements/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.PaymentRequirementId = new SelectList(db.PaymentRequirements, "PaymentRequirementsID", "СurrencyCode");
@@ -62,6 +65,7 @@ namespace EEBank.Controllers
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ArchivePaymentRequirementsId,PaymentRequirementId")] ArchivePaymentRequirements archivePaymentRequirements)
         {
@@ -77,6 +81,7 @@ namespace EEBank.Controllers
         }
 
         // GET: ArchivePaymentRequirements/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -97,6 +102,7 @@ namespace EEBank.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "ArchivePaymentRequirementsId,PaymentRequirementId")] ArchivePaymentRequirements archivePaymentRequirements)
         {
             if (ModelState.IsValid)
@@ -110,6 +116,7 @@ namespace EEBank.Controllers
         }
 
         // GET: ArchivePaymentRequirements/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -126,6 +133,7 @@ namespace EEBank.Controllers
 
         // POST: ArchivePaymentRequirements/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

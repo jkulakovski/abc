@@ -15,6 +15,7 @@ namespace EEBank.Controllers
         private EEBankEntitie db = new EEBankEntitie();
 
         // GET: ArchiveFreeFormatDocs
+        [Authorize]
         public ActionResult Index()
         {
             var user = db.Users.FirstOrDefault(p => p.Email == User.Identity.Name);

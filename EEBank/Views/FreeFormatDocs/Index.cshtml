@@ -11,6 +11,23 @@ Random rn = new Random();
     ViewBag.Title = "Документ свободного формата";
 }
 
+@if (role == 6)
+{
+    <style>
+        body {
+            background-color: #aed7c6;
+        }
+    </style>
+}
+else
+{
+    <style>
+        body {
+            background: url('http://i075.radikal.ru/1002/e7/6cadddcd73ff.jpg') 20% 20%;
+        }
+    </style>
+}
+
 @section scripts
 {
     <script type="text/javascript">
@@ -30,15 +47,14 @@ Random rn = new Random();
 }
 <link href="~/Content/tablestyle.css" type="text/css" rel="stylesheet">
 <body>
-
     <div align="center" class=" wrapper">
         <h2>Документ свободного формата</h2>
-                @if (role == 5)
-                {
-                    <p>
-                        @Html.ActionLink("Создать новый", "Create", null, new { @class = "compItem" })
-        | 
-                        @Html.ActionLink("Сделать выписку за последний месяц", "Export")
+        @if (role == 5)
+        {
+            <p>
+                @Html.ActionLink("Создать новый", "Create", null, new { @class = "compItem" })
+                |
+                @Html.ActionLink("Сделать выписку за последний месяц", "Export")
             </p>}
         @if (role == 7)
         {
@@ -46,6 +62,11 @@ Random rn = new Random();
                 @Html.ActionLink("Создать новый", "Create_by_manager", null, new { @class = "compItem" })
             </p>
         }
+        <p>
+            @Html.ActionLink("Перейти к платежные требованиям", "Index", "PaymentRequirements")
+            |
+            @Html.ActionLink("Перейти к платежным поручениям", "Index", "PaymentOrders")
+        </p>
         <div id="modDialog" class="modal fade">
             <div id="dialogContent" class="modal-dialog"></div>
         </div>
@@ -108,28 +129,9 @@ Random rn = new Random();
                             </p>
                         }
 
-
-
                     </div>
                 </div>
             }
-
         </div>
     </div>
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

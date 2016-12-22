@@ -15,11 +15,13 @@ namespace EEBank.Controllers
         private EEBankEntitie db = new EEBankEntitie();
 
         // GET: Banks
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Banks.ToList());
         }
 
+        [Authorize]
         // GET: Banks/Details/5
         public ActionResult Details(int? id)
         {
@@ -32,13 +34,14 @@ namespace EEBank.Controllers
             {
                 return HttpNotFound();
             }
-            return View(banks);
+            return PartialView(banks);
         }
 
         // GET: Banks/Create
+        [Authorize]
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Banks/Create
@@ -46,6 +49,7 @@ namespace EEBank.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create([Bind(Include = "BankID,Adress,BanckCode,Phone")] Banks banks)
         {
             if (ModelState.IsValid)
@@ -55,10 +59,11 @@ namespace EEBank.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(banks);
+            return PartialView(banks);
         }
 
         // GET: Banks/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -70,13 +75,14 @@ namespace EEBank.Controllers
             {
                 return HttpNotFound();
             }
-            return View(banks);
+            return PartialView(banks);
         }
 
         // POST: Banks/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "BankID,Adress,BanckCode,Phone")] Banks banks)
         {
@@ -86,10 +92,11 @@ namespace EEBank.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(banks);
+            return PartialView(banks);
         }
 
         // GET: Banks/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -101,11 +108,12 @@ namespace EEBank.Controllers
             {
                 return HttpNotFound();
             }
-            return View(banks);
+            return PartialView(banks);
         }
 
         // POST: Banks/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
